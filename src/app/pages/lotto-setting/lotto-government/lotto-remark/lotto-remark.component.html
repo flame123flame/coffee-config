@@ -1,0 +1,12 @@
+<h1 mat-dialog-title>Confirm Data</h1>
+<div mat-dialog-content>
+    <p>Enter Your Remark</p>
+    <mat-form-field>
+        <mat-label>Remark Close Status</mat-label>
+        <input matInput [(ngModel)]="remark">
+    </mat-form-field>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">No Thanks</button>
+    <button mat-button (click)="onConfirm()">Ok</button>
+</div>

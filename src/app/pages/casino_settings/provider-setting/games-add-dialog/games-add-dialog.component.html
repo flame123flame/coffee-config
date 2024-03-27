@@ -1,0 +1,126 @@
+<h1 mat-dialog-title>{{header}}</h1>
+<div mat-dialog-content>
+  <div class="d-flex flex-column  w-auto">
+    <form [formGroup]='form'>
+      <mat-form-field appearance="outline" class="w-100 p-1 col-lg-12 col-12" floatLabel="always">
+        <mat-label>Game Code</mat-label>
+        <input matInput formControlName='gameCode'>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="w-100 p-1 col-lg-12 col-12" floatLabel="always">
+        <mat-label>Name TH</mat-label>
+        <input matInput formControlName='nameTh'>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="w-100 p-1 col-lg-12 col-12" floatLabel="always">
+        <mat-label>Name EN</mat-label>
+        <input matInput formControlName='nameEn'>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="w-100 p-1 col-lg-12 col-12" floatLabel="always">
+        <mat-label>Display Name</mat-label>
+        <input matInput formControlName='displayName'>
+      </mat-form-field>
+      <mat-form-field floatLabel="always" appearance="outline" class="w-100 p-1 col-lg-12 col-12">
+        <mat-label>Game Product Type</mat-label>
+        <mat-select placeholder="Click to select" formControlName="gameProductTypeCode">
+          <mat-option *ngFor="let item of productList" [value]="item.code">{{item.nameEn}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field floatLabel="always" appearance="outline" class="w-100 p-1 col-lg-12 col-12">
+        <mat-label>Game Provider</mat-label>
+        <mat-select placeholder="Click to select" formControlName="providerCode"
+          (selectionChange)='getALlGameGroup($event.value)'>
+          <mat-option *ngFor="let item of providerList" [value]="item.code">{{item.nameEn}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field floatLabel="always" appearance="outline" class="w-100 p-1 col-lg-12 col-12">
+        <mat-label>Game Tag</mat-label>
+        <mat-select placeholder="Click to select" formControlName="gameTagMappingGame" multiple>
+          <mat-option *ngFor="let item of gameTagList" [value]="item.code">{{item.nameTh}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field floatLabel="always" appearance="outline" class="w-100 p-1 col-lg-12 col-12">
+        <mat-label>Game Group</mat-label>
+        <mat-select placeholder="Click to select" formControlName="gameGroupCode">
+          <mat-option *ngFor="let item of gameGroupList" [value]="item.gameGroupCode">{{item.gameGroupCode}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <!-- <mat-form-field floatLabel="always" appearance="outline" class="w-100 p-1 col-lg-12 col-12">
+        <mat-label>Game Tag</mat-label>
+        <mat-select placeholder="Click to select" formControlName="gameTag" >
+          <mat-option *ngFor="let item of gameTagList" [value]="item.gameTagCode">{{item.gameTagName}}</mat-option>
+        </mat-select>
+      </mat-form-field> -->
+      <!-- <mat-form-field appearance="outline" class="w-100 p-1 col-lg-12 col-12" floatLabel="always">
+        <mat-label>Game Tag</mat-label>
+        <input matInput formControlName='gameTag'>
+      </mat-form-field> -->
+
+      <!-- <label>Platform</label>
+      <div class="flex-row ">
+        <section class="example-section">
+          <mat-checkbox formControlName='platformPc'>PC</mat-checkbox>
+          <mat-checkbox formControlName='platformPcDl'>PC D/L</mat-checkbox>
+          <mat-checkbox formControlName='platformMapp'>M. App</mat-checkbox>
+          <mat-checkbox formControlName='platformMhFive'>M. H5</mat-checkbox>
+          <mat-checkbox formControlName='platformMini'>Mini</mat-checkbox>
+        </section>
+
+      </div> -->
+      <!-- <div class="flex-row">
+        <mat-form-field appearance="outline" class="w-100 p-1 col-lg-4 col-12" floatLabel="always">
+          <mat-label>Min RTP%</mat-label>
+          <input matInput formControlName='minRtp' type='number'>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="w-100 p-1 col-lg-4 col-12" floatLabel="always">
+          <mat-label>Max RTP%</mat-label>
+          <input matInput formControlName='maxRtp' type='number'>
+        </mat-form-field>
+      </div> -->
+      <div class="w-100 p-1 col-lg-12 col-12">
+        <label><span style="color: red;">*</span>Image Portrait</label>
+        <br>
+        <img [src]="image1?image1:IMG_ENV+data.image1" style="max-width: 70%;">
+        <br>
+        <input (change)="previewPortrait(file.files)" #file type="file" />
+        <p>Image size limit : 1 MB</p>
+        <p>Support formats : JPG, PNG, GIF, BMP</p>
+      </div>
+      <div class="w-100 p-1 col-lg-12 col-12">
+        <label><span style="color: red;">*</span>Image Landscape</label>
+        <br>
+        <img [src]="image2?image2:IMG_ENV+data.image2" style="max-width: 100%;">
+        <br>
+        <input (change)="previewLandscape(file2.files)" #file2 type="file" />
+        <p>Image size limit : 1 MB</p>
+        <p>Support formats : JPG, PNG, GIF, BMP</p>
+      </div>
+
+      <label>Status</label>
+      <div class="flex-row mb-3">
+        <mat-radio-group formControlName='status' class="example-container ">
+          <mat-radio-button [value]="true">Active</mat-radio-button>
+          <mat-radio-button [value]="false">Disable</mat-radio-button>
+          <!-- <mat-radio-button [value]="3">Coming Soon</mat-radio-button> -->
+        </mat-radio-group>
+      </div>
+      <div class="flex-row">
+        <mat-form-field appearance="outline" class="w-100 p-1 col-lg-12 col-12" floatLabel="always">
+          <mat-label>Remark</mat-label>
+          <textarea matInput formControlName='remark'></textarea>
+        </mat-form-field>
+      </div>
+      <!-- <div class="flex-row">
+      <label>Enable</label>
+        <mat-radio-group formControlName='enable' class="example-container">
+          <mat-radio-button [value]="true">Enable</mat-radio-button>
+          <mat-radio-button [value]="false">Disable</mat-radio-button>
+        </mat-radio-group>
+      </div> -->
+
+    </form>
+  </div>
+</div>
+<div mat-dialog-actions class="d-flex flex-row justify-content-center">
+  <button-cancel class="mr-1" (click)="onNoClick()"></button-cancel>
+  <button-save [disabled]="form.status=='VALID'?false:true" (click)="onSave()"></button-save>
+</div>

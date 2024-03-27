@@ -1,0 +1,21 @@
+<h1 mat-dialog-title>Group Mapping</h1>
+<div mat-dialog-content>
+    <div class="d-flex flex-column  w-auto">
+        <form [formGroup]='form'>
+            <mat-form-field appearance="outline" class="w-100 p-1 col-lg-12 col-12" floatLabel="always">
+                <mat-label>Group Code</mat-label>
+                <input matInput formControlName='groupCode'>
+            </mat-form-field>
+            <mat-form-field floatLabel="always" appearance="outline" class="w-100 p-1 col-lg-12 col-12">
+                <mat-label>Game Provider</mat-label>
+                <mat-select placeholder="Click to select" formControlName="providerCode" multiple>
+                    <mat-option *ngFor="let item of providerList" [value]="item.code">{{item.nameEn}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </form>
+    </div>
+</div>
+<div mat-dialog-actions class="d-flex flex-row justify-content-center">
+    <button-cancel class="mr-1" (click)="onNoClick()"></button-cancel>
+    <button-save [disabled]="form.status=='VALID'?false:true" (click)="onSave()"></button-save>
+</div>

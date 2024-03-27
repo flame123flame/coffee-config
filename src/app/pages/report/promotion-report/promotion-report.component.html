@@ -1,0 +1,66 @@
+<div class="d-flex flex-column">
+  <app-content title="Search">
+    <form [formGroup]="form">
+      <div class="d-flex flex-column">
+        <div class="d-flex flex-lg-row flex-column">
+          <mat-form-field floatLabel="always" appearance="outline" class="w-100 p-1 col-lg-3 col-12">
+            <mat-label>Period Type</mat-label>
+            <mat-select formControlName='periodType'>
+              <mat-option value="ALL">All</mat-option>
+              <mat-option *ngFor="let option of periodTypeList" [value]="option.value">
+                {{ option.display }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field floatLabel="always" appearance="outline" class="w-100 p-1 col-lg-3 col-12"
+            (click)="periodStartDate.open()">
+            <mat-label>Report Period Start</mat-label>
+            <input matInput [ngxMatDatetimePicker]="periodStartDate" [max]="maxDate" formControlName='startDate' />
+            <mat-datepicker-toggle matSuffix [for]="periodStartDate"></mat-datepicker-toggle>
+            <ngx-mat-datetime-picker #periodStartDate></ngx-mat-datetime-picker>
+          </mat-form-field>
+
+          <mat-form-field floatLabel="always" appearance="outline" class="w-100 p-1 col-lg-3 col-12"
+            (click)="periodEndDate.open()">
+            <mat-label>Report Period End</mat-label>
+            <input matInput [ngxMatDatetimePicker]="periodEndDate" [min]="form.value.startDate" [max]="maxDate"
+              formControlName='endDate' />
+            <mat-datepicker-toggle matSuffix [for]="periodEndDate"></mat-datepicker-toggle>
+            <ngx-mat-datetime-picker #periodEndDate></ngx-mat-datetime-picker>
+          </mat-form-field>
+
+          <mat-form-field required floatLabel="always" appearance="outline" class="w-100 p-1 col-lg-3 col-12">
+            <mat-label>Promotion Category</mat-label>
+            <mat-select formControlName='promoCategory'>
+              <mat-option value="ALL">All</mat-option>
+              <mat-option *ngFor="let option of promotionCategoryList" [value]="option.value">
+                {{ option.display }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+        </div>
+
+        <div class="d-flex flex-lg-row flex-column">
+          <mat-form-field floatLabel="always" appearance="outline" class="w-100 p-1 col-lg-12 col-12">
+            <mat-label>Promotion Title</mat-label>
+            <input matInput formControlName='promoTitle' />
+          </mat-form-field>
+        </div>
+
+        <div class="d-flex flex-row justify-content-center mb-3">
+          <button-reset (click)="resetSearch()"></button-reset>
+          <button-search (click)="loadList()"></button-search>
+        </div>
+        
+      </div>
+    </form>
+  </app-content>
+
+  <app-content class="mt-3" subtitle="Player Report">
+    <app-table-mat [columns]="columns" [dataInput]="dataInput" [displayedColumns]="tr" [length]='length'
+      (onPageChange)='pageChange($event)' (onSortChange)='sortChange($event)'>
+    </app-table-mat>
+  </app-content>
+</div>

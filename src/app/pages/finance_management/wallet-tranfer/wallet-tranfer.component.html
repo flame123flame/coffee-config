@@ -1,0 +1,60 @@
+<div class="d-flex flex-column">
+  <app-content>
+    <div class="d-flex flex-column">
+      <form [formGroup]="formFilter">
+        <div class="flex-lg-row">
+          <mat-form-field appearance="outline" class="w-100 p-1 col-lg-3 col-12" floatLabel="always">
+            <mat-label>Player username</mat-label>
+            <input matInput formControlName="username" placeholder="Ex. 123456" />
+          </mat-form-field>
+
+          <mat-form-field loatLabel="always" appearance="outline" class="w-100 p-1 col-lg-3 col-12">
+            <input matInput [ngxMatDatetimePicker]="picker" placeholder="Choose a date" formControlName="dateStart">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <ngx-mat-datetime-picker #picker>
+            </ngx-mat-datetime-picker>
+          </mat-form-field>
+
+          <mat-form-field floatLabel="always" appearance="outline" class="w-100 p-1 col-lg-3 col-12">
+            <input matInput [ngxMatDatetimePicker]="picker2" placeholder="Choose a date" formControlName="dateEnd">
+            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+            <ngx-mat-datetime-picker #picker2>
+            </ngx-mat-datetime-picker>
+          </mat-form-field>
+          
+          <mat-form-field appearance="outline" class="w-100 p-1 col-lg-3 col-12" floatLabel="always">
+            <mat-label>Tranfer ID</mat-label>
+            <input matInput formControlName="transferId" placeholder="Ex. 1123356634" />
+          </mat-form-field>
+
+
+        </div>
+
+        <div class="flex-lg-row">
+          <mat-form-field appearance="outline" class="w-100 p-1 col-lg-3 col-12" floatLabel="always">
+            <mat-label>from</mat-label>
+            <input matInput formControlName="transferAmountStart" placeholder="Ex. member1" />
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="w-100 p-1 col-lg-3 col-12" floatLabel="always">
+            <mat-label>to</mat-label>
+            <input matInput matInput formControlName="transferAmountEnd" placeholder="Ex. member2" />
+          </mat-form-field>
+
+          <!-- <mat-form-field appearance="outline" class="w-100 p-1 col-lg-3 col-12" floatLabel="always">
+            <mat-label>Create On</mat-label>
+            <input matInput placeholder="Ex. Phone , Website" />
+          </mat-form-field> -->
+        </div>
+      </form>
+
+      <div class="d-flex flex-row justify-content-center">
+        <button-reset (click)="resetSearch()"></button-reset>
+        <button-search (click)="searchPaginate()"></button-search>
+      </div>
+    </div>
+  </app-content>
+  <app-content class="mt-3" title="Wallter Tranfer" subtitle="Logging">
+    <app-table-mat [length]="length" [columns]="columns" [dataInput]="data" [displayedColumns]="tr" (onPageChange)='pageAllChange($event)'>
+    </app-table-mat>
+  </app-content>
+</div>

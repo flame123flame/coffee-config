@@ -1,0 +1,227 @@
+<div class="d-flex flex-column">
+    <div class="d-flex flex-lg-row flex-column">
+        <div class="col-lg-4 col-12">
+            <app-card-status icon="assignment_ind" title="Totle Reg. Player">
+                <div class="d-flex flex-row justify-content-center">
+                    <div id="statusTitle">{{totalSummary.registercount}}</div>
+                    <!-- <mat-icon style="color: red;" aria-hidden="false" aria-label="Example home icon">keyboard_arrow_down
+                    </mat-icon>
+                    <div style="color: red;">50%</div>
+                    <span>From last month</span> -->
+                </div>
+            </app-card-status>
+        </div>
+        <div class="col-lg-4 col-12 mt-3 mt-lg-0">
+            <app-card-status icon="input" title="Total Deposit Amount">
+                <div class="d-flex flex-row justify-content-center">
+                    <div id="statusTitle">{{totalSummary.deposit}}</div>
+                    <!-- <mat-icon style="color: cyan;" aria-hidden="false" aria-label="Example home icon">keyboard_arrow_up
+                    </mat-icon>
+                    <div style="color: cyan;">10.03%</div>
+                    <span>From last month</span> -->
+                </div>
+            </app-card-status>
+        </div>
+        <div class="col-lg-4 col-12 mt-3 mt-lg-0">
+            <app-card-status icon="money" title="Total Withdrawal Amount">
+                <div class="d-flex flex-row justify-content-center">
+                    <div id="statusTitle">{{totalSummary.withdraw}}</div>
+                    <!-- <mat-icon style="color: cyan;" aria-hidden="false" aria-label="Example home icon">keyboard_arrow_up
+                    </mat-icon>
+                    <div style="color: cyan;">6.53%</div>
+                    <span>From last month</span> -->
+                </div>
+            </app-card-status>
+        </div>
+    </div>
+    <div class="d-flex flex-lg-row flex-column mt-4">
+        <div class="col-lg-4 col-12">
+            <app-card-status icon="monetization_on" title="Total Vaild Bets">
+                <div class="d-flex flex-row justify-content-center">
+                    <div id="statusTitle">{{totalSummary.validbet}}</div>
+                    <!-- <mat-icon style="color: cyan;" aria-hidden="false" aria-label="Example home icon">keyboard_arrow_up
+                    </mat-icon>
+                    <div style="color: cyan;">30.03%</div>
+                    <span>From last month</span> -->
+                </div>
+            </app-card-status>
+        </div>
+        <div class="col-lg-4 col-12 mt-3 mt-lg-0">
+            <app-card-status icon="money_off" title="Game Win/Loss">
+                <div class="d-flex flex-row justify-content-center">
+                    <div id="statusTitle">{{totalSummary.totalwinloss}}</div>
+                    <!-- <mat-icon style="color: red;" aria-hidden="false" aria-label="Example home icon">keyboard_arrow_down
+                    </mat-icon>
+                    <div style="color: red;">13.09%</div>
+                    <span>From last month</span> -->
+                </div>
+            </app-card-status>
+        </div>
+        <div class="col-lg-4 col-12 mt-3 mt-lg-0">
+            <app-card-status icon="attach_money" title="Company Profit/Loss">
+                <div class="d-flex flex-row justify-content-center">
+                    <div id="statusTitle">{{totalSummary.companytotal}}</div>
+                    <!-- <mat-icon style="color: red;" aria-hidden="false" aria-label="Example home icon">keyboard_arrow_down
+                    </mat-icon>
+                    <div style="color: red;">59.5%</div>
+                    <span>From last month</span> -->
+                </div>
+            </app-card-status>
+        </div>
+    </div>
+    <app-content class="mt-3">
+        <!-- <form [formGroup]="form"></form> -->
+        <div class="d-flex flex-column">
+            <mat-tab-group>
+                <mat-tab label="Graphic">
+                    <div class="d-flex flex-column mb-3">
+                        <div class="flex-lg-row mt-3">
+                            <mat-form-field appearance="outline" class="w-100 p-1 col-lg-6 col-12" floatLabel="always">
+                                <mat-label>Year</mat-label>
+                                <mat-select [(value)]="years">
+                                    <mat-option *ngFor="let item of yearList" [value]="item">
+                                        {{ item }} year
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" class="w-100 p-1 col-lg-6 col-12" floatLabel="always">
+                                <mat-label>Month</mat-label>
+                                <mat-select [(value)]="months">
+                                    <mat-option *ngFor="let option of monthList" [value]="option">
+                                        {{ option }}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="d-flex flex-row justify-content-center">
+                            <button class="mr-2" mat-raised-button (click)="resetGraphic()">Reset</button>
+                            <button-search (click)="getOverallReportGraphic()"></button-search>
+                        </div>
+                    </div>
+
+                    <!-- <div class="d-flex flex-lg-row flex-column mt-3 mb-3">
+                        <div class="col-12 col-lg-6 p-0">
+                            <app-content title="Valid Bests & Win/Loss">
+                                <mat-form-field appearance="outline" class="w-100 p-1 col-lg-6 col-12">
+                                    <mat-label>Select</mat-label>
+                                    <mat-select [(value)]="product">
+                                        <mat-option value="ALL">All Product Type</mat-option>
+                                        <mat-option *ngFor="let item of productList" [value]="item.code">
+                                            {{ item.nameEn }}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <bar-chart [barChartData]="barChartData" [barChartLabels]="barChartLabels"
+                                    [barChartColors]="barChartColors"></bar-chart>
+                            </app-content>
+                        </div>
+                        <div class="col-12 col-lg-6">
+                            <app-content title="Valid Bets Top 3">
+                                <pie-chart [pieChartOptions]="pieChartOptions" [pieChartColors]="pieChartColors"
+                                    [pieChartLabels]="pieChartLabels" [pieChartData]="pieChartData"></pie-chart>
+                            </app-content>
+                        </div>
+                    </div> -->
+                    <app-content class="mt-3" title="{{chartRoundMonth}}" height>
+                        <div class="d-flex flex-row justify-content-center mb-3">
+                            <mat-button-toggle-group class="p-1" appearance="legacy" [(value)]="checkChart">
+                                <mat-button-toggle value="1" (click)="getRegDeposit(firstDay,lastDay)">First Deposit
+                                </mat-button-toggle>
+                                <mat-button-toggle value="2" (click)="getDepositWithdrawalAmount(firstDay,lastDay)">
+                                    Deposit/Withdrawal Amount
+                                </mat-button-toggle>
+                                <mat-button-toggle value="3" (click)="getCompanySurplus(firstDay,lastDay)">Company
+                                    Surplus
+                                </mat-button-toggle>
+                            </mat-button-toggle-group>
+                        </div>
+                        <div class="d-flex flex-column">
+                            <!-- <mat-form-field appearance="outline" class="w-100 p-1 col-lg-2 col-12">
+                                <mat-label>Select</mat-label>
+                                <mat-select  [(value)]="chartRoundMonth">
+                                    <mat-option value="Reg./First Deposit count">First Deposit</mat-option>
+                                    <mat-option value="Deposit/Withdrawal Amount">Deposit/Withdrawal Amount</mat-option>
+                                    <mat-option value="option">Company Surplus</mat-option>
+                                </mat-select>
+                            </mat-form-field> -->
+
+                            <line-chart [lineChartData]="lineChartDataMon" [lineChartLabels]="lineChartLabelsMon"
+                                [lineChartColors]="lineChartColorsMon"></line-chart>
+                        </div>
+                    </app-content>
+                </mat-tab>
+
+                <mat-tab label="Table">
+                    <div class="d-flex flex-column mt-3">
+                        <div class="d-flex flex-lg-row flex-column">
+                            <!-- <mat-form-field appearance="outline" class="w-100 p-1 col-lg-4 col-12" floatLabel="always"
+                                (click)="picker.open()">
+                                <mat-label>Report Period</mat-label>
+                                <mat-date-range-input [rangePicker]="picker">
+                                    <input matStartDate placeholder="Start date" />
+                                    <input matEndDate placeholder="End date" />
+                                </mat-date-range-input>
+                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-date-range-picker #picker></mat-date-range-picker>
+                            </mat-form-field> -->
+                            <mat-form-field floatLabel="always" appearance="outline" class="w-100 p-1 col-lg-3 col-12"
+                                (click)="picker.open()">
+                                <mat-label>Report Period Start</mat-label>
+                                <input matInput [matDatepicker]="picker" [min]="minDate" [max]="tomorrow"
+                                    [formControl]="startDate" disabled />
+                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-datepicker #picker disabled="false"> </mat-datepicker>
+                            </mat-form-field>
+
+                            <mat-form-field floatLabel="always" appearance="outline" class="w-100 p-1 col-lg-3 col-12"
+                                (click)="picker2.open()">
+                                <mat-label>Report Period End</mat-label>
+                                <input matInput [matDatepicker]="picker2" [min]="startDate.value" [max]="tomorrow"
+                                    [formControl]="endDate" disabled />
+                                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                <mat-datepicker #picker2 disabled="false"></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="d-flex flex-row justify-content-center mb-3">
+                            <button class="mr-2" mat-raised-button (click)="resetTable()">Reset</button>
+                            <button-search (click)="getOverallReportTable()"></button-search>
+                        </div>
+
+                        <div class="flex-lg-row p-1">
+                            <app-content class="mt-3"
+                                title="Company Profit/Loss {{startDateformat}} - {{endDateformat}}">
+                                <app-table-mat [columns]="companyColumns" [dataInput]="companyData"
+                                    [displayedColumns]="companyTr" [displayPaginator]="false">
+                                </app-table-mat>
+                            </app-content>
+                        </div>
+
+                        <div class="flex-lg-row p-1">
+                            <app-content class="mt-3" title="Game Win/Loss {{startDateformat}} - {{endDateformat}}">
+                                <mat-button-toggle-group class="p-1" appearance="legacy"
+                                    [(value)]="checkGameWinLossTable">
+                                    <mat-button-toggle value="product" (click)="gameWinLoss()">By Product Type
+                                    </mat-button-toggle>
+                                    <mat-button-toggle value="provider" (click)="gameWinLoss()">By Game Provider
+                                    </mat-button-toggle>
+                                </mat-button-toggle-group>
+
+                                <app-table-mat *ngIf="checkGameWinLossTable ==='product'"
+                                    [columns]="winLossProductColumns" [dataInput]="winLossData"
+                                    [displayedColumns]="winLossPDTr" [displayPaginator]="false"
+                                    [enableFooterRow]="true">
+                                </app-table-mat>
+                                <app-table-mat *ngIf="checkGameWinLossTable ==='provider'"
+                                    [columns]="winLossProviderColumns" [dataInput]="winLossData"
+                                    [displayedColumns]="winLossPVTr" [displayPaginator]="false"
+                                    [enableFooterRow]="true">
+                                </app-table-mat>
+                            </app-content>
+                        </div>
+                    </div>
+                </mat-tab>
+            </mat-tab-group>
+        </div>
+    </app-content>
+</div>

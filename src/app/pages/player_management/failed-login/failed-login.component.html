@@ -1,0 +1,55 @@
+<div class="d-flex flex-column">
+  <app-content>
+    <div class="d-flex flex-column">
+      <div class="flex-lg-row">
+        <mat-form-field appearance="outline" class="w-100 p-1 col-lg-4 col-12">
+          <mat-label>Player ID</mat-label>
+          <mat-select [(ngModel)]="searchModel.username">
+            <mat-option [value]="''">ALL</mat-option>
+            <mat-option *ngFor="let item of customerList" [value]="item.username">
+              {{ item.username }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="w-100 p-1 col-lg-4 col-12">
+          <mat-label>Real Name</mat-label>
+          <input matInput [(ngModel)]="searchModel.realName"/>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="w-100 p-1 col-lg-4 col-12">
+          <mat-label>Remark</mat-label>
+          <input matInput [(ngModel)]="searchModel.remark"/>
+        </mat-form-field>
+      </div>
+
+      <div class="flex-lg-row">
+        <mat-form-field appearance="outline" class="w-100 p-1 col-lg-3 col-12">
+          <mat-label>Enter a date range</mat-label>
+          <mat-date-range-input [rangePicker]="picker">
+            <input matStartDate placeholder="Start date" [(ngModel)]="searchModel.lastFailedLoginStart"/>
+            <input matEndDate placeholder="End date" [(ngModel)]="searchModel.lastFailedLoginEnd"/>
+          </mat-date-range-input>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-date-range-picker #picker></mat-date-range-picker>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="w-100 p-1 col-lg-3 col-12">
+          <mat-label>Country</mat-label>
+          <input matInput  [(ngModel)]="searchModel.country"/>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="w-100 p-1 col-lg-3 col-12">
+          <mat-label>Platform</mat-label>
+          <input matInput  [(ngModel)]="searchModel.platform"/>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="w-100 p-1 col-lg-3 col-12">
+          <mat-label>Browser</mat-label>
+          <input matInput  [(ngModel)]="searchModel.browserName"/>
+        </mat-form-field>
+      </div>
+      <div class="d-flex flex-row justify-content-center">
+        <button-search (click)="loadList()"></button-search>
+      </div>
+    </div>
+  </app-content>
+  <app-content class="mt-3" subtitle="">
+    <app-table-mat [length]='dataLength' [columns]="columns" [dataInput]="dataInputX" [displayedColumns]="tr" (onPageChange)='pageChange($event)' (onSortChange)='sortChange($event)'></app-table-mat>
+  </app-content>
+</div>

@@ -1,0 +1,13 @@
+<div *ngIf="listItems.length">
+    <mat-icon style="cursor: pointer;"  [matMenuTriggerFor]="menu"> {{ icon }}</mat-icon>
+  <mat-menu #menu="matMenu">
+    <button
+      *ngFor="let item of listItems"
+      mat-menu-item
+      color="primary"
+      (click)="item.onClick()"
+    >
+      {{ item.text }}
+    </button>
+  </mat-menu>
+</div>

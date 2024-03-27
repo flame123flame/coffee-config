@@ -1,0 +1,121 @@
+<mat-drawer-container autosize>
+  <mat-drawer #drawer class="sidenav-container" opened="true" [mode]="setDrawerMode()">
+    <div class="drawer-nav-content d-flex flex-column justify-content-center">
+      <div class="d-flex justify-content-center align-items-center" style="height: 70px;">
+        <span class="banner-title">Coffee</span>
+      </div>
+      <div class="d-flex flex-column align-items-stretch justify-content-center mx-3 nav-menu-container">
+        <div *ngFor="let item of newListMenu; let rootMenuItemIndex = index"
+          class="d-flex flex-column menu-item-conatiner">
+          <div (click)="selectMenuItem(rootMenuItemIndex)" [class]="{
+              'menu-item': true,
+              'd-flex': true,
+              'flex-row': true,
+              'align-items-center': true,
+              'justify-content-start': true,
+              active: menuItemIndex == rootMenuItemIndex
+            }">
+            <mat-icon class="mr-4" aria-hidden="false" aria-label="Example home icon">{{ item.icon }}</mat-icon>
+            <span>{{ item.title }}</span>
+          </div>
+          <div *ngIf="
+              item.children &&
+              item.children.length > 0 &&
+              menuItemIndex == rootMenuItemIndex &&
+              showSupMenu
+            " class="sup-item-menu-container ml-2">
+            <div *ngFor="let childItem of item.children; let childIndex = index" [class]="{
+                'sup-item': true,
+                'p-2': true
+              }" (click)="selectSupMenuItem(childIndex, childItem.path)">
+              <span [style]="{
+                  color:
+                    menuItemIndex == rootMenuItemIndex &&
+                    childIndex == supItemIndex
+                      ? '#fc9289'
+                      : 'black'
+                }">
+                {{ childItem.title }}</span>
+              <div *ngIf="
+                  menuItemIndex == rootMenuItemIndex &&
+                  childIndex == supItemIndex
+                " class="dot"></div>
+              <!-- <button
+                mat-mini-fab
+                style="width: 10px; height: 10px;"
+                color="warn"
+                aria-label="Example icon button with a filter list icon"
+              >
+              </button> -->
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="menu-item">re</div> -->
+    </div>
+  </mat-drawer>
+  <mat-drawer-content class="pr-3">
+    <div class="d-flex flex-column h-100 drawer-content pt-3">
+      <div class="d-flex flex-row justify-content-between align-items-center">
+        <div class="d-flex">
+          <button id="btn-toggle" [class]="[drawer.opened ? 'ml-3' : 'ml-2']" mat-mini-fab (click)="drawer.toggle()"
+            aria-label="Example icon button with a menu icon">
+            <mat-icon>{{ drawer.opened ? "view_quilt" : "menu" }}</mat-icon>
+          </button>
+        </div>
+        <div class="d-flex flex-row align-items-center pr-2">
+          <mat-icon class="mx-2" (click)='clickNotificationRegister()' [matBadgeHidden]='countRegister==0'
+            [matBadge]="countRegister" matBadgeColor="warn" style="color: #545454; cursor: pointer;">person_add
+          </mat-icon>
+          <mat-icon class="mx-2" (click)='clickNotificationDeposit()' [matBadgeHidden]='countDeposit==0'
+            [matBadge]="countDeposit" matBadgeColor="warn" style="color: #545454; cursor: pointer;">archive</mat-icon>
+          <mat-icon class="mx-2" (click)='clickNotificationWithdraw()' [matBadgeHidden]='countWithdraw==0'
+            [matBadge]="countWithdraw" matBadgeColor="warn" style="color: #545454; cursor: pointer;">unarchive
+          </mat-icon>
+          <mat-icon class="mx-2" (click)='clickNotificationPromotion()' [matBadgeHidden]='countPromotion==0'
+            [matBadge]="countPromotion" matBadgeColor="warn" style="color: #545454; cursor: pointer;">campaign
+          </mat-icon>
+          <button mat-icon-button [matMenuTriggerFor]="LottoMenu"  matTooltip="Lotto Notify">
+            <mat-icon [matBadgeHidden]='sumCountLotto==0' [matBadge]="sumCountLotto" >format_list_numbered</mat-icon>
+          </button>
+          <mat-menu #LottoMenu="matMenu" >
+            <button mat-menu-item (click)="clickNotifyLottoGov()" matTooltip="Approve Lotto Goverment">
+              <mat-icon class="mx-2" [matBadgeHidden]='countConfirmLottoTransaction==0'
+                [matBadge]="countConfirmLottoTransaction" matBadgeColor="warn" style="color: #545454; cursor: pointer;">
+                confirmation_number</mat-icon>
+            </button>
+            <button mat-menu-item (click)="clickNotifyLottoStocks()"
+              matTooltip="Approve Lotto Stocks">
+              <mat-icon class="mx-2" [matBadgeHidden]='countConfirmLottoTransaction==0'
+                [matBadge]="countConfirmLottoTransaction" matBadgeColor="warn" style="color: #545454; cursor: pointer;">
+                addchart</mat-icon>
+            </button>
+            <button mat-menu-item (click)="clickConfirmTransaction()"
+              matTooltip="Confirm Tansaction Lotto">
+              <mat-icon class="mx-2" [matBadgeHidden]='countConfirmLottoTransaction==0'
+                [matBadge]="countConfirmLottoTransaction" matBadgeColor="warn" style="color: #545454; cursor: pointer;">
+                grading</mat-icon>
+            </button>
+            <button mat-menu-item (click)="clickApproveYeekee()" matTooltip="Confirm Yeekee">
+              <mat-icon class="mx-2" [matBadgeHidden]='countNotifyYeeKeeApprove==0'
+                [matBadge]="countNotifyYeeKeeApprove" matBadgeColor="warn" style="color: #545454; cursor: pointer;">
+                money</mat-icon>
+            </button>
+
+
+
+          </mat-menu>
+          <!-- <mat-icon class="mx-2" style="color: #545454; cursor: pointer;"
+            >person</mat-icon
+          > -->
+          <mat-icon (click)="logout()" class="mx-2" style="color: #545454; cursor: pointer;">login</mat-icon>
+        </div>
+      </div>
+      <div class="h-100 w-100 p-3">
+        <div class="d-flex flex-column">
+          <router-outlet></router-outlet>
+        </div>
+      </div>
+    </div>
+  </mat-drawer-content>
+</mat-drawer-container>

@@ -1,0 +1,28 @@
+<h1 mat-dialog-title>New tag</h1>
+<div mat-dialog-content>
+  <form [formGroup]="formAddTag">
+    <div class="d-flex flex-column  w-auto">
+      <mat-form-field>
+        <mat-label><span style="color: red;">*</span>Tag name</mat-label>
+        <input formControlName='name' matInput>
+      </mat-form-field>
+
+
+      <mat-form-field>
+        <mat-label><span style="color: red;">*</span>Description</mat-label>
+        <textarea formControlName='description' matInput></textarea>
+      </mat-form-field>
+
+
+      <mat-form-field>
+        <mat-label>Remark</mat-label>
+        <textarea formControlName='remark' matInput></textarea>
+      </mat-form-field>
+    </div>
+  </form>
+
+</div>
+<div mat-dialog-actions class="d-flex flex-row justify-content-center">
+  <button-cancel class="mr-1" (click)="onNoClick()"></button-cancel>
+  <button-save [disabled]="formAddTag.status=='VALID'?false:true" (click)="insertOne()"></button-save>
+</div>

@@ -1,0 +1,54 @@
+<div class="d-flex flex-column">
+    <app-content title="Lotto Cancel">
+        <div class="d-flex flex-column">
+            <form [formGroup]="form">
+                <div class="d-flex flex-lg-row flex-column">
+
+                    <mat-form-field appearance="outline" class="w-100 p-1 col-lg-4 col-12" floatLabel="always">
+                        <mat-label>Lotto Category</mat-label>
+                        <mat-select formControlName="lottoCategoryCode" (selectionChange)="getLottoClass($event)">
+                            <mat-option [value]="item.lottoCategoryCode" *ngFor="let item of lottoCategoryList">
+                                {{item.lottoCategoryName}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="w-100 p-1 col-lg-4 col-12" floatLabel="always">
+                        <mat-label>Lotto Class</mat-label>
+                        <mat-select formControlName="lottoClassCode" (selectionChange)="getInstallment($event)">
+                            <mat-option [value]="item.lottoClassCode" *ngFor="let item of lottoClassList">
+                                {{item.className}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="w-100 p-1 col-lg-4 col-12" floatLabel="always">
+                        <mat-label>Installment</mat-label>
+                        <mat-select formControlName="installment" (selectionChange)="getRound($event)">
+                            <mat-option [value]="item.installment" *ngFor="let item of installmentList">
+                                {{item.installment}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="d-flex flex-lg-row flex-column">
+                    <mat-form-field *ngIf="checkYeekee()" appearance="outline" class="w-100 p-1 col-lg-4 col-12" floatLabel="always">
+                        <mat-label>Yeekee Round</mat-label>
+                        <mat-select formControlName="round">
+                            <mat-option [value]="item" *ngFor="let item of roundList">
+                                {{item}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="d-flex flex-lg-row flex-column">
+                    <mat-form-field appearance="outline" class="w-100 p-1 col-lg-12 col-12" floatLabel="always">
+                        <mat-label>Remark</mat-label>
+                        <textarea matInput formControlName='remark' rows="10"></textarea>
+                      </mat-form-field>
+                </div>
+                
+            </form>
+            <div class="d-flex flex-row justify-content-center mb-3">
+                <button-reset (click)="reset()"></button-reset>
+                <button-save [disabled]="form.status=='VALID'?false:true" (click)="saveData()"></button-save>
+            </div>
+        </div>
+    </app-content>
+</div>

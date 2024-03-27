@@ -1,0 +1,22 @@
+<ng-container>
+    <app-content class='mb-2 mt-2' title="เพิ่ม กลุ่มหวยตามประเภท">
+        <div class="d-flex justify-content-end mb-2">
+            <button-add (click)="addRow()"></button-add>
+          </div>
+        <app-content class='mb-2 mt-2' title="เพิ่ม กลุ่มหวยยอดนิยม">
+            <app-table-mat [length]="lottoHit.length" [columns]="columns" [dataInput]="lottoHit" [displayedColumns]="tr"
+            [actionSetting]='actionSetting' (deleteAction)='deleteOne($event)'>
+        </app-table-mat>
+        </app-content>
+        <app-content class='mb-2 mt-2' title="เพิ่ม กลุ่มหวยหุ้น">
+            <app-table-mat [length]="lottoStocks.length" [columns]="columns" [dataInput]="lottoStocks" [displayedColumns]="tr"
+            [actionSetting]='actionSetting' (deleteAction)='deleteOne($event)'>
+        </app-table-mat>
+        </app-content>
+        <app-content class='mb-2 mt-2' title="เพิ่ม กลุ่มหวยชุด">
+            <app-table-mat [length]="lottoSet.length" [columns]="columns" [dataInput]="lottoSet" [displayedColumns]="tr"
+            [actionSetting]='actionSetting' (deleteAction)='deleteOne($event)'>
+        </app-table-mat>
+        </app-content>
+    </app-content>
+</ng-container>

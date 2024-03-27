@@ -1,0 +1,171 @@
+<div class="d-flex flex-column">
+  <app-content>
+    <mat-tab-group [selectedIndex]='classCode' (selectedIndexChange)='getClassCode(classList[$event].value)'>
+      <mat-tab *ngFor="let item of classList" [label]="item.display">
+        <mat-tab-group [selectedIndex]='categoryCode' (selectedIndexChange)='getDashboard($event,lottoCategoryList[$event].lottoClassCode)'>
+          <mat-tab *ngFor="let item of lottoCategoryList" [label]="item.className">
+            <div class="d-flex flex-lg-row flex-column mb-2 mt-4" *ngIf="connectCode == 0 || connectCode== 1||connectCode ==3">
+              <mat-icon aria-hidden="false" aria-label="Example home icon" style="color: rgb(156, 92, 92);">autorenew</mat-icon>
+              <span style="color: red;">{{connectStatus}}</span>
+            </div>
+              <div class="d-flex flex-lg-row flex-column mb-2 mt-4">
+                <app-content title="" class="col-12 mb-3">
+                  <div style="overflow-x: auto">
+                    <table mat-table [dataSource]="sumDashboard" class="table-striped">
+                      <ng-container matColumnDef="msdLottoKindName">
+                        <th mat-header-cell *matHeaderCellDef>ประเภท</th>
+                        <td mat-cell *matCellDef="let element">
+                          {{element.msdLottoKindName}}
+                        </td>
+                        <td mat-footer-cell *matFooterCellDef>รวม</td>
+                      </ng-container>
+                      <ng-container matColumnDef="sumPayCost">
+                        <th mat-header-cell *matHeaderCellDef>ยอดแทง</th>
+                        <td mat-cell *matCellDef="let element">
+                          {{element.sumPayCost | number:'1.2-2'}}
+                        </td>
+                        <td mat-footer-cell *matFooterCellDef>{{sumPayCost | number:'1.2-2'}}</td>
+                      </ng-container>
+                      <ng-container matColumnDef="sumPrizeCost">
+                        <th mat-header-cell *matHeaderCellDef>ยอดรางวัล</th>
+                        <td mat-cell *matCellDef="let element">
+                          {{element.sumPrizeCost | number:'1.2-2'}}
+                        </td>
+                        <td mat-footer-cell *matFooterCellDef>{{sumPrizeCost | number:'1.2-2'}}</td>
+                      </ng-container>
+                      <ng-container matColumnDef="sumProfit">
+                        <th mat-header-cell *matHeaderCellDef>ผลกำไร</th>
+                        <td mat-cell *matCellDef="let element">
+                          <span *ngIf="element.sumProfit<0" style="color: red;">
+                            {{element.sumProfit | number:'1.2-2'}}
+                          </span>
+                          <span *ngIf="element.sumProfit>0">
+                            {{element.sumProfit | number:'1.2-2'}}
+                          </span>
+                        </td>
+                        <td mat-footer-cell *matFooterCellDef>
+                          <span *ngIf="sumProfit<0" style="color: red;">
+                            {{sumProfit | number:'1.2-2'}}
+                          </span>
+                          <span *ngIf="sumProfit>0">
+                            {{sumProfit | number:'1.2-2'}}
+                          </span>
+                        </td>
+                      </ng-container>
+                      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                      <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
+                    </table>
+                  </div>
+                  <!-- <app-table-mat [columns]='header2' [dataInput]='sumDashboard' [displayedColumns]='displayedColumns'
+                    [displayPaginator]='false'>
+                  </app-table-mat> -->
+                </app-content>
+              </div>
+              <div class="d-flex flex-lg-row" style="flex-wrap: wrap;">
+                <app-content title='3 ตัวบน' class="col-lg-4 col-12 mb-3">
+                  <div class="col-12">
+                    <app-card-status icon="local_atm" title="Total Bet">
+                      <div class="d-flex flex-row justify-content-center">
+                        <h3><b>{{(this.digit3Top["sumBet"]?this.digit3Top["sumBet"]:0) |number:'1.2-2'}} Baht</b></h3>
+                      </div>
+                    </app-card-status>
+                  </div>
+                  <app-table-mat [columns]='header' [dataInput]='this.digit3Top["prizeList"]' [displayedColumns]='tr' [displayPaginator]='false'>
+                  </app-table-mat>
+                </app-content>
+                <app-content title='3 โต๊ด' class="col-lg-4 col-12 mb-3">
+                  <div class="col-12">
+                    <app-card-status icon="local_atm" title="Total Bet">
+                      <div class="d-flex flex-row justify-content-center">
+                        <h3><b>{{(this.digit3Swap["sumBet"]?this.digit3Swap["sumBet"]:0) |number:'1.2-2'}} Baht</b></h3>
+                      </div>
+                    </app-card-status>
+                  </div>
+                  <app-table-mat [columns]='header' [dataInput]='this.digit3Swap["prizeList"]' [displayedColumns]='tr' [displayPaginator]='false'>
+                  </app-table-mat>
+                </app-content>
+                <app-content title='3 ตัวบน(+3 ตัวโต๊ด)' class="col-lg-4 col-12 mb-3">
+                  <div class="col-12">
+                    <app-card-status icon="local_atm" title="Total Bet">
+                      <div class="d-flex flex-row justify-content-center">
+                        <h3><b>{{(this.digit3Top["sumBet"]+this.digit3Swap["sumBet"]?this.digit3Top["sumBet"]+this.digit3Swap["sumBet"]:0) |number:'1.2-2'}} Baht</b></h3>
+                      </div>
+                    </app-card-status>
+                  </div>
+                  <app-table-mat [columns]='header' [dataInput]='this.digiMixed["prizeList"]' [displayedColumns]='tr' [displayPaginator]='false'>
+                  </app-table-mat>
+                </app-content>
+                <app-content title='2 ตัวบน' class="col-lg-6 col-12 mb-3">
+                  <div class="col-12">
+                    <app-card-status icon="local_atm" title="Total Bet">
+                      <div class="d-flex flex-row justify-content-center">
+                        <h3><b>{{(this.digit2Top["sumBet"]?this.digit2Top["sumBet"]:0) |number:'1.2-2'}} Baht</b></h3>
+                      </div>
+                    </app-card-status>
+                  </div>
+                  <app-table-mat [columns]='header' [dataInput]='this.digit2Top["prizeList"]' [displayedColumns]='tr' [displayPaginator]='false'>
+                  </app-table-mat>
+                </app-content>
+                <app-content title='2 ตัวล่าง' class="col-lg-6 col-12 mb-3">
+                  <div class="col-12">
+                    <app-card-status icon="local_atm" title="Total Bet">
+                      <div class="d-flex flex-row justify-content-center">
+                        <h3><b>{{(this.digit2Bot["sumBet"]?this.digit2Bot["sumBet"]:0) |number:'1.2-2'}} Baht</b></h3>
+                      </div>
+                    </app-card-status>
+                  </div>
+                  <app-table-mat [columns]='header' [dataInput]='this.digit2Bot["prizeList"]' [displayedColumns]='tr' [displayPaginator]='false'>
+                  </app-table-mat>
+                </app-content>
+                <app-content title='วิ่งบน' class="col-lg-6 col-12 mb-3">
+                  <div class="col-12">
+                    <app-card-status icon="local_atm" title="Total Bet">
+                      <div class="d-flex flex-row justify-content-center">
+                        <h3><b>{{(this.digit1Top["sumBet"]?this.digit1Top["sumBet"]:0) |number:'1.2-2'}} Baht</b></h3>
+                      </div>
+                    </app-card-status>
+                  </div>
+                  <app-table-mat [columns]='header' [dataInput]='this.digit1Top["prizeList"]' [displayedColumns]='tr' [displayPaginator]='false'>
+                  </app-table-mat>
+                </app-content>
+                <app-content title='วิ่งล่าง' class="col-lg-6 col-12 mb-3">
+                  <div class="col-12">
+                    <app-card-status icon="local_atm" title="Total Bet">
+                      <div class="d-flex flex-row justify-content-center">
+                        <h3><b>{{(this.digit1Bot["sumBet"]?this.digit1Bot["sumBet"]:0) |number:'1.2-2'}} Baht</b></h3>
+                      </div>
+                    </app-card-status>
+                  </div>
+                  <app-table-mat [columns]='header' [dataInput]='this.digit1Bot["prizeList"]' [displayedColumns]='tr' [displayPaginator]='false'>
+                  </app-table-mat>
+                </app-content>
+                <app-content title='3 ตัวหน้า' class="col-lg-6 col-12 mb-3">
+                  <div class="col-12">
+                    <app-card-status icon="local_atm" title="Total Bet">
+                      <div class="d-flex flex-row justify-content-center">
+                        <h3><b>{{(this.digit3front["sumBet"]?this.digit3front["sumBet"]:0) |number:'1.2-2'}} Baht</b></h3>
+                      </div>
+                    </app-card-status>
+                  </div>
+                  <app-table-mat [columns]='header' [dataInput]='this.digit3front["prizeList"]' [displayedColumns]='tr' [displayPaginator]='false'>
+                  </app-table-mat>
+                </app-content>
+                <app-content title='3 ตัวล่าง' class="col-lg-6 col-12 mb-3">
+                  <div class="col-12">
+                    <app-card-status icon="local_atm" title="Total Bet">
+                      <div class="d-flex flex-row justify-content-center">
+                        <h3><b>{{(this.digit3bot["sumBet"]?this.digit3bot["sumBet"]:0) |number:'1.2-2'}} Baht</b></h3>
+                      </div>
+                    </app-card-status>
+                  </div>
+                  <app-table-mat [columns]='header' [dataInput]='this.digit3bot["prizeList"]' [displayedColumns]='tr' [displayPaginator]='false'>
+                  </app-table-mat>
+                </app-content>
+              </div>
+          </mat-tab>
+        </mat-tab-group>
+      </mat-tab>
+    </mat-tab-group>
+  </app-content>
+</div>

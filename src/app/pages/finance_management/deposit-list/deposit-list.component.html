@@ -1,0 +1,97 @@
+<div class="d-flex flex-column">
+    <div class="d-flex flex-row w-100 justify-content-end">
+        <div>Action</div>
+        <div>
+            <menu-dropdown [listItems]="listItemMenu"></menu-dropdown>
+        </div>
+    </div>
+    <app-content class="mt-3" title="Search">
+        <form [formGroup]="formFilter">
+            <div class="d-flex flex-column">
+                <div class="flex-lg-row">
+                    <mat-form-field appearance="outline" class="w-100 p-1 col-lg-3 col-12">
+                        <mat-label>Date Type</mat-label>
+                        <mat-select [(value)]="dateType">
+                            <mat-option *ngFor="let option of dateTypeOptions" [value]="option">
+                                {{ option }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field floatLabel="always" appearance="outline" class="w-100 p-1 col-lg-3 col-12"
+                        (click)="periodStartDate.open()">
+                        <mat-label>Report Period Start</mat-label>
+                        <input matInput [ngxMatDatetimePicker]="periodStartDate" [min]="minDate" [max]="maxDate"
+                            formControlName='startDate' />
+                        <mat-datepicker-toggle matSuffix [for]="periodStartDate"></mat-datepicker-toggle>
+                        <ngx-mat-datetime-picker #periodStartDate></ngx-mat-datetime-picker>
+                    </mat-form-field>
+
+                    <mat-form-field floatLabel="always" appearance="outline" class="w-100 p-1 col-lg-3 col-12"
+                        (click)="periodEndDate.open()">
+                        <mat-label>Report Period End</mat-label>
+                        <input matInput [ngxMatDatetimePicker]="periodEndDate" [min]="formFilter.value.startDate"
+                            [max]="maxDate" formControlName='endDate' />
+                        <mat-datepicker-toggle matSuffix [for]="periodEndDate"></mat-datepicker-toggle>
+                        <ngx-mat-datetime-picker #periodEndDate></ngx-mat-datetime-picker>
+                    </mat-form-field>
+
+                    <mat-form-field floatLabel="always" appearance="outline" class="w-100 p-1 col-lg-3 col-12">
+                        <mat-label>Player ID</mat-label>
+                        <input type="text" aria-label="Number" matInput formControlName="playerId"
+                            [matAutocomplete]="auto" (keyup)="onKeyup($event.target.value)">
+                        <button mat-button mat-icon-button matSuffix (click)="clearSearchField()"
+                            *ngIf="formFilter.value.playerId">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                        <mat-autocomplete #auto="matAutocomplete"
+                            (optionSelected)="onSelectionChanged($event.option.value)">
+                            <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                                {{option}}
+                            </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                </div>
+                <div class="flex-lg-row">
+                    <mat-label>Deposit Amt.</mat-label>
+                    <mat-form-field appearance="outline" class="w-100 p-1 col-lg-3 col-12">
+                        <mat-label>min</mat-label>
+                        <input matInput formControlName='min' type="number" />
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="w-100 p-1 col-lg-3 col-12">
+                        <mat-label>max</mat-label>
+                        <input matInput formControlName='max' type="number" />
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="w-100 p-1 col-lg-3 col-12">
+                        <mat-label>Type</mat-label>
+                        <mat-select formControlName='status'>
+                            <mat-option value="ALL">ALL</mat-option>
+                            <mat-option *ngFor="let option of statusTypeOptions" [value]="option">
+                                {{ option }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="d-flex flex-row justify-content-center mb-3">
+                    <button-reset (click)="resetSearch()"></button-reset>
+                    <button-search (click)="searchData()"></button-search>
+                </div>
+            </div>
+        </form>
+    </app-content>
+    <app-content class="mt-3" title="Deposit List">
+        <!-- <div class="d-flex flex-column">
+            <div class="flex-lg-row text-right">
+                <button style="background-color: #c7c7c7;margin: 5px;color: rgb(255, 255, 255);" mat-raised-button>
+                    Export
+                </button>
+            </div>
+        </div> -->
+        <app-table-mat [columns]="columns" [dataInput]="dataInput" [displayedColumns]="tr"
+            [actionSetting]="actionSetting" [length]="length" (onPageChange)='pageChange($event)'
+            (onSortChange)='sortChange($event)' [displayedSecondColumns]="trSecond" [enableFooterRow]="true"
+            [enableFooterRowSecond]="true">
+        </app-table-mat>
+    </app-content>
+</div>

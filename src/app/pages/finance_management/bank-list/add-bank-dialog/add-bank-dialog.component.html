@@ -1,0 +1,52 @@
+<h1 mat-dialog-title>Add bank</h1>
+<div mat-dialog-content>
+  <div class="d-flex flex-column  w-auto">
+    <form [formGroup]="formBank">
+      <div class="d-flex flex-lg-column flex-column">
+        <!-- <mat-form-field floatLabel="always" appearance="outline" class="w-100 p-1 col-lg-12 col-12">
+          <mat-label><span style="color: red;">*</span>Currency</mat-label>
+          <mat-select placeholder="Click to Select">
+            <mat-option *ngFor="let item of currencyList" [value]="item">{{item}}</mat-option>
+          </mat-select>
+        </mat-form-field> -->
+        <mat-form-field floatLabel="always" appearance="outline" class="w-100 p-1 col-lg-12 col-12">
+          <mat-label><span style="color: red;">*</span>Thai Name</mat-label>
+          <input matInput formControlName="bankNameTh" />
+        </mat-form-field>
+        <mat-form-field floatLabel="always" appearance="outline" class="w-100 p-1 col-lg-12 col-12">
+          <mat-label><span style="color: red;">*</span>English name</mat-label>
+          <input matInput formControlName="bankNameEn" />
+        </mat-form-field>
+
+        <!-- <mat-form-field floatLabel="always" appearance="outline" class="w-100 p-1 col-lg-12 col-12">
+          <mat-label><span style="color: red;">*</span>Simplified chinese name (Rephrase from chinese name simplified)
+          </mat-label>
+          <input matInput />
+        </mat-form-field>
+        <mat-form-field floatLabel="always" appearance="outline" class="w-100 p-1 col-lg-12 col-12">
+          <mat-label><span style="color: red;">*</span>Traditional chinese name (Rephrase from chinese name traditional)
+          </mat-label>
+          <input matInput />
+        </mat-form-field> -->
+        <div class="w-100 p-1 col-lg-12 col-12">
+          <label><span style="color: red;">*</span>Image</label>
+          <br>
+          <input (change)="preview(file.files)" #file formControlName="bankImg" type="file" />
+          <p>Image size limit : 1 MB</p>
+          <p>Support formats : JPG, PNG, GIF, BMP</p>
+        </div>
+        <div class="w-100 p-1 col-lg-12 col-12">
+          <mat-checkbox formControlName="enable" [(checked)]="isHotBank">Is hot Bank?</mat-checkbox>
+        </div>
+        <mat-form-field floatLabel="always" appearance="outline" class="w-100 p-1 col-lg-12 col-12">
+          <mat-label>Online bank URL</mat-label>
+          <input matInput formControlName="bankUrl"/>
+        </mat-form-field>
+      </div>
+    </form>
+  </div>
+</div>
+<div mat-dialog-actions class="d-flex flex-row justify-content-center">
+  <button-cancel class="mr-1" (click)="onNoClick()"></button-cancel>
+  <button-save (click)="onSave()"></button-save>
+</div>

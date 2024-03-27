@@ -1,0 +1,135 @@
+<div class="d-flex flex-column  w-auto">
+    <mat-card class="mb-1">
+        <mat-card-title class="mb-1">
+            <h2>Lotto Government</h2>
+        </mat-card-title>
+        <div class="d-flex flex-lg-column flex-column ">
+            <form [formGroup]="formAddLotto">
+                <div class="flex-lg-row">
+                    <mat-form-field floatLabel="always" appearance="outline" class="col-lg-3">
+                        <mat-label><span style="color: red;">*</span>Code</mat-label>
+                        <input matInput formControlName="lottoClassCode" [readonly]="disable" required />
+                    </mat-form-field>
+                    <mat-form-field floatLabel="always" appearance="outline" class="col-lg-3">
+                        <mat-label><span style="color: red;">*</span>Prefix Code</mat-label>
+                        <input matInput required formControlName="prefixCode" />
+                    </mat-form-field>
+                    <mat-form-field floatLabel="always" appearance="outline" class="col-lg-3">
+                        <mat-label><span style="color: red;">*</span>Name</mat-label>
+                        <input matInput formControlName="lottoClassName" required />
+                    </mat-form-field>
+                    <mat-form-field floatLabel="always" appearance="outline" class="col-lg-3">
+                        <mat-label><span style="color: red;">*</span>Installment Type</mat-label>
+                        <mat-select formControlName="typeInstallment" required (selectionChange)="onChangeTypeInstallment($event.value)">
+                            <mat-option value='MONTHLY'>MONTHLY</mat-option>
+                            <mat-option value='DAILY'>DAILY</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+                <div class="flex-column pt-2">
+                    <mat-form-field floatLabel="always" appearance="outline" class="col-lg-3">
+                        <mat-label><span style="color: red;">*</span>สามารถคืนได้หลังจากซื้อ(ช.ม.)</mat-label>
+                        <input type="text" mask="separator.0" thousandSeparator="," formControlName="timeAfterBuy" matInput required />
+                    </mat-form-field>
+                    <mat-form-field floatLabel="always" appearance="outline" class="col-lg-3">
+                        <mat-label><span style="color: red;">*</span>สามารถคืนก่อนหวยปิด(ช.ม.)</mat-label>
+                        <input type="text" mask="separator.0" thousandSeparator="," formControlName="timeBeforeLotto" matInput required />
+                    </mat-form-field>
+                    <mat-form-field floatLabel="always" appearance="outline" class="col-lg-3">
+                        <mat-label><span style="color: red;">*</span>จำนวนครั้งที่คืนโพยได้</mat-label>
+                        <input type="text" mask="separator.0" thousandSeparator="," f matInput required formControlName="countRefund" />
+                    </mat-form-field>
+                    <mat-form-field floatLabel="always" appearance="outline" class="col-lg-3">
+                        <mat-label><span style="color: red;">*</span>COLOR (e.g.,#254284)</mat-label>
+                        <input formControlName="lottoClassColor" matInput required />
+                    </mat-form-field>
+
+                </div>
+
+                <!-- <div class="d-flex flex-lg-row flex-column">
+            <div class="col-lg-6 col-12">
+              <app-mat-multiple-select-chip label='Group Level' [selectList]='groupList' selectDisplay="groupName"
+                selectValue="groupCode" [useFromControl]='true' formName='groupList' [formGroup]='formAddLotto'>
+              </app-mat-multiple-select-chip>
+            </div>
+            <div class="col-lg-6 col-12">
+              <app-mat-multiple-select-chip label='Affiliate' [selectList]='affiliateList' selectDisplay="groupName"
+                selectValue="affiliateGroupCode" [useFromControl]='true' formName='affiliateList'
+                [formGroup]='formAddLotto'></app-mat-multiple-select-chip>
+            </div>
+          </div> -->
+                <div class="flex-lg-row" *ngIf="formAddLotto.controls.typeInstallment.value!='24_HOUR'">
+                    <button-add wording="" (click)="this.getTimeSell.push(this.newTimeSell(formAddLotto.controls.typeInstallment.value))">
+                    </button-add>
+                </div>
+
+                <div formArrayName="timeSell">
+                    <div class="flex-lg-row" *ngFor="let timedata of getTimeSell.controls; let i = index">
+                        <div [formGroupName]="i">
+                            <div class="d-flex flex-lg-row flex-column" *ngIf="formAddLotto.controls.typeInstallment.value!='24_HOUR'">
+                                <ng-container *ngIf="formAddLotto.controls.typeInstallment.value!='DAILY'">
+                                    <mat-form-field appearance="fill" class="col-lg-2">
+                                        <mat-label>Start Date</mat-label>
+                                        <mat-select formControlName="dateStart" required>
+                                            <mat-option *ngFor="let day of number" [value]='day+"/01/2020"'>
+                                                {{day}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </ng-container>
+                                <label>Start Time</label>
+                                <div class="d-flex flex-lg-row  mr-4">
+                                    <timepicker formControlName="timeStart" [showMeridian]="false" [hourStep]="1" [minuteStep]="1" [showSpinners]="false" required></timepicker>
+                                </div>
+                                <ng-container *ngIf="formAddLotto.controls.typeInstallment.value!='DAILY'">
+                                    <mat-form-field appearance="fill" class="col-lg-2">
+                                        <mat-label>End Date</mat-label>
+                                        <mat-select formControlName="dateEnd" required>
+                                            <mat-option *ngFor="let day of number" [value]='day+"/01/2020"'>
+                                                {{day}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </ng-container>
+                                <label>End Time</label>
+                                <div class="d-flex flex-lg-row  mr-3">
+                                    <timepicker formControlName="timeEnd" [showMeridian]="false" [hourStep]="1" [minuteStep]="1" [showSpinners]="false" required></timepicker>
+                                </div>
+                                <div>
+                                    <button-delete wording="" (click)="removeTime(i, timedata.value.timeSellCode)">
+                                    </button-delete>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex-column pt-2">
+                    <div class="w-100 p-1 col-lg-3">
+                        <label><span style="color: red;">*</span>Image</label>
+                        <br>
+                        <input (change)="preview(file.files)" #file type="file" />
+                        <p>Image size limit : 1 MB</p>
+                        <p>Support formats : JPG, PNG, GIF, BMP</p>
+                    </div>
+                    <div class="w-100 p-1 col-lg-3 col-12" *ngIf="tmp">
+                        <img [src]="tmp" height="150" width="150" style="background-image: url('/assets/images/table_bg.jpg');">
+                    </div>
+                </div>
+            </form>
+
+            <div floatLabel="always" appearance="outline" class="flex-lg-row">
+                <label><span style="color: red;">*</span>Rule Description</label>
+                <text-editor [Ckdata]="formAddLotto.controls.ruleDes.value" (onEnter)="onChange($event)"></text-editor>
+                <!-- <text-editor [Ckdata]="formAddLotto.controls.ruleDes.value" ></text-editor> -->
+            </div>
+
+        </div>
+        <div class="d-flex flex-row justify-content-center mt-3">
+            <button-cancel (click)="goBack()"></button-cancel>
+            <button-save [disabled]="checkFrom()" (click)="onSubmit()"></button-save>
+        </div>
+
+    </mat-card>
+</div>

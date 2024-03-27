@@ -1,0 +1,51 @@
+<ng-container>
+    <app-content class="mb-2 mt-2" title="{{ className }} เพิ่ม ลำดับผู้ได้รางวัล ">
+        <div class="d-flex justify-content-end">
+            <button-add wording="Add Seq-Prize" (click)="addRow()"></button-add>
+        </div>
+        <form [formGroup]="formAddSeqPrize">
+            <table mat-table [dataSource]="dataSource" class="table-striped mb-3" formArrayName="data">
+
+                <ng-container matColumnDef="seqNumber">
+                    <th mat-header-cell *matHeaderCellDef>ลำดับผู้ชนะ</th>
+                    <td mat-cell *matCellDef="let row; let index = index" [formGroupName]="index">
+                        <mat-form-field appearance="outline" class="w-100 p-1 col-lg-12 col-12" floatLabel="always">
+                            <input type='text' matInput formControlName="seqNumber" mask="separator.0"
+                                thousandSeparator="," style="text-align:left;" />
+                        </mat-form-field>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="prizeWin">
+                    <th mat-header-cell *matHeaderCellDef> ราคาชนะ (฿) </th>
+                    <td mat-cell *matCellDef="let row; let index = index" [formGroupName]="index">
+                        <mat-form-field appearance="outline" class="w-100 p-1 col-lg-12 col-12" floatLabel="always">
+                            <input type='text' matInput formControlName="prizeWin" mask="separator.2"
+                                thousandSeparator="," style="text-align:left;" />
+                        </mat-form-field>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="action">
+                    <th mat-header-cell *matHeaderCellDef style="text-align: center;"> Action </th>
+                    <td mat-cell *matCellDef="let element; let i = index">
+                        <div *ngIf="i != 0" style="text-align: center;">
+                            <button mat-icon-button style="color: red" (click)="dropRow(element,i)">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </div>
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns; let i = index"></tr>
+            </table>
+            <div *ngIf="!dataSource.value" class="d-flex flex-row justify-content-center mt-3 mb-3">
+                <span style="color: gray">No Data</span>
+            </div>
+        </form>
+    </app-content>
+    <div mat-dialog-actions class="d-flex flex-row justify-content-center">
+        <button-cancel wording="Back" class="mr-1" (click)="goBack()"></button-cancel>
+        <button-save [disabled]="formAddSeqPrize.status=='VALID'?false:true" (click)="onSave()"></button-save>
+    </div>
+</ng-container>

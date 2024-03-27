@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>Edit Display Order</h1>
+<div mat-dialog-content>
+    <app-table-mat [columns]="columns" [dataInput]="data" [displayedColumns]="displayedColumns"></app-table-mat>
+</div>
+<div mat-dialog-actions class="d-flex flex-row justify-content-center">
+    <button-cancel [mat-dialog-close]="1"></button-cancel>
+    <button-save class="ml-2" wording="Update" [mat-dialog-close]="1"></button-save>
+</div>

@@ -1,0 +1,13 @@
+<div class="d-flex flex-column">
+  <app-content class="p-1 mt-3" title="Product Type" subtitle="Logging">
+    <div class="d-flex flex-row justify-content-end">
+      <button mat-raised-button class="p-1" style="background-color: #009688;color: white;margin: 5px;"
+        (click)="saveProductType()">ADD PRODUCT
+        TYPE</button>
+    </div>
+    <app-table-mat [columns]="productCol" [length]='productLength' [dataInput]="productData"
+      [displayedColumns]="productTr" (deleteAction)="onDeleteProduct($event)" (editAction)="onEditProduct($event)"
+      (onPageChange)='pageProductChange($event)' (onSortChange)='sortProductChange($event)'>
+    </app-table-mat>
+  </app-content>
+</div>

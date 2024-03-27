@@ -1,0 +1,515 @@
+<div class="d-flex flex-column">
+  <p>Add new Promotion: 1st & 2nd Deposit</p>
+
+  <!-- <app-content class="pb-5" title=""> -->
+  <mat-horizontal-stepper linear #stepper>
+    <mat-step [stepControl]="firstFormGroup">
+      <!-- ############# Basic Setting ############# -->
+      <form [formGroup]="firstFormGroup">
+        <ng-template matStepLabel>Posting Setting</ng-template>
+        <br>
+        <app-content class="pt-3 pb-3 " title="Basic Setting">
+          <div class="d-flex flex-column">
+            <div class="flex-lg-row">
+              <mat-form-field appearance="outline" class="w-100 p-1 col-lg-4 col-12">
+                <mat-label>Promotion Title</mat-label>
+                <input matInput placeholder="Ex. โปรโมชั่นฯ" required formControlName="promoTitle" />
+              </mat-form-field>
+            </div>
+
+            <div class="flex-lg-row m-2">
+              <mat-label>Application Platform</mat-label>
+              <section class="example-section">
+                <mat-radio-group formControlName="appPlatform">
+                  <mat-radio-button class="example-margin mr-4 col-lg-2 col-12" value="All">
+                    All
+                  </mat-radio-button>
+                  <mat-radio-button class="example-margin mr-4 col-lg-2 col-12" value="Mobile">
+                    Mobile
+                  </mat-radio-button>
+                  <mat-radio-button class="example-margin mr-4 col-lg-2 col-12" value="Desktop">
+                    Desktop
+                  </mat-radio-button>
+                  <mat-radio-button class="example-margin mr-4 col-lg-2 col-12" value="MobileApp">
+                    Mobile(App)
+                  </mat-radio-button>
+                </mat-radio-group>
+              </section>
+            </div>
+
+            <div class="flex-lg-row m-2">
+              <div class="flex-lg-row">
+                <mat-label>Promotion Period</mat-label>
+              </div>
+              <section class="example-section">
+                <mat-radio-group formControlName="promoPeriodType" (change)="changeDateType()">
+                  <div class="flex-lg-row">
+                    <mat-radio-button class="example-margin col-lg-2 col-12" value="Indefinite">
+                      Indefinite
+                    </mat-radio-button>
+                    <mat-form-field appearance="outline" class="w-100 p-1 col-lg-4 col-12"
+                      *ngIf="firstFormGroup.value.promoPeriodType === 'Indefinite'">
+                      <input [disabled]="firstFormGroup.value.promoPeriodType !== 'Indefinite'" placeholder="from"
+                        matInput [ngxMatDatetimePicker]="indefiniteDate" (click)="indefiniteDate.open()"
+                        formControlName="startDate" required />
+                      <mat-datepicker-toggle matSuffix [for]="indefiniteDate"></mat-datepicker-toggle>
+                      <ngx-mat-datetime-picker #indefiniteDate>
+                      </ngx-mat-datetime-picker>
+                    </mat-form-field>
+                  </div>
+                  <div class="flex-lg-row">
+                    <mat-radio-button class="example-margin col-lg-2 col-12" value="DatePeriod">
+                      Date Period
+                    </mat-radio-button>
+                    <mat-form-field appearance="outline" class="w-100 p-1 col-lg-3 col-12">
+                      <input matInput [ngxMatDatetimePicker]="periodStartDate" (click)="periodStartDate.open()"
+                        placeholder="Start date" formControlName="startDate" [disabled]="firstFormGroup.value.promoPeriodType !==
+                            'DatePeriod'">
+                      <mat-datepicker-toggle matSuffix [for]="periodStartDate"></mat-datepicker-toggle>
+                      <ngx-mat-datetime-picker #periodStartDate>
+                      </ngx-mat-datetime-picker>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="w-100 p-1 col-lg-3 col-12">
+                      <input matInput [ngxMatDatetimePicker]="periodEndDate" (click)="periodEndDate.open()"
+                        placeholder="End date" formControlName="endDate" [disabled]="firstFormGroup.value.promoPeriodType !==
+                            'DatePeriod'">
+                      <mat-datepicker-toggle matSuffix [for]="periodEndDate"></mat-datepicker-toggle>
+                      <ngx-mat-datetime-picker #periodEndDate>
+                      </ngx-mat-datetime-picker>
+                    </mat-form-field>
+                  </div>
+                </mat-radio-group>
+              </section>
+            </div>
+          </div>
+        </app-content>
+
+      </form>
+      <form [formGroup]="postSettingFG">
+        <br>
+        <app-content class="pt-3 pb-3" title="Posting Setting">
+          <!-- <div class="flex-lg-row">
+                        <mat-form-field appearance="outline" class="w-100 p-1 col-lg-4 col-12">
+                            <mat-label>Language</mat-label>
+                            <mat-select [(value)]="selected2" formControlName="lang">
+                                <mat-option value="TH">Thai</mat-option>
+                                <mat-option value="US">English</mat-option>
+                                <mat-option value="CH">Simplified Chinese</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div> -->
+          <!-- <div class="flex-lg-row">
+                        <mat-form-field appearance="outline" class="w-100 p-1 col-lg-4 col-12">
+                            <mat-label>EC Promotion Title</mat-label>
+                            <input matInput placeholder="Ex. โปรโมชั่นฯ" formControlName="ecPromotionTitle" />
+                        </mat-form-field>
+                    </div> -->
+          <!-- <div *ngIf="firstFormGroup.value.appPlatform == 'Desktop' || firstFormGroup.value.appPlatform == 'All'" class="flex-lg-column"> -->
+          <!-- <h2>Desktop</h2> -->
+          <div class="flex-lg-row mb-3">
+            <mat-label>Promotion Detail</mat-label>
+          </div>
+
+          <input type="file" [accept]="fileNameAccept" (change)="onSelectFile($event, 'deskBanner')" />
+          <mat-error *ngIf="postSettingFG.controls.deskBanner.invalid && showError">require choose file</mat-error>
+          <img *ngIf="postSettingFG.controls.deskBanner.valid" style="max-width: 100%;"
+            [src]="postSettingFG.controls.deskBanner.value">
+          <div class="flex-lg-row mb-2  mt-2">
+            <text-editor (onEnter)="onChange($event)" [(Ckdata)]='cdkData'></text-editor>
+            <mat-error *ngIf=" postSettingFG.controls.deskDetail.invalid && showError">require Enter Detail</mat-error>
+          </div>
+          <!-- </div>
+                    <div *ngIf="firstFormGroup.value.appPlatform == 'Mobile' || firstFormGroup.value.appPlatform == 'All'" class="flex-lg-column">
+                        <h2>Mobile</h2>
+                        <div class="flex-lg-row mb-3">
+                            <mat-label>Promotion Detail</mat-label>
+                        </div>
+                        <input type="file" [accept]="fileNameAccept" (change)="onSelectFile($event, 'mobileBanner')" />
+                        <input type="file" [accept]="fileNameAccept" (change)="onSelectFile($event, 'mobileGrid')" />
+                        <div class="flex-lg-row mb-2  mt-2">
+                            <text-editor [editorConfig]="config"></text-editor>
+                        </div>
+                    </div>
+
+                    <div *ngIf="firstFormGroup.value.appPlatform == 'MobileApp' || firstFormGroup.value.appPlatform == 'All'" class="flex-lg-column">
+                        <h2>Mobile(App)</h2>
+                        <div class="flex-lg-row mb-3">
+                            <mat-label>Promotion Detail</mat-label>
+                        </div>
+                        <input type="file" [accept]="fileNameAccept" (change)="onSelectFile($event, 'mobileAppBanner')" />
+                        <div class="flex-lg-row mb-2 mt-2">
+                            <text-editor [editorConfig]="config"></text-editor>
+                        </div>
+                    </div> -->
+
+        </app-content>
+
+        <div class="d-flex flex-row justify-content-center m-3">
+          <button mat-button style="background-color: tomato; color: white;"
+            (click)="validateNextStepper1()">Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <!-- =================================================================================================================================================== -->
+    <mat-step [stepControl]="secondFormGroup">
+      <form [formGroup]="secondFormGroup">
+        <ng-template matStepLabel>Application Setting</ng-template>
+
+        <app-content class="pt-3 pb-3" title="Application Setting">
+          <div class="d-flex flex-lg-row pb-3">
+            <mat-form-field appearance="outline" class="w-100 p-1 col-lg-4 col-12">
+              <mat-label>Valid Period</mat-label>
+              <mat-select formControlName="validPeriod">
+                <mat-option placeholder="-- Select Valid Period --" *ngFor="let option of validPeriodList"
+                  [value]="option.value">
+                  {{ option.text }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <div class="col-lg-4 col-12 ">
+              <div>
+                <label class="flex-lg-row p-2"><span class="required-span">*</span> Verification Type</label>
+              </div>
+              <mat-radio-group required formControlName="verificationType">
+                <mat-radio-button class="pr-2 flex-lg-row" value="Auto">Auto</mat-radio-button>
+                <mat-radio-button class="flex-lg-row" value="Manual">Manual</mat-radio-button>
+              </mat-radio-group>
+            </div>
+            <div class="col-lg-4 col-12 ">
+              <div>
+                <label class="flex-lg-row p-2"><span class="required-span">*</span> Deposit Sequence</label>
+              </div>
+              <mat-radio-group required formControlName="depositSequence">
+                <mat-radio-button class="pr-2 flex-lg-row" value="1st">1st Deposit
+                </mat-radio-button>
+                <mat-radio-button class="flex-lg-row" value="2nd">2nd Deposit
+                </mat-radio-button>
+              </mat-radio-group>
+            </div>
+          </div>
+
+          <div class="flex-lg-row">
+            <mat-label>Recive Limit</mat-label>
+            <section class="example-section">
+              <mat-radio-group formControlName="reciveLimitType">
+                <mat-radio-button class="example-margin mr-1 col-lg-2 col-12" value="Unlimited">
+                  Unlimited
+                </mat-radio-button>
+                <mat-radio-button class="example-margin mr-1 col-lg-2 col-12" value="Limit">
+                  Limit
+                </mat-radio-button>
+                <mat-form-field appearance="outline" class="w-100 p-1 col-lg-3 col-12">
+                  <input matInput placeholder="" *ngIf="secondFormGroup.value.reciveLimitType !== 'Unlimited'"
+                    formControlName="reciveLimit" />
+                  <input matInput placeholder="" disabled
+                    *ngIf="secondFormGroup.value.reciveLimitType === 'Unlimited'" />
+                </mat-form-field>
+              </mat-radio-group>
+            </section>
+          </div>
+        </app-content>
+        <br>
+        <app-content class="pt-3 pb-3" title="Application Risk Control">
+
+          <div class="flex-lg-row">
+            <mat-form-field appearance="outline" class=" col-lg-4 col-12">
+              <mat-label>Allow Applicant</mat-label>
+              <mat-select formControlName="allowApp" required>
+                <mat-option placeholder="-- Select Valid Period --" *ngFor="let option of allowApplicantList"
+                  [value]="option.value">
+                  {{ option.text }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class=" col-lg-8 col-12">
+              <mat-label>Select</mat-label>
+              <mat-select multiple matNativeControl [disabled]="secondFormGroup.value.allowApp === 'All'"
+                formControlName="groupList">
+                <mat-select-trigger>
+                  <mat-chip-list>
+                    <mat-chip *ngFor="let code of secondFormGroup.controls.groupList.value" [removable]="true"
+                      (removed)="removeGroupListSecondFormGroup(code)">
+                      {{ findInGroupList(code) }}
+                      <mat-icon matChipRemove>cancel</mat-icon>
+                    </mat-chip>
+                  </mat-chip-list>
+                </mat-select-trigger>
+                <mat-option *ngFor="let item of listGroup" [value]="item.groupCode">
+                  {{item.groupName}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="flex-lg-row">
+            <label class="col-lg-4 col-12">Not Allowed Tag</label>
+            <mat-form-field appearance="outline" class="col-lg-8 col-12">
+              <mat-label>Select</mat-label>
+              <mat-select multiple formControlName="notAllowTag">
+                <mat-select-trigger>
+                  <mat-chip-list>
+                    <mat-chip *ngFor="let id of secondFormGroup.controls.notAllowTag.value" [removable]="true"
+                      (removed)="removeNotAllowTagSecondFormGroup(id)">
+                      {{ findInNotAllowTag(id) }}
+                      <mat-icon matChipRemove>cancel</mat-icon>
+                    </mat-chip>
+                  </mat-chip-list>
+                </mat-select-trigger>
+                <mat-option *ngFor="let item of listTag" [value]="item.tagCode">
+                  {{item.name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </app-content>
+        <br>
+        <app-content class="pt-3 pb-3" title="Risk Setting">
+          <div class="flex-lg-row">
+            <div class="d-flex flex-lg-row pb-3">
+              <section class="example-section">
+                <div>
+                  <mat-label>Risk Option</mat-label>
+                </div>
+                <mat-checkbox formControlName="sameIP" class="example-margin mr-3">Does not allow same IP address
+                </mat-checkbox>
+
+                <mat-checkbox formControlName="sameRealName" class="example-margin mr-3">Does not allow same real name
+                </mat-checkbox>
+
+              </section>
+            </div>
+            <div class="d-flex flex-lg-row pt-2">
+              <mat-label>Validation Count Setting</mat-label>
+            </div>
+            <div class="d-flex flex-lg-row pb-3">
+              <div class="w-100 p-1 col-lg-12 col-12">
+                <span>If validated count is above </span>
+                <mat-form-field appearance="outline">
+                  <input matInput placeholder="" formControlName="violationCountSetting" />
+                </mat-form-field>
+                <span> , request will be auto declined</span>
+              </div>
+            </div>
+          </div>
+        </app-content>
+        <div class="d-flex flex-row justify-content-center m-3">
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button style="background-color: tomato; color: white;"
+            (click)="validateNextStepper2()">Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <!-- =================================================================================================================================================== -->
+    <mat-step [stepControl]="thirdFormGroup">
+      <form [formGroup]="thirdFormGroup">
+        <ng-template matStepLabel>Done</ng-template>
+        <app-content class="pt-3 pb-3" title="Bonus & Condition  Setting">
+          <div class="flex-lg-row pb-4">
+            <h2>Step 1: Select Bonus Structure</h2>
+            <div class="flex-lg-row">
+
+              <mat-label>Bonus Type</mat-label>
+              <section class="example-section">
+                <mat-radio-group formControlName="bonusType">
+                  <mat-radio-button class="example-margin mr-1 col-lg-2 col-12" value="FixedAmount">
+                    Fixed Amount
+                  </mat-radio-button>
+                  <mat-radio-button class="example-margin mr-1 col-lg-2 col-12" value="RatioAmount">
+                    Ratio Amount
+                  </mat-radio-button>
+                </mat-radio-group>
+              </section>
+              <br>
+              <mat-label>Condition Type</mat-label>
+              <section class="example-section">
+                <mat-radio-group formControlName="conditionType">
+                  <mat-radio-button class="example-margin mr-1 col-lg-2 col-12" value="MultiplierCondition">
+                    Multiplier Condition
+                  </mat-radio-button>
+                </mat-radio-group>
+              </section>
+            </div>
+          </div>
+          <div class="flex-lg-row pb-5">
+            <h2>Step 2: Set Parameter</h2>
+            <div class="flex-lg-row">
+
+              <mat-label>Max Approve Limit</mat-label>
+              <section class="example-section">
+                <mat-radio-group formControlName="maxApprovalLimitType">
+                  <mat-radio-button class="example-margin mr-1 col-lg-2 col-12" value="Unlimited">
+                    Unlimited
+                  </mat-radio-button>
+                  <mat-radio-button class="example-margin mr-1 col-lg-2 col-12" value="Limit">
+                    Limit
+                  </mat-radio-button>
+                  <mat-form-field appearance="outline" class="w-100 p-1 col-lg-3 col-12">
+                    <input matInput placeholder="" *ngIf="thirdFormGroup.value.maxApprovalLimitType !== 'Unlimited'"
+                      formControlName="maxApprovalLimit" />
+                    <input matInput placeholder="" disabled
+                      *ngIf="thirdFormGroup.value.maxApprovalLimitType === 'Unlimited'" />
+                  </mat-form-field>
+                </mat-radio-group>
+              </section>
+              <mat-label>Max Bonus Limit</mat-label>
+              <section class="example-section">
+                <mat-radio-group formControlName="maxBonusLimitType">
+                  <mat-radio-button class="example-margin mr-1 col-lg-2 col-12" value="Unlimited">
+                    Unlimited
+                  </mat-radio-button>
+                  <mat-radio-button class="example-margin mr-1 col-lg-2 col-12" value="Limit">
+                    Limit
+                  </mat-radio-button>
+                  <mat-form-field appearance="outline" class="w-100 p-1 col-lg-3 col-12">
+                    <input matInput placeholder="" *ngIf="thirdFormGroup.value.maxBonusLimitType !== 'Unlimited'"
+                      formControlName="maxBonusLimit" />
+                    <input matInput placeholder="" disabled
+                      *ngIf="thirdFormGroup.value.maxBonusLimitType === 'Unlimited'" />
+                  </mat-form-field>
+                </mat-radio-group>
+              </section>
+              <mat-label>Single Bonus Limit</mat-label>
+              <section class="example-section">
+                <mat-radio-group formControlName="singleBonusLimitType">
+                  <mat-radio-button class="example-margin mr-1 col-lg-2 col-12" value="Unlimited">
+                    Unlimited
+                  </mat-radio-button>
+                  <mat-radio-button class="example-margin mr-1 col-lg-2 col-12" value="Limit">
+                    Limit
+                  </mat-radio-button>
+                  <mat-form-field appearance="outline" class="w-100 p-1 col-lg-3 col-12">
+                    <input matInput placeholder="" *ngIf="thirdFormGroup.value.singleBonusLimitType !== 'Unlimited'"
+                      formControlName="singleBonusLimit" />
+                    <input matInput placeholder="" disabled
+                      *ngIf="thirdFormGroup.value.singleBonusLimitType === 'Unlimited'" />
+                  </mat-form-field>
+                </mat-radio-group>
+              </section>
+
+              <div class="flex-lg-row">
+                <table mat-table [dataSource]="depositLevelSource" class="mat-elevation-z8">
+                  <ng-container matColumnDef="level">
+                    <th mat-header-cell *matHeaderCellDef> level. </th>
+                    <td mat-cell *matCellDef="let element;let i = index"> Lv. {{i+1}} </td>
+                  </ng-container>
+                  <ng-container matColumnDef="depositAmount">
+                    <th mat-header-cell *matHeaderCellDef> Deposit Amt. </th>
+                    <td mat-cell *matCellDef="let element;let i = index">
+                      <mat-form-field appearance="outline" class="w-100 p-1 col-lg-12 col-12">
+                        <mat-label> Deposit above</mat-label>
+                        <ng-container *ngIf="i==0; else elseTemplate">
+                          <input [(ngModel)]='element.depositAmount' formControlName='depositAmt' type='number' matInput
+                            required>
+                        </ng-container>
+                        <ng-template #elseTemplate>
+                          <input [(ngModel)]='element.depositAmount' type='number' matInput
+                            [ngModelOptions]="{standalone: true}">
+                        </ng-template>
+
+                      </mat-form-field>
+                    </td>
+                  </ng-container>
+                  <ng-container matColumnDef="bonusRatio">
+                    <th mat-header-cell *matHeaderCellDef>
+                      {{thirdFormGroup.controls.bonusType.value=='FixedAmount'?'Bonus Calculation(Fixed Amount)':'Bonus
+                      Calculation(Ratio Amount)'}}
+                    </th>
+                    <td mat-cell *matCellDef="let element;let i = index">
+                      <mat-form-field appearance="outline" class="w-100 p-1 col-lg-12 col-12">
+                        <mat-label>
+                          {{thirdFormGroup.controls.bonusType.value=='FixedAmount'?'Fixed Bonus
+                          Amount':'(Deposit)*Multiplier (%)'}}
+                        </mat-label>
+                        <ng-container *ngIf="i==0; else elseTemplate">
+                          <input [(ngModel)]='element.bonusRatio' formControlName='bonusCalculate' type='number'
+                            matInput required>
+                        </ng-container>
+                        <ng-template #elseTemplate>
+                          <input [(ngModel)]='element.bonusRatio' type='number' matInput
+                            [ngModelOptions]="{standalone: true}">
+                        </ng-template>
+                      </mat-form-field>
+                    </td>
+                  </ng-container>
+                  <ng-container matColumnDef="multiplier">
+                    <th mat-header-cell *matHeaderCellDef> Condition Type(Multiplier Condition) </th>
+                    <td mat-cell *matCellDef="let element;let i = index">
+                      <mat-form-field appearance="outline" class="w-100 p-1 col-lg-12 col-12">
+                        <mat-label> (Bonus+Deposit)*Multiplier</mat-label>
+                        <ng-container *ngIf="i==0; else elseTemplate">
+                          <input [(ngModel)]='element.multiplier' formControlName='multiplierCondition' type='number'
+                            matInput required>
+                        </ng-container>
+                        <ng-template #elseTemplate>
+                          <input [(ngModel)]='element.multiplier' type='number' matInput
+                            [ngModelOptions]="{standalone: true}">
+                        </ng-template>
+                      </mat-form-field>
+                    </td>
+                  </ng-container>
+                  <ng-container matColumnDef="remove">
+                    <th mat-header-cell *matHeaderCellDef></th>
+                    <td mat-cell *matCellDef="let element;let i = index">
+                      <button *ngIf="i!=0" mat-icon-button style="color: red" (click)="del(i)">
+                        <mat-icon>delete</mat-icon>
+                      </button>
+                    </td>
+                  </ng-container>
+
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+                <div class="d-flex mt-2" style="justify-content:space-between;align-items: flex-end;">
+                  <a href='javascript:void(0)' (click)='add()'>
+                    <mat-icon>add</mat-icon> ADD (Max 10 Levels)
+                  </a>
+                  <a href='javascript:void(0)' (click)='reset()'>
+                    <mat-icon>cached</mat-icon>Reset
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </app-content>
+        <br>
+
+        <app-content class="pt-3 pb-3" title="Bonus Issue Setting">
+          <div class="flex-lg-row">
+            <mat-form-field appearance="outline" class="w-100 p-1 col-lg-4 col-12">
+              <mat-label>Select wallet for receive bonus</mat-label>
+              <mat-select formControlName="receiveBonusWallet" (selectionChange)='onReceiveBonusChange($event)'>
+                <mat-option value="BALANCE">Balance</mat-option>
+                <mat-option value="BONUS">Bonus</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="flex-lg-row mb-2" *ngIf="thirdFormGroup.controls.receiveBonusWallet.value === 'BONUS'">
+            <p>Select Product Type</p>
+            <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="w-100 h-200 p-1 col-lg-3 col-12">
+              <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding>
+                <button mat-icon-button disabled></button>
+                <mat-checkbox class="checklist-leaf-node" [checked]="checklistSelection.isSelected(node)"
+                  (change)="todoLeafItemSelectionToggle(node)">{{node.item.displayValue}}</mat-checkbox>
+              </mat-tree-node>
+              <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
+                <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.item">
+                  <mat-icon class="mat-icon-rtl-mirror">
+                    {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                  </mat-icon>
+                </button>
+                <mat-checkbox [checked]="descendantsAllSelected(node)"
+                  [indeterminate]="descendantsPartiallySelected(node)" (change)="todoItemSelectionToggle(node)">
+                  {{node.item.displayValue}}</mat-checkbox>
+              </mat-tree-node>
+            </mat-tree>
+          </div>
+          <div class="d-flex flex-row justify-content-center m-3">
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button [disabled]='disabledBtn' style="background-color: tomato; color: white;"
+              (click)="onSave()">Save</button>
+          </div>
+        </app-content>
+      </form>
+    </mat-step>
+  </mat-horizontal-stepper>
+  <!-- </app-content> -->
+</div>

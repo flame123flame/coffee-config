@@ -1,0 +1,52 @@
+<h1 mat-dialog-title>Add Issue Type</h1>
+<div mat-dialog-content>
+    <form [formGroup]="formAddIssueType">
+        <div class="d-flex flex-column">
+            <div class="d-flex flex-lg-row flex-column">
+                <mat-form-field appearance="outline" class="w-100 p-1 col-lg-4 col-12" floatLabel="always">
+                    <mat-label>Issue Type Name</mat-label>
+                    <input matInput required formControlName="issueName" />
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="w-100 p-1 col-lg-4 col-12" floatLabel="always">
+                    <mat-label>Description</mat-label>
+                    <input matInput formControlName="description" />
+                </mat-form-field>
+                <div class="d-flex flex-column">
+                    <div class="col-12 col-lg-12 mt-2 text-center">
+                        <button class="p-1 mr-3" mat-raised-button style="background-color: red;color: white;"
+                            (click)="onClear()">
+                            CLEAR
+                        </button>
+                        <button class="p-1" mat-raised-button style="background-color: #009688;color: white;"
+                            (click)="onAdd()">
+                            <label *ngIf="checkUpdate">SAVE</label>
+                            <label *ngIf="!checkUpdate">EDIT</label>
+                        </button>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+        <!-- <div class="d-flex flex-column  w-auto">
+            <mat-form-field>
+                <mat-label>Note</mat-label>
+                <input formControlName='adminRemark' matInput>
+            </mat-form-field>
+            <div class="d-flex flex-column  w-auto">
+                <mat-label class="mr-2">Auto Rebate :</mat-label>
+                <mat-radio-group formControlName="status">
+                    <mat-radio-button [value]="'APPROVE'">APPROVE</mat-radio-button>
+                    <mat-radio-button [value]="'REJECT'">REJECT</mat-radio-button>
+                </mat-radio-group>
+            </div>
+        </div> -->
+    </form>
+    <app-table-mat [columns]="columns" [dataInput]="dataInput" [displayedColumns]="tr" [actionSetting]="actionSetting"
+        (deleteAction)="onDeleteIssueType($event)" (editAction)="onEditIssueType($event)">
+    </app-table-mat>
+</div>
+<div mat-dialog-actions class="d-flex flex-row justify-content-center">
+    <button-cancel class="mr-1" (click)="onCancel()"></button-cancel>
+    <!-- <button-save (click)="onAdd()"></button-save> -->
+</div>

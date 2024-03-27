@@ -1,0 +1,47 @@
+<div class="d-flex flex-column">
+  <app-content>
+    <h2>Lotto Report</h2>
+    <mat-tab-group [selectedIndex]='0' (selectedIndexChange)='getClassCode(categoryList[$event].value)'>
+      <mat-tab *ngFor="let item of categoryList" [label]="item.display">
+        <mat-tab-group [selectedIndex]='0'
+          (selectedIndexChange)='getDashboard($event,lottoClassList[$event]?.lottoClassCode)'>
+          <mat-tab *ngFor="let item of lottoClassList" [label]="item.className">
+
+            <!-- <div class="flex-lg-row pt-3">
+              <mat-form-field floatLabel="always" appearance="outline" class="w-100 p-1 pr-3 col-lg-10 col-12">
+                <mat-label>Installment</mat-label>
+                <input placeholder="" matInput [matDatepicker]="picker" [(ngModel)]="searchModel.installment" />
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+              <button-search (click)="loadList(null)"></button-search>
+
+              <mat-form-field appearance="outline" class="w-100 p-1 col-lg-12 col-12">
+                <mat-label>Installment</mat-label>
+                <mat-select [(ngModel)]="searchModel.installment">
+                  <mat-option [value]="''">ALL</mat-option>
+                  <mat-option *ngFor="let item of dataPaginateList" [value]="item.installment">
+                    {{ item.installment }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div> -->
+
+            <!-- <div class="d-flex flex-row justify-content-center mb-3">
+              <button-reset (click)="resetSearch()"></button-reset>
+              <button-search (click)="loadList(null)"></button-search>
+            </div> -->
+
+            <app-table-mat [columns]="columns" [dataInput]="dataPaginateList" [displayedColumns]="tr"
+              [actionSetting]="actionSetting" (editAction)='goToView($event)' (onPageChange)='pageChange($event)'
+              (onSortChange)='sortChange($event)' [length]='dataLength'></app-table-mat>
+
+
+          </mat-tab>
+        </mat-tab-group>
+      </mat-tab>
+    </mat-tab-group>
+
+    <!-- <app-table-mat [columns]="columns" [dataInput]="data" [displayedColumns]="tr" [actionSetting]="actionSetting" (editAction)='goToAddEdit($event)'></app-table-mat> -->
+  </app-content>
+</div>

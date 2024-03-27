@@ -1,0 +1,12 @@
+<div class="d-flex flex-column">
+    <app-content class="mt-3" title="Contact Us List">
+        <div class="d-flex flex-row justify-content-end">
+            <button class="mr-2" style="background-color: #32363E;color:white;" mat-raised-button
+                (click)="exportExcel()">Export
+            </button>
+        </div>
+        <app-table-mat [columns]="columns" [length]='dataLength' [dataInput]="dataInput" [displayedColumns]="tr"
+            (onPageChange)='pageChange($event)' (onSortChange)='sortChange($event)'>
+        </app-table-mat>
+    </app-content>
+</div>

@@ -1,0 +1,93 @@
+<div class="d-flex flex-column">
+    <app-content>
+        <div class="d-flex flex-column">
+            <mat-tab-group>
+                <mat-tab label="Transfer">
+                    <app-content>
+                        <div class="d-flex flex-column">
+                            <div class="flex-lg-row">
+                                Transfer Rules
+                            </div>
+                            <div class="flex-lg-row">Agents transferring rules</div>
+                            <div class="flex-lg-row">1. Only the agents under the same level can be transffered.</div>
+                            <div class="flex-lg-row">2. Only agents with lower levels than SH can be transferred (SSH is
+                                not transferrable)</div>
+                            <div class="flex-lg-row">3. The game pos iti on taking of transferred agents cannot be
+                                higher than the upper levels. (cannot be transferred if levels are higher.)
+                            </div>
+                            <div class="flex-lg-row">4. Transfer all the agents and members under the transfer page.
+                            </div>
+                            <div class="flex-lg-row">Players transferring</div>
+                            <div class="flex-lg-row">1. Players can be trans ferred to any agents</div>
+                            <div class="flex-lg-row">Transferring complete.</div>
+                            <div class="flex-lg-row">1. After tran sferring agents, settle ments will be calculated with
+                                the new position taking which begins to belong t o the new uplines.
+                            </div>
+                            <div class="flex-lg-row">2. After tran sferring play ers, the positi on taking bonus begins
+                                to belong to the new agents.
+                            </div>
+                            <div class="flex-lg-row">3. The previous data will be kept at the moment before
+                                transferring.</div>
+                            <div class="flex-lg-row">4. After tran sferring, the old data of the agents and players will
+                                still remain kept under the previous upline agent.
+                            </div>
+                            <div class="flex-lg-row">5. If it's needed to resettle, then it goes with the current
+                                postion taking, meanwhile the pos iti on taking bonus will be claimed by the uplines.
+                            </div>
+                        </div>
+                        <div class="d-flex flex-column mt-5">
+                            <div class="row">
+                                <div class="col-lg-4 col-12 mt-3">
+                                    <h4>transferring agent accounts</h4>
+                                    <mat-radio-group class="example-container col-lg-12 col-12" [(value)]="radio1">
+                                        <mat-radio-button value="1">Agent ID</mat-radio-button>
+                                        <mat-radio-button value="2">Player ID</mat-radio-button>
+                                    </mat-radio-group>
+                                    <mat-form-field appearance="outline" class="w-100 p-1 col-lg-12 col-12"
+                                        floatLabel="always">
+                                        <mat-label>Agent ID</mat-label>
+                                        <mat-select placeholder="Agent ID">
+                                            <mat-option value="1">Agent ID</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-lg-4 col-12 mt-3 text-center ">>>Transferrung>></div>
+                                <div class="col-lg-4 col-12 mt-3">
+                                    <h4>transferring to agents' accounts</h4>
+                                    <mat-radio-group class="example-container col-lg-12 col-12" [(value)]="radio2">
+                                        <mat-radio-button value="1">Agent ID</mat-radio-button>
+                                    </mat-radio-group>
+                                    <mat-form-field appearance="outline" class="w-100 p-1 col-lg-12 col-12"
+                                        floatLabel="always">
+                                        <mat-label>Agent ID</mat-label>
+                                        <mat-select placeholder="Agent ID">
+                                            <mat-option value="1">Agent ID</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex flex-row justify-content-center">
+                            <button-reset disabled class="p-1"></button-reset>
+                            <button class="mr-2" mat-raised-button disabled
+                                style="background-color: #86c078; margin: 5px; color: rgb(255, 255, 255);">
+                                Confirm
+                            </button>
+                        </div>
+                    </app-content>
+                </mat-tab>
+
+                <mat-tab label="PT adjustment">
+                    <div class="container">
+                        <div class="row justify-content-center">no data!!!!</div>
+                    </div>
+                </mat-tab>
+                <mat-tab label="Adjustment record">
+                    <div class="container">
+                        <div class="row justify-content-center">no data!!!!</div>
+                    </div>
+                </mat-tab>
+            </mat-tab-group>
+        </div>
+    </app-content>
+</div>

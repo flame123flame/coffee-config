@@ -1,0 +1,23 @@
+<div class="d-flex flex-row w-100 d-flex justify-content-start">
+    <button-cancel wording="Back" (click)="goBack()"></button-cancel>
+</div>
+<br>
+<ng-container>
+    <app-content class='mb-2 mt-2' title="เพิ่ม User Dummy">
+    </app-content>
+</ng-container>
+
+<ng-container>
+    <app-content class='mb-2' title="">
+    <form [formGroup]="formAddDummy">
+        <div class="d-flex">
+            <mat-form-field appearance="outline" class="p-1 col-lg-10" floatLabel="always">
+                <input type='text' matInput formControlName="dummyName" style="text-align:left;" minlength="8"/>
+            </mat-form-field>
+            <button-add class="pl-3 pt-2 col-lg-2" (click)="addRow()"></button-add>
+        </div>
+    </form>
+        <app-table-mat [length]="dummyUserList.length" [columns]="columns" [dataInput]="dummyUserList" [displayedColumns]="tr"
+            [actionSetting]='actionSetting' (deleteAction)='deleteOne($event.dumyCode, $event.username)'></app-table-mat>
+    </app-content>
+</ng-container>

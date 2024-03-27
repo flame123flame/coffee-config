@@ -1,0 +1,39 @@
+<h1 mat-dialog-title>Edit</h1>
+<div mat-dialog-content>
+  <div class="d-flex flex-column  w-auto">
+    <form [formGroup]='form'>
+      <mat-form-field floatLabel="always" appearance="outline" class="w-100 p-1 col-lg-12 col-12">
+        <mat-label>Tag Name</mat-label>
+        <input matInput formControlName='code'/>
+      </mat-form-field>
+      <mat-form-field floatLabel="always" appearance="outline" class="w-100 p-1 col-lg-12 col-12">
+        <mat-label>Display Name TH</mat-label>
+        <input matInput  formControlName='nameTh'/>
+      </mat-form-field>
+      <mat-form-field floatLabel="always" appearance="outline" class="w-100 p-1 col-lg-12 col-12">
+        <mat-label>Display Name EN</mat-label>
+        <input matInput  formControlName='nameEn'/>
+      </mat-form-field>
+      <mat-form-field floatLabel="always" appearance="outline" class="w-100 p-1 col-lg-6 col-12">
+        <mat-label>Status</mat-label>
+        <mat-select  formControlName='isActive'>
+          <mat-option *ngFor="let option of statusList" [value]="option.value">
+            {{ option.display }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field floatLabel="always" appearance="outline" class="w-100 p-1 col-lg-6 col-12">
+        <mat-label>View Type</mat-label>
+        <mat-select formControlName='userView'>
+          <mat-option *ngFor="let option of viewList" [value]="option.value">
+            {{ option.display }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </form>
+  </div>
+</div>
+<div mat-dialog-actions class="d-flex flex-row justify-content-center">
+  <button-cancel [mat-dialog-close]="1"></button-cancel>
+  <button-save class="ml-2" wording="Update" (click)="editGameTag()"></button-save>
+</div>

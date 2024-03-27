@@ -1,0 +1,133 @@
+<div class="d-flex flex-column">
+    <p>Add new Promotion: Promotion Setting</p>
+    <app-content class="pt-3 pb-3">
+        <form [formGroup]="firstFormGroup">
+            <app-content class="pt-3 pb-3" title="Basic Setting">
+                <div class="d-flex flex-column">
+                    <div class="flex-lg-row">
+                        <mat-form-field appearance="outline" class="w-100 p-1 col-lg-4 col-12">
+                            <mat-label>Promotion Title</mat-label>
+                            <input matInput placeholder="Ex. โปรโมชั่นฯ" required formControlName="promoTitle" />
+                        </mat-form-field>
+                    </div>
+
+                    <div class="flex-lg-row m-2">
+                        <mat-label>Application Platform</mat-label>
+                        <section class="example-section">
+                            <mat-radio-group formControlName="appPlatform">
+                                <mat-radio-button class="example-margin mr-4 col-lg-2 col-12" value="All">
+                                    All
+                                </mat-radio-button>
+                                <!-- <mat-radio-button class="example-margin mr-4 col-lg-2 col-12" value="Mobile">
+                                    Mobile
+                                </mat-radio-button>
+                                <mat-radio-button class="example-margin mr-4 col-lg-2 col-12" value="Desktop">
+                                    Desktop
+                                </mat-radio-button>
+                                <mat-radio-button class="example-margin mr-4 col-lg-2 col-12" value="MobileApp">
+                                    Mobile(App)
+                                </mat-radio-button> -->
+                            </mat-radio-group>
+                        </section>
+                    </div>
+
+                    <div class="flex-lg-row m-2">
+                        <div class="flex-lg-row">
+                            <mat-label>Promotion Period</mat-label>
+                        </div>
+                        <section class="example-section">
+                            <mat-radio-group formControlName="promoPeriodType" (change)="changeDateType()">
+
+                                <div class="flex-lg-row">
+                                    <mat-radio-button class="example-margin col-lg-2 col-12" value="Indefinite">
+                                        Indefinite
+                                    </mat-radio-button>
+                                    <mat-form-field appearance="outline" class="w-100 p-1 col-lg-4 col-12"
+                                        *ngIf="firstFormGroup.value.promoPeriodType === 'Indefinite'">
+                                        <input placeholder="from" matInput [matDatepicker]="startDate1"
+                                            (click)="startDate1.open()" formControlName="startDate" required />
+                                        <mat-datepicker-toggle matSuffix [for]="startDate1">
+                                        </mat-datepicker-toggle>
+                                        <mat-datepicker #startDate1></mat-datepicker>
+                                    </mat-form-field>
+                                    <mat-form-field appearance="outline" class="w-100 p-1 col-lg-4 col-12"
+                                        *ngIf="firstFormGroup.value.promoPeriodType !== 'Indefinite'">
+                                        <input disabled placeholder="from" matInput />
+                                        <mat-datepicker-toggle matSuffix [for]="startDate1Dis">
+                                        </mat-datepicker-toggle>
+                                        <mat-datepicker #startDate1Dis></mat-datepicker>
+                                    </mat-form-field>
+                                </div>
+                                <!-- <div class="flex-lg-row">
+                                    <mat-radio-button class="example-margin col-lg-2 col-12" value="Indefinite">
+                                        Indefinite
+                                    </mat-radio-button>
+    
+                                </div> -->
+                                <div class="flex-lg-row">
+                                    <mat-radio-button class="example-margin col-lg-2 col-12" value="DatePeriod">
+                                        Date Period
+                                    </mat-radio-button>
+                                    <ng-container *ngIf="firstFormGroup.value.promoPeriodType === 'DatePeriod'">
+                                        <mat-form-field appearance="outline" class="w-100 p-1 col-lg-4 col-12">
+                                            <mat-date-range-input
+                                                [disabled]="firstFormGroup.value.promoPeriodType !=='DatePeriod'? true: false"
+                                                [rangePicker]="rangeDate" required>
+                                                <input matStartDate placeholder="Start date" (click)="rangeDate.open()"
+                                                    formControlName="startDate" />
+                                                <input matEndDate placeholder="End date" (click)="rangeDate.open()"
+                                                    formControlName="endDate" />
+                                            </mat-date-range-input>
+                                            <mat-datepicker-toggle matSuffix [for]="rangeDate">
+                                            </mat-datepicker-toggle>
+                                            <mat-date-range-picker #rangeDate></mat-date-range-picker>
+                                        </mat-form-field>
+                                    </ng-container>
+                                    <ng-container *ngIf="firstFormGroup.value.promoPeriodType !== 'DatePeriod'">
+                                        <mat-form-field appearance="outline" class="w-100 p-1 col-lg-4 col-12">
+                                            <mat-date-range-input [disabled]="true">
+                                                <input matStartDate placeholder="Start date" />
+                                                <input matEndDate placeholder="End date" />
+                                            </mat-date-range-input>
+                                            <mat-datepicker-toggle matSuffix [for]="rangeDateDis">
+                                            </mat-datepicker-toggle>
+                                            <mat-date-range-picker #rangeDateDis></mat-date-range-picker>
+                                        </mat-form-field>
+                                    </ng-container>
+                                </div>
+                            </mat-radio-group>
+                        </section>
+                    </div>
+                </div>
+            </app-content>
+        </form>
+
+        <form [formGroup]="postSettingFG">
+            <br />
+            <app-content class="pt-3 pb-3" title="Posting Setting">
+                <div class="flex-lg-row mb-3">
+                    <mat-label>Promotion Detail</mat-label>
+                </div>
+
+                <input type="file" [accept]="fileNameAccept" (change)="onSelectFile($event, 'deskBanner')" />
+                <mat-error *ngIf="postSettingFG.controls.deskBanner.invalid && showError">require choose file
+                </mat-error>
+                <img *ngIf="postSettingFG.controls.deskBanner.valid" style="max-width: 100%;"
+                    [src]="postSettingFG.controls.deskBanner.value">
+                <div class="flex-lg-row mb-2 mt-2">
+                    <text-editor (onEnter)="onChange($event)" [(Ckdata)]='cdkData'></text-editor>
+                    <mat-error *ngIf="postSettingFG.controls.deskDetail.invalid && showError">require Enter Detail
+                    </mat-error>
+                </div>
+            </app-content>
+
+            <div class="d-flex flex-row justify-content-center m-3">
+                <!-- <button mat-button style="background-color: tomato; color: white"">
+                    Next
+                </button> -->
+                <button-save (click)="onSave()"></button-save>
+            </div>
+        </form>
+    </app-content>
+
+</div>

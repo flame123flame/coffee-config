@@ -1,0 +1,116 @@
+<div class="d-flex flex-column">
+  <app-content>
+    <form [formGroup]="form">
+      <div class="d-flex flex-column">
+        <div class="d-flex flex-lg-row flex-column">
+          <!-- Daily and Game -->
+          <mat-form-field *ngIf="checkType !=='2'" floatLabel="never" appearance="outline"
+            class="w-100 p-1 col-lg-3 col-12" (click)="periodStartDate.open()">
+            <mat-label>Report Period Start</mat-label>
+            <input matInput [matDatepickerFilter]="filterDefaultStart" [matDatepicker]="periodStartDate"
+              formControlName='startDate' disabled />
+            <mat-datepicker-toggle matSuffix [for]="periodStartDate"></mat-datepicker-toggle>
+            <mat-datepicker #periodStartDate disabled="false"> </mat-datepicker>
+          </mat-form-field>
+
+          <mat-form-field *ngIf="checkType !=='2'" floatLabel="never" appearance="outline"
+            class="w-100 p-1 col-lg-3 col-12" (click)="periodEndDate.open()">
+            <mat-label>Report Period End</mat-label>
+            <input matInput [matDatepickerFilter]="filterDefaultEnd" [matDatepicker]="periodEndDate"
+              formControlName='endDate' disabled />
+            <mat-datepicker-toggle matSuffix [for]="periodEndDate"></mat-datepicker-toggle>
+            <mat-datepicker #periodEndDate disabled="false"></mat-datepicker>
+          </mat-form-field>
+
+          <!-- Monthly -->
+          <mat-form-field *ngIf="checkType ==='2'" floatLabel="never" appearance="outline"
+            class="w-100 p-1 col-lg-3 col-12" (click)="picker.open()">
+            <mat-label>Report Period Start</mat-label>
+            <input matInput [matDatepickerFilter]="filterFirstDayOfTheMonth" [matDatepicker]="picker"
+              formControlName='startDateM' disabled />
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker disabled="false"> </mat-datepicker>
+          </mat-form-field>
+
+          <mat-form-field *ngIf="checkType ==='2'" floatLabel="never" appearance="outline"
+            class="w-100 p-1 col-lg-3 col-12" (click)="picker2.open()">
+            <mat-label>Report Period End</mat-label>
+            <input matInput [matDatepickerFilter]="filterLastDayOfTheMonth" [matDatepicker]="picker2"
+              formControlName='endDateM' disabled />
+            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2 disabled="false"></mat-datepicker>
+          </mat-form-field>
+
+          <div class="w-100 p-1 col-lg-6 col-12 justify-content-center">
+            <label>
+              <h4>Report By</h4>
+            </label><br>
+            <mat-radio-group (change)="changeType($event.value)" [(value)]="checkType"
+              class="example-container w-100 p-1 col-lg-4 col-12 mr-5">
+              <mat-radio-button value="1">Daily</mat-radio-button>
+              <mat-radio-button value="2">Monthly</mat-radio-button>
+              <mat-radio-button value="3">Game</mat-radio-button>
+            </mat-radio-group>
+          </div>
+
+        </div>
+        <div class="d-flex flex-lg-row flex-column">
+          <mat-form-field floatLabel="always" appearance="outline" class="w-100 p-1 col-lg-3 col-12">
+            <mat-label>Game Provider</mat-label>
+            <mat-select formControlName="providerCode">
+              <mat-option value="ALL">All</mat-option>
+              <mat-option *ngFor="let item of providerList" [value]="item.code">
+                {{ item.nameEn }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field floatLabel="always" appearance="outline" class="w-100 p-1 col-lg-3 col-12">
+            <mat-label>Product Type</mat-label>
+            <mat-select formControlName="productCode">
+              <mat-option value="ALL">All</mat-option>
+              <mat-option *ngFor="let item of productList" [value]="item.code">
+                {{ item.nameEn }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field floatLabel="always" appearance="outline" class="w-100 p-1 col-lg-3 col-12">
+            <mat-label>Game Group</mat-label>
+            <mat-select formControlName="gameGroupCode">
+              <mat-option value="ALL">All</mat-option>
+              <mat-option *ngFor="let item of groupList" [value]="item.code">
+                {{ item.nameEn }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field floatLabel="always" appearance="outline" class="w-100 p-1 col-lg-3 col-12">
+            <mat-label>Game</mat-label>
+            <mat-select formControlName="gameCode">
+              <mat-option value="ALL">All</mat-option>
+              <mat-option *ngFor="let item of gameList" [value]="item.gameCode">
+                {{ item.displayName }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="d-flex flex-row justify-content-center mt-3">
+          <button class="mr-2" mat-raised-button (click)="resetData()">Reset</button>
+          <button-search (click)="searchGameReport()"></button-search>
+        </div>
+      </div>
+    </form>
+  </app-content>
+  <app-content class="mt-3" title="Game Report">
+    <div class="d-flex flex-row justify-content-end">
+      <button class="mr-2" style="background-color: #32363E;color:white;" mat-raised-button
+        (click)="exportExcel()">Export</button>
+    </div>
+    <app-table-mat *ngIf="checkSendApi !== '3'" [length]="dataLength" [columns]="columns" [dataInput]="dataInput"
+      [displayedColumns]="tr" (onPageChange)='pageChange($event)' (onSortChange)='sortChange($event)'
+      [enableFooterRow]="true">
+    </app-table-mat>
+    <app-table-mat *ngIf="checkSendApi === '3'" [length]="dataLength" [columns]="columnsGames"
+      [dataInput]="dataInputGames" [displayedColumns]="trGames" (onPageChange)='pageChange($event)'
+      (onSortChange)='sortChange($event)' [enableFooterRow]="true">
+    </app-table-mat>
+  </app-content>
+</div>

@@ -1,0 +1,30 @@
+// table,
+// td,
+// th {
+//   border: 1px solid #ddd;
+//   text-align: left;
+//   width: 50%;
+// }
+
+.contaier-detail {
+  border: 1px solid gray;
+  border-radius: 15px;
+}
+.example-stretched-tabs {
+  max-width: 100%;
+}
+.content {
+  color: #8f8f8f;
+}
+
+table.information>tr>td:first-child{
+  background-color: #eeeeee;
+    // border-bottom: #bbbbbb;
+    // border-bottom-style: solid;
+    // border-bottom-width: 1px;
+}
+td {
+  border-color: #bbbbbb;
+    border-style: solid;
+    border-width: 1px;
+}

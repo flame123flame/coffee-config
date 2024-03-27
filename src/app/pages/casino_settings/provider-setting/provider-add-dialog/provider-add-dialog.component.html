@@ -1,0 +1,72 @@
+<h1 mat-dialog-title>{{header}}</h1>
+<div mat-dialog-content>
+    <div class="d-flex flex-column  w-auto">
+        <form [formGroup]='form'>
+            <mat-form-field appearance="outline" class="w-100 p-1 col-lg-12 col-12" floatLabel="always">
+                <mat-label>Code</mat-label>
+                <input matInput formControlName='code'>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="w-100 p-1 col-lg-12 col-12" floatLabel="always">
+                <mat-label>Name TH</mat-label>
+                <input matInput formControlName='nameTh'>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="w-100 p-1 col-lg-12 col-12" floatLabel="always">
+                <mat-label>Name EN</mat-label>
+                <input matInput formControlName='nameEn'>
+            </mat-form-field>
+            <ng-container class="w-100 p-1 col-lg-12 col-12"
+                *ngIf="this.data['type'] == 'provider'">
+                <label>Open Type</label><br>
+                <mat-radio-group formControlName='openType' class="example-container ">
+                  <mat-radio-button value="LIST">LIST</mat-radio-button>
+                  <mat-radio-button value="ONEPAGE">ONEPAGE</mat-radio-button>
+                </mat-radio-group>
+            </ng-container>
+            <ng-container *ngIf="this.data['type'] == 'provider'; else elseTemplate">
+              <div class="w-100 p-1 col-lg-12 col-12">
+                <label><span style="color: red;">*</span>Image Portrait</label>
+                <br>
+                <img [src]="imgPreviewPortrait"  style="max-width: 70%;">
+                <br>
+                <input (change)="previewPortrait(file.files)" #file type="file" />
+                <p>Image size limit : 1 MB</p>
+                <p>Support formats : JPG, PNG, GIF, BMP</p>
+            </div>
+            <div class="w-100 p-1 col-lg-12 col-12">
+              <label><span style="color: red;">*</span>Image Landscape</label>
+              <br>
+              <img [src]="imgPreviewLandscape" style="max-width: 100%;">
+              <br>
+              <input (change)="previewLandscape(file.files)" #file type="file" />
+              <p>Image size limit : 1 MB</p>
+              <p>Support formats : JPG, PNG, GIF, BMP</p>
+          </div>
+            </ng-container>
+            <ng-template #elseTemplate>
+              <div class="w-100 p-1 col-lg-12 col-12">
+                <label><span style="color: red;">*</span>Image</label>
+                <br>
+                <img [src]="imgPreview"  style="max-width: 70%;">
+                <br>
+                <input (change)="preview(file.files)" #file type="file" />
+                <p>Image size limit : 1 MB</p>
+                <p>Support formats : JPG, PNG, GIF, BMP</p>
+            </div>
+            </ng-template>
+
+
+
+            <div *ngIf="data['type'] == 'provider'">
+                <label>Status</label><br>
+                <mat-radio-group formControlName='status' class="example-container ">
+                    <mat-radio-button [value]="true">Active</mat-radio-button>
+                    <mat-radio-button [value]="false">Disable</mat-radio-button>
+                </mat-radio-group>
+            </div>
+        </form>
+    </div>
+</div>
+<div mat-dialog-actions class="d-flex flex-row justify-content-center">
+    <button-cancel class="mr-1" (click)="onNoClick()"></button-cancel>
+    <button-save [disabled]="form.status=='VALID'?false:true" (click)="onSave()"></button-save>
+</div>

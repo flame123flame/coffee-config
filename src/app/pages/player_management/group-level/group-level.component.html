@@ -1,0 +1,12 @@
+<div class="d-flex flex-column">
+  <div class="d-flex flex-row w-100 justify-content-end">
+
+      <button-add (click)="onCreatGroup()"></button-add>
+      <!-- <menu-dropdown [listItems]="listItemMenu"></menu-dropdown> -->
+
+  </div>
+  <app-content class="mt-3" title="Group List" >
+    <app-table-mat [columns]="columns" [dataInput]="dataInput" [actionSetting]="actionSetting" [displayedColumns]="tr" (deleteAction)="onDelete($event)"
+      (editAction)="editData($event)"></app-table-mat>
+  </app-content>
+</div>

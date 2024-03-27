@@ -1,0 +1,75 @@
+<app-content title="{{title}}" subtitle="Logging">
+    <div class="d-flex flex-row pb-1 w-100 justify-content-end">
+        <button-add wording="Add Maximum/Minimum" (click)="addRow()"></button-add>
+    </div>
+    <app-content title="{{msdLottoKindName}}" subtitle="Logging">
+
+        <form [formGroup]="formGroup">
+            <table mat-table [dataSource]="dataSourceX" class="table-striped" formArrayName="data">
+
+                <ng-container matColumnDef="vipCode">
+                    <th mat-header-cell *matHeaderCellDef> VIP </th>
+                    <td mat-cell *matCellDef="let row; let index = index" [formGroupName]="index">
+                        <mat-form-field appearance="outline" class="p-2 w-100 col-12" floatLabel="always">
+                            <mat-label></mat-label>
+                            <!-- <input type="number" matInput  /> -->
+                            <mat-select formControlName="vipCode" [disabled]="index == 0">
+                                <mat-option *ngFor="let option of getList(row.value.vipCode); let j = index"
+                                    [value]='option.code'>
+                                    {{option.name}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="minimumTrans">
+                    <th mat-header-cell *matHeaderCellDef> จำนวนซื้อขั้นต่ำต่อเลขต่อโพย (฿) </th>
+                    <td mat-cell *matCellDef="let row; let index = index" [formGroupName]="index">
+                        <mat-form-field appearance="outline" class="w-100 p-1 col-lg-12 col-12" floatLabel="always">
+                            <input type='text' matInput formControlName="minimumTrans" (change)="onChange(index)" mask="separator.2" thousandSeparator="," style="text-align:right;"/>
+                        </mat-form-field>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="maximumTrans">
+                    <th mat-header-cell *matHeaderCellDef> จำนวนซื้อสูงสุดต่อเลขต่อโพย (฿) </th>
+                    <td mat-cell *matCellDef="let row; let index = index" [formGroupName]="index">
+                        <mat-form-field appearance="outline" class="w-100 p-1 col-lg-12 col-12" floatLabel="always">
+                            <input type='text' matInput formControlName="maximumTrans" (change)="onChange(index)" mask="separator.2" thousandSeparator="," style="text-align:right;"/>
+                        </mat-form-field>
+                    </td>
+
+                </ng-container>
+                <ng-container matColumnDef="maximumUsername">
+                    <th mat-header-cell *matHeaderCellDef> จำนวนซื้อสูงสุดต่อเลขต่อ username (฿) </th>
+                    <td mat-cell *matCellDef="let row; let index = index" [formGroupName]="index">
+                        <mat-form-field appearance="outline" class="w-100 p-1 col-lg-12 col-12" floatLabel="always">
+                            <input type='text' matInput formControlName="maximumUsername" (change)="onChange(index)" mask="separator.2" thousandSeparator="," style="text-align:right;"/>
+                        </mat-form-field>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="action">
+                    <th mat-header-cell *matHeaderCellDef style="text-align: center;"> Action </th>
+                    <td mat-cell *matCellDef="let element; let i = index">
+                        <div *ngIf="i != 0" style="text-align: center;">
+                            <button mat-icon-button style="color: red" (click)="dropRow(i)">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </div>
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns; let i = index"></tr>
+            </table>
+        </form>
+
+    </app-content>
+    <!-- <mat-error class="d-flex flex-row pb-2">
+        หมายเหตุุ : จำนวนซื้อขั้นต่ำต่อโพย >= จำนวนซื้อสูงสุดต่อโพย >= จำนวนซื้อสูงสุดต่อ username
+    </mat-error> -->
+</app-content>
+<div mat-dialog-actions class="d-flex flex-row justify-content-center">
+    <button-cancel wording="Back" class="mr-1" (click)="onCancel()"></button-cancel>
+    <button-save [disabled]="formGroup.status=='VALID'?false:true" (click)="onSave()"></button-save>
+</div>

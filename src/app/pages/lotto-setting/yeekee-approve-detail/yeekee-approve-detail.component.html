@@ -1,0 +1,339 @@
+<div class="d-flex flex-column">
+  <div class="d-flex">
+    <div class="d-flex flex-row w-100 d-flex justify-content-start">
+      <button-cancel wording="Back" (click)="goBack()"></button-cancel>
+    </div>
+  </div>
+  <app-content class="mt-3" title="{{className +' งวด : ' + installment + ' รอบ : ' + roundNumber}}" subtitle="Logging">
+    <div class="d-flex flex-row mb-3 col-12" style="flex-wrap: wrap;">
+      <app-content class="col-lg-12 mt-3 col-12" title="สรุปข้อมูล / เลขที่ออก" subtitle="Logging">
+        <div class="d-flex flex-row">
+          <h3 class="col-lg-6 mt-3 col-12">
+            Earning Percent : {{earningsPercent}}
+          </h3>
+        </div>
+        <div class="d-flex flex-row ">
+          <h3 class="col-lg-6 mt-3 col-12">
+            Sum Number : {{showSumNumber}}
+          </h3>
+          <h3 class="col-lg-6 mt-3 col-12">
+            เลขลำดับที่ 16 : {{showNumberNo16}}
+          </h3>
+        </div>
+        <div class="d-flex flex-row ">
+          <h3 class="col-lg-4 mt-3 col-12">
+            ผลเลขที่ออก : {{lottoResult}}
+          </h3>
+        </div>
+        <div class="d-flex flex-row ">
+          <h3 class="col-lg-6 mt-3 col-12">
+            2 ตัวล่าง : {{lottoBot}}
+          </h3>
+          <h3 class="col-lg-6 mt-3 col-12">
+            3 ตัวบน : {{lottoTop}}
+          </h3>
+        </div>
+
+      </app-content>
+    </div>
+    <div class="d-flex flex-row mb-3" style="flex-wrap: wrap;">
+      <app-content class="col-lg-6 mt-3 col-12" title="สรุปข้อมูลเลข ล่างที่ถูก" subtitle="Logging">
+        <div class="d-flex flex-lg-row pb-3">
+          <div class="w-100 p-1 col-lg-12 col-12">
+            <h3 class="mr-5">Sum Bet: {{sumBot | number:'1.2-2'}} ฿</h3>
+          </div>
+        </div>
+        <div style="overflow-x: auto">
+          <table mat-table matSort [dataSource]="dataTest2" class="table-striped  mb-3">
+            <ng-container matColumnDef="lottoNumber">
+              <th mat-header-cell *matHeaderCellDef> เลขที่ต้องจ่าย </th>
+              <td mat-cell *matCellDef="let element">
+                  {{element.lottoNumber}}
+              </td>
+              <td mat-footer-cell *matFooterCellDef></td>
+            </ng-container>
+
+            <ng-container matColumnDef="sumPrize">
+              <th mat-header-cell *matHeaderCellDef> ราคา </th>
+              <td mat-cell *matCellDef="let element">
+                {{element.sumPrize | number:'1.2-2'}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="earning">
+              <th mat-header-cell *matHeaderCellDef> กำไร(฿) </th>
+              <td mat-cell *matCellDef="let element">
+                <span *ngIf="element.earning<0" style="color: red;" >
+                  {{element.earning | number:'1.2-2'}}
+                </span>
+                <span *ngIf="element.earning>0">
+                  {{element.earning | number:'1.2-2'}}
+                </span>
+               
+              </td>
+              <td mat-footer-cell *matFooterCellDef></td>
+            </ng-container>
+
+            <ng-container matColumnDef="percentLoss">
+              <th mat-header-cell *matHeaderCellDef> เปอร์เซนต์การจ่าย </th>
+              <td mat-cell *matCellDef="let element">
+                <span *ngIf="element.percentLoss>percentResult" style="color: red;" >
+                  {{element.percentLoss | number:'1.2-2'}}
+                </span>
+                <span *ngIf="element.percentLoss<=percentResult" style="color: #1cd822;">
+                  {{element.percentLoss | number:'1.2-2'}}
+                </span>
+              </td>
+              <td mat-footer-cell *matFooterCellDef></td>
+            </ng-container>
+
+            <ng-container matColumnDef="countUser">
+              <th mat-header-cell *matHeaderCellDef> จำนวนคนที่ถูก </th>
+              <td mat-cell *matCellDef="let element">
+                {{element.countUser}}
+              </td>
+              <td mat-footer-cell *matFooterCellDef></td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="trTop"></tr>
+            <tr mat-row *matRowDef="let row; columns: trTop"></tr>
+          </table>
+        </div>
+      </app-content>
+      <app-content class="col-lg-6 mt-3 col-12" title="สรุปข้อมูลเลข บนที่ถูก" subtitle="Logging">
+        <div class="d-flex flex-lg-row pb-3">
+          <div class="w-100 p-1 col-lg-12 col-12">
+            <h3 class="mr-5">Sum Bet: {{sumTop | number:'1.2-2'}} ฿</h3>
+          </div>
+        </div>
+        <div style="overflow-x: auto">
+          <table mat-table matSort [dataSource]="dataTest" class="table-striped  mb-3">
+            <ng-container matColumnDef="lottoNumber">
+              <th mat-header-cell *matHeaderCellDef> เลขที่ถูก </th>
+              <td mat-cell *matCellDef="let element">
+                <a>
+                  {{element.lottoNumber}}
+                </a>
+              </td>
+              <td mat-footer-cell *matFooterCellDef></td>
+            </ng-container>
+
+            <ng-container matColumnDef="sumPrize">
+              <th mat-header-cell *matHeaderCellDef> ราคา </th>
+              <td mat-cell *matCellDef="let element">
+                {{element.sumPrize | number:'1.2-2'}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="earning">
+              <th mat-header-cell *matHeaderCellDef> กำไร(฿) </th>
+              <td mat-cell *matCellDef="let element">
+                <span *ngIf="element.earning<0" style="color: red;" >
+                  {{element.earning | number:'1.2-2'}}
+                </span>
+                <span *ngIf="element.earning>0">
+                  {{element.earning | number:'1.2-2'}}
+                </span>
+              </td>
+              <td mat-footer-cell *matFooterCellDef></td>
+            </ng-container>
+
+            <ng-container matColumnDef="percentLoss">
+              <th mat-header-cell *matHeaderCellDef> เปอร์เซนต์การจ่าย </th>
+              <td mat-cell *matCellDef="let element">
+                <span *ngIf="element.percentLoss>percentResult" style="color: red;" >
+                  {{element.percentLoss | number:'1.2-2'}}
+                </span>
+                <span *ngIf="element.percentLoss<=percentResult" style="color: #1cd822;">
+                  {{element.percentLoss | number:'1.2-2'}}
+                </span>
+              </td>
+              <td mat-footer-cell *matFooterCellDef></td>
+            </ng-container>
+
+            <ng-container matColumnDef="countUser">
+              <th mat-header-cell *matHeaderCellDef> จำนวนคนที่ถูก </th>
+              <td mat-cell *matCellDef="let element">
+                {{element.countUser}}
+              </td>
+              <td mat-footer-cell *matFooterCellDef></td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="trTop"></tr>
+            <tr mat-row *matRowDef="let row; columns: trTop"></tr>
+          </table>
+        </div>
+      </app-content>
+    </div>
+
+  </app-content>
+
+  <form [formGroup]="formChangeNumber" >
+    <app-content class="col-lg-12 mt-3 col-12" title="กรอกเลขที่ต้องการออกผล" subtitle="Logging" >
+      <mat-form-field floatLabel="always" appearance="outline" class="w-100 p-1 col-lg-5 col-12">
+        <mat-label><span>*</span>YEEKEE Number 2 ล่าง: </mat-label>
+        <input matInput required maxlength="2" formControlName="digitBot"  type="text" mask="00"  />
+        <mat-error>
+          กรุณากรอกเลข 2 ตัวบน
+        </mat-error>
+      </mat-form-field>
+      
+      <mat-form-field floatLabel="always" appearance="outline" class="w-100 p-1 col-lg-5 col-12">
+        <mat-label><span>*</span>YEEKEE Number 3 ตัวบน: </mat-label>
+        <input matInput required maxlength="3" formControlName="digitTop"  type="text" mask="000" />
+        <mat-error>
+          กรุณากรอกเลข 3 ตัวบน
+        </mat-error>
+      </mat-form-field>
+      
+      &nbsp;
+      <button-save (click)="submitNumber()"  [disabled]="formChangeNumber.status=='VALID'?false:true" ></button-save>
+    </app-content>
+  </form>
+ 
+
+  <div class="d-flex flex-row" style="flex-wrap: wrap;">
+
+    <app-content class="col-lg-6 mt-3 col-12" title="Bot Number Result" subittle="Logging">
+      <div class="d-flex flex-lg-row pb-3">
+        <div class="w-100 p-1 col-lg-12 col-12">
+          <mat-label class="mr-5">Sum Bet: {{sumBot | number:'1.2-2'}} ฿</mat-label>
+        </div>
+      </div>
+      <div style="overflow-x: auto">
+        <table mat-table matSort [dataSource]="dataInputBot" class="table-striped  mb-3">
+          <ng-container matColumnDef="lottoNumber">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> เลขที่ต้องจ่าย </th>
+            <td mat-cell *matCellDef="let element">
+                {{element.lottoNumber }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="sumPrize">
+            <th mat-header-cell *matHeaderCellDef> ราคา </th>
+            <td mat-cell *matCellDef="let element">
+              {{element.sumPrize | number:'1.2-2'}}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="earning">
+            <th mat-header-cell *matHeaderCellDef> กำไร(฿) </th>
+            <td mat-cell *matCellDef="let element">
+              {{element.earning | number:'1.2-2'}}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="percentLoss">
+            <th mat-header-cell *matHeaderCellDef> เปอร์เซนต์การจ่าย </th>
+            <td mat-cell *matCellDef="let element">
+              <span *ngIf="element.percentLoss>earningsPercent">
+                {{element.percentLoss | number:'1.2-2'}}
+              </span>
+              <span *ngIf="element.percentLoss<earningsPercent">
+                {{element.percentLoss | number:'1.2-2'}}
+              </span>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="countUser">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> จำนวนคนที่ถูก </th>
+            <td mat-cell *matCellDef="let element">
+              {{element.countUser}}
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="trBot"></tr>
+          <tr mat-row *matRowDef="let row; columns: trBot"></tr>
+        </table>
+        <mat-paginator #paginator1 [pageSize]="10" [pageSizeOptions]="[10, 20, 50]" [showFirstLastButtons]="true">
+        </mat-paginator>
+      </div>
+    </app-content>
+
+    <app-content class="col-lg-6 mt-3 col-12" title="Top Number Result" subittle="Logging">
+      <div class="d-flex flex-lg-row pb-3">
+        <div class="w-100 p-1 col-lg-12 col-12">
+          <mat-label class="mr-5">Sum Bet: {{sumTop | number:'1.2-2'}} ฿</mat-label>
+        </div>
+      </div>
+      <div style="overflow-x: auto">
+        <table mat-table matSort [dataSource]="dataInputTop" class="table-striped  mb-3">
+          <ng-container matColumnDef="lottoNumber">
+            <th mat-header-cell *matHeaderCellDef> เลขที่ต้องจ่าย </th>
+            <td mat-cell *matCellDef="let element">
+              <a>
+                {{element.lottoNumber}}
+              </a>
+            </td>
+            <td mat-footer-cell *matFooterCellDef></td>
+          </ng-container>
+
+          <ng-container matColumnDef="sumPrize">
+            <th mat-header-cell *matHeaderCellDef> ราคา </th>
+            <td mat-cell *matCellDef="let element">
+              {{element.sumPrize | number:'1.2-2'}}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="earning">
+            <th mat-header-cell *matHeaderCellDef> กำไร(฿) </th>
+            <td mat-cell *matCellDef="let element">
+              {{element.earning | number:'1.2-2'}}
+            </td>
+            <td mat-footer-cell *matFooterCellDef></td>
+          </ng-container>
+
+          <ng-container matColumnDef="percentLoss">
+            <th mat-header-cell *matHeaderCellDef> เปอร์เซนต์การจ่าย </th>
+            <td mat-cell *matCellDef="let element">
+              <span *ngIf="element.percentLoss>earningsPercent">
+                {{element.percentLoss | number:'1.2-2'}}
+              </span>
+              <span *ngIf="element.percentLoss<earningsPercent">
+                {{element.percentLoss | number:'1.2-2'}}
+              </span>
+            </td>
+            <td mat-footer-cell *matFooterCellDef></td>
+          </ng-container>
+
+          <ng-container matColumnDef="countUser">
+            <th mat-header-cell *matHeaderCellDef> จำนวนคนที่ถูก </th>
+            <td mat-cell *matCellDef="let element">
+              {{element.countUser}}
+            </td>
+            <td mat-footer-cell *matFooterCellDef></td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="trTop"></tr>
+          <tr mat-row *matRowDef="let row; columns: trTop"></tr>
+        </table>
+
+        <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[10, 20, 50]" [showFirstLastButtons]="true">
+        </mat-paginator>
+      </div>
+    </app-content>
+  </div>
+
+  <!-- <app-content class="mt-3" title="Top Number Result" subtitle="Logging">
+        <div class="flex-lg-row">
+            <div class="w-100 p-1 col-lg-4 col-12"></div>
+            <app-table-mat [length]="dataInputTop.data.length" [columns]="columnTop" [dataInput]="dataInputTop"
+                [displayedColumns]="trTop"></app-table-mat  le-mat>
+
+        </div>
+    </app-content>
+    <app-content class="mt-3" title="Top Number Result" subtitle="Logging">
+        <div class="flex-lg-row">
+            <div class="w-100 p-1 col-lg-4 col-12"></div>
+            <app-table-mat [length]="dataInputTop.data.length" [columns]="columnTop" [dataInput]="dataInputTop"
+                [displayedColumns]="trTop"></app-table-mat>
+
+        </div>
+    </app-content> -->
+  <!-- <app-content class="mt-3" title="Bot Number Result" subtitle="Logging">
+        <div class="flex-lg-row">
+
+            <app-table-mat #paginator [length]="dataInputBot.length" [columns]="columnBot" [dataInput]="dataInputBot"
+                [displayedColumns]="trBot"></app-table-mat>
+        </div>
+        <button-save (click)="test2()"></button-save>
+    </app-content> -->
+</div>

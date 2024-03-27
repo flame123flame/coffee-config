@@ -1,0 +1,108 @@
+<div class="d-flex flex-column">
+
+    <div class="d-flex">
+        <div class="d-flex flex-row w-100 d-flex justify-content-start">
+            <button-cancel wording="Back" (click)="goBack()"></button-cancel>
+        </div>
+        <div class="d-flex flex-row w-100 d-flex justify-content-end">
+            <button-add wording="Add" (click)="onClickAdd($event)"></button-add>
+        </div>
+        <!-- -----------------------------------------User Draft Later------------------------------------------ -->
+        <!-- <div class="flex-row w-100 justify-content-end">
+            <button mat-raised-button (click)="getOnDraftConfig()">Draft</button>
+            
+        </div> -->
+    </div>
+    <ng-container *ngIf="groupRiskData.length == 0">
+        <app-content class='mb-2' title="{{title}}">
+            NO DATA LOTTO GROUP. PLEASE GO TO ADD GROUP
+        </app-content>
+    </ng-container>
+    <div *ngIf="groupRiskData.length > 0">
+        <app-content class="mt-3" title="{{title}}" subtitle="Logging"></app-content>
+        <!-- loop group -->
+        <div class="flex-row" *ngFor="let groupRisk of groupRiskData; let i = index">
+            <app-content class="mt-3" title="" subtitle="Logging">
+                <div class="d-flex flex-row w-100 justify-content-end pb-2">
+                    <!-- <button-edit class="pr-1" (click)="onClickEdit(groupRiskList[i].lottoGroupCode)"></button-edit> -->
+                    <p>
+                        <button class="mr-2" mat-raised-button (click)="onClickEditRiskGroup(i)">Edit
+                            Risk/Group</button>
+                        <button-delete (click)="onClickDeleteGroup(groupRisk.groupCode)"></button-delete>
+                    </p>
+                </div>
+                <div class="d-flex flex-row flex-wrap pb-2">
+                    <div class="col-12 mt-1 col-lg-6  d-flex flex-row">
+                        <div class="col-4 p-0">Group Name:</div>
+                        <div class="col-8 p-0 content">{{groupRisk.groupName}}</div>
+                    </div>
+                    <div class="col-12 mt-1 col-lg-6  d-flex flex-row">
+                        <div class="col-5 p-0">Max Close (฿):</div>
+                        <div class="col-7 p-0 content">{{groupRiskData[i].groupMaxClose | number:'1.2-2'}}</div>
+                    </div>
+                    <div class="col-12 mt-1 col-lg-6  d-flex flex-row">
+                        <div class="col-4 p-0">Earning Percent (%):</div>
+                        <div class="col-8 p-0 content">{{groupRiskData[i].groupEarningsPercent}}</div>
+                    </div>
+                </div>
+
+                <!-- loop risk -->
+                <!-- <div class="d-flex flex-column contaier-detail justify-content-start p-2 mb-3" *ngIf="groupRiskList?.length > 0"> -->
+                <div class="d-flex flex-column contaier-detail justify-content-start p-2 mb-3"
+                    *ngFor="let data of groupRisk.groupRiskList; let j = index">
+
+                    <!-- <div class="d-flex flex-row w-100 justify-content-end pb-2">
+                            <div class="col-12 mt-1 col-lg-6  d-flex flex-row">
+                                {{data.kindName}}
+                            </div>
+                            <button class="mr-2" mat-raised-button
+                                (click)="onClickEditMinMax(data.kindCode, data.kindName)">Add Minimum/Maximum</button>
+                            <button class="mr-2" mat-raised-button
+                                (click)="onClickEditPrize(i, data.kindCode, data.kindName)">Edit Prize</button>
+                            <button-delete (click)="onClickDeleteRisk()"></button-delete>
+                        </div> -->
+
+                    <div class="d-flex bd-highlight pb-2">
+                        <div class="pl-3 pt-2 flex-grow-1 bd-highlight" style="font-size: 20px;">
+                            {{data.kindName}}
+                        </div>
+                        <div class="p-1 bd-highlight"><button class="mr-2" mat-raised-button
+                                (click)="onClickEditMinMax(data.kindCode, data.kindName, i)">Add
+                                Minimum/Maximum</button></div>
+                        <div class="p-1 bd-highlight"> <button class="mr-2" mat-raised-button
+                                (click)="onClickEditPrize(i, data.kindCode, data.kindName)">Edit Prize</button>
+                        </div>
+
+                        <div class="p-1 bd-highlight">
+                            <button-delete (click)="onClickDeleteKind(data.kindCode, groupRisk.groupCode)">
+                            </button-delete>
+                        </div>
+
+                    </div>
+                    <div *ngIf='data.minmax.length!=0'>
+                        <app-content>
+                            <app-table-mat [columns]="columns" [dataInput]="data.minmax" [displayedColumns]="tr"
+                                [displayPaginator]="false">
+                            </app-table-mat>
+                        </app-content>
+                    </div>
+                    <div *ngIf='data.prize.length!=0'>
+                        <app-content>
+                            <app-table-mat *ngIf="data.prize['0'].prizeList"
+                                [columns]="createColumns(data.prize['0'].prizeList)"
+                                [dataInput]="getRowAndColList(data.prize)"
+                                [displayedColumns]="createTr(data.prize['0'].prizeList)" [displayPaginator]="false">
+                            </app-table-mat>
+
+                            <!-- <app-table-mat *ngIf="data.prize['0'].prizeList" [columns]="getXColumn(data.kindCode, groupRisk.groupCode)" [dataInput]="getRowAndColList(data.prize)" [displayedColumns]="createTr(data.prize['0'].prizeList)" [displayPaginator]="false">
+                            </app-table-mat> -->
+                        </app-content>
+                    </div>
+                </div>
+            </app-content>
+        </div>
+
+
+    </div>
+
+</div>

@@ -1,0 +1,187 @@
+<div class="d-flex flex-column w-auto">
+  <div class="d-flex" *ngIf="isDraft">
+    <div class="d-flex flex-row w-100 d-flex justify-content-start">
+      <button-cancel wording="Back" (click)="goBack()"></button-cancel>
+    </div>
+  </div>
+  <br>
+  <mat-card class="mb-1">
+    <mat-card-title class="mb-1">
+      <h2>LOTTO {{category}}</h2>
+    </mat-card-title>
+    <div class="d-flex flex-lg-column flex-column">
+      <form [formGroup]="formAddLotto">
+        <div class="flex-lg-row">
+          <mat-form-field floatLabel="always" appearance="outline" class="col-lg-3">
+            <mat-label><span style="color: red">*</span>Code</mat-label>
+            <input matInput formControlName="lottoClassCode" [readonly]="disable" required />
+          </mat-form-field>
+          <mat-form-field floatLabel="always" appearance="outline" class="col-lg-3">
+            <mat-label><span style="color: red">*</span>Prefix Code</mat-label>
+            <input matInput required formControlName="prefixCode" [readonly]="disable" [readonly]="isDraft" />
+          </mat-form-field>
+          <mat-form-field floatLabel="always" appearance="outline" class="col-lg-3">
+            <mat-label><span style="color: red">*</span>Name</mat-label>
+            <input matInput formControlName="lottoClassName" required [readonly]="isDraft" />
+          </mat-form-field>
+          <mat-form-field floatLabel="always" appearance="outline" class="col-lg-3">
+            <mat-label><span style="color: red">*</span>Installment Type</mat-label>
+            <mat-select formControlName="typeInstallment" required (selectionChange)="onChangeTypeInstallment($event.value)" [disabled]="isDraft">
+              <mat-option value="MONTHLY">MONTHLY</mat-option>
+              <mat-option value="DAILY">DAILY</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="flex-column pt-2">
+          <mat-form-field floatLabel="always" appearance="outline" class="col-lg-3">
+            <mat-label><span style="color: red">*</span>สามารถคืนได้หลังจากซื้อ(ช.ม.)</mat-label>
+            <input type="text" mask="separator.0" thousandSeparator="," formControlName="timeAfterBuy" matInput required [readonly]="isDraft" />
+          </mat-form-field>
+          <mat-form-field floatLabel="always" appearance="outline" class="col-lg-3">
+            <mat-label><span style="color: red">*</span>สามารถคืนก่อนหวยปิด(ช.ม.)</mat-label>
+            <input type="text" mask="separator.0" thousandSeparator="," formControlName="timeBeforeLotto" matInput required [readonly]="isDraft" />
+          </mat-form-field>
+          <mat-form-field floatLabel="always" appearance="outline" class="col-lg-3">
+            <mat-label><span style="color: red">*</span>จำนวนครั้งที่คืนโพยได้</mat-label>
+            <input type="text" mask="separator.0" thousandSeparator="," f matInput required formControlName="countRefund" [readonly]="isDraft" />
+          </mat-form-field>
+          <mat-form-field floatLabel="always" appearance="outline" class="col-lg-3">
+            <mat-label><span style="color: red">*</span>COLOR (e.g.,#254284)</mat-label>
+            <input formControlName="lottoClassColor" matInput required [readonly]="isDraft" />
+          </mat-form-field>
+        </div>
+
+        <div class="flex-column pt-2">
+          <span class="example-list-section col-lg-3">
+            <mat-checkbox class="example-margin" formControlName="autoUpdateWallet" [disabled]="isDraft">
+              อัพเดตเงินเข้ากระเป๋าอัตโนมัติเมื่อถูกรางวัล
+            </mat-checkbox>
+          </span>
+          <ng-container *ngIf="formAddLotto.controls.typeInstallment.value == 'DAILY'">
+            <span class="example-list-section col-lg-3">
+              <mat-checkbox class="example-margin" formControlName="ignoreWeekly" [disabled]="isDraft">
+                เว้นวันหยุดสุดสัปดาห์
+              </mat-checkbox>
+            </span>
+          </ng-container>
+        </div>
+
+        <!-- <div class="d-flex flex-lg-row flex-column">
+          <div class="col-lg-6 col-12">
+            <app-mat-multiple-select-chip label='Group Level' [selectList]='groupList' selectDisplay="groupName"
+              selectValue="groupCode" [useFromControl]='true' formName='groupList' [formGroup]='formAddLotto'>
+            </app-mat-multiple-select-chip>
+          </div>
+          <div class="col-lg-6 col-12">
+            <app-mat-multiple-select-chip label='Affiliate' [selectList]='affiliateList' selectDisplay="groupName"
+              selectValue="affiliateGroupCode" [useFromControl]='true' formName='affiliateList'
+              [formGroup]='formAddLotto'></app-mat-multiple-select-chip>
+          </div>
+        </div> -->
+        <br>
+        <div class="flex-lg-row" *ngIf="formAddLotto.controls.typeInstallment.value != '24_HOUR' && !isDraft">
+          <button-add wording="" (click)="
+              this.getTimeSell.push(
+                this.newTimeSell(formAddLotto.controls.typeInstallment.value)
+              )
+            "></button-add>
+        </div>
+
+        <div formArrayName="timeSell">
+          <div class="flex-lg-row" *ngFor="let timedata of getTimeSell.controls; let i = index">
+            <div [formGroupName]="i">
+              <div class="d-flex flex-lg-row flex-column" *ngIf="formAddLotto.controls.typeInstallment.value != '24_HOUR'">
+                <ng-container *ngIf="formAddLotto.controls.typeInstallment.value != 'DAILY'">
+                  <mat-form-field appearance="fill" class="col-lg-2">
+                    <mat-label>Start Date</mat-label>
+                    <mat-select formControlName="dateStart" required>
+                      <mat-option *ngFor="let day of number" [value]="day + '/01/2020'">
+                        {{ day }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </ng-container>
+                <label>Start Time</label>
+                <div class="d-flex flex-lg-row mr-4">
+                  <timepicker [disabled]="isDraft" formControlName="timeStart" [showMeridian]="false" [hourStep]="1" [minuteStep]="1" [showSpinners]="false" required></timepicker>
+                </div>
+                <ng-container *ngIf="formAddLotto.controls.typeInstallment.value != 'DAILY'">
+                  <mat-form-field appearance="fill" class="col-lg-2">
+                    <mat-label>End Date</mat-label>
+                    <mat-select formControlName="dateEnd" required>
+                      <mat-option *ngFor="let day of number" [value]="day + '/01/2020'">
+                        {{ day }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </ng-container>
+                <label>End Time</label>
+                <div class="d-flex flex-lg-row mr-3">
+                  <timepicker [disabled]="isDraft" formControlName="timeEnd" [showMeridian]="false" [hourStep]="1" [minuteStep]="1" [showSpinners]="false" required></timepicker>
+                </div>
+                <div *ngIf="!isDraft">
+                  <button-delete wording="" (click)="removeTime(i, timedata.value.timeSellCode)"></button-delete>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="flex-column pt-2">
+          <div class="w-100 p-1 col-lg-3">
+            <label><span style="color: red">*</span>Image</label>
+            <br />
+            <input *ngIf="!isDraft" (change)="preview(file.files)" #file type="file" />
+            <p *ngIf="!isDraft">Image size limit : 1 MB</p>
+            <p *ngIf="!isDraft">Support formats : JPG, PNG, GIF, BMP</p>
+          </div>
+          <div class="w-100 p-1 col-lg-3 col-12" *ngIf="tmp">
+            <img [src]="tmp" height="150" width="150" style="background-image: url('/assets/images/table_bg.jpg')" />
+          </div>
+        </div>
+      </form>
+
+      <!-- <div floatLabel="always" appearance="outline" class="flex-lg-row">
+        <label><span style="color: red">*</span>Rule Description</label>
+        <text-editor [Ckdata]="formAddLotto.controls.ruleDes.value" [Ckreadonly]="isDraft" (onEnter)="onChange($event)"></text-editor>
+      </div> -->
+    </div>
+
+    <form [formGroup]="formAddLotto">
+      <div class="d-flex flex-row flex-wrap pb-2">
+        <div class="col-12 mt-1 col-lg-6  d-flex flex-row" *ngIf="isDraft">
+          <div class="col-4 p-0">Created By:</div>
+          <div class="col-8 p-0 content">{{dataDraftShow?.createdBy}}</div>
+        </div>
+        <div class="col-12 mt-1 col-lg-6  d-flex flex-row" *ngIf="isDraft">
+          <div class="col-5 p-0">Created At:</div>
+          <div class="col-7 p-0 content">{{dataDraftShow?.createdAt}}</div>
+        </div>
+        <mat-form-field floatLabel="always" appearance="outline" class="col-lg-12 mt-2">
+          <mat-label><span style="color: red">*</span>REMARK VERSION</mat-label>
+          <textarea matInput formControlName="remarkVersion" [readonly]="isDraft" required rows="3"></textarea>
+        </mat-form-field>
+      </div>
+    </form>
+
+    <div class="d-flex flex-row justify-content-center mt-3">
+      <button-cancel *ngIf="!isDraft" (click)="goBack()"></button-cancel>
+      <button-save *ngIf="!isDraft" [disabled]="checkFrom()" (click)="onSubmit()"></button-save>
+    </div>
+
+    <div class="d-flex flex-row w-100 justify-content-end" *ngIf="isDraft">
+      <ng-container>
+        <div class="d-flex flex-row w-100 justify-content-center  mb-3">
+          <button mat-raised-button color="warn" (click)="confirmApprove(false)">REJECT</button>
+          &nbsp;
+          &nbsp;
+          &nbsp;
+          <button mat-raised-button color="primary" (click)="confirmApprove(true)">APPROVE</button>
+        </div>
+      </ng-container>
+    </div>
+
+    <app-table-mat *ngIf="isDraft" [columns]="columnsApprove" [dataInput]="listApprove" [displayedColumns]="trApprove" [actionSetting]="actionSettingApp"></app-table-mat>
+
+  </mat-card>
+</div>

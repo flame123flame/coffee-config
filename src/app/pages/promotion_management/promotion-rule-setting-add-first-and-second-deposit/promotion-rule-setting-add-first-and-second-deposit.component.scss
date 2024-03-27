@@ -1,0 +1,27 @@
+.mat-radio-button ~ .mat-radio-button {
+    margin-left: 16px;
+}
+
+.required-span {
+    color: red;
+}
+
+.mat-column-Index {
+    flex: 0 0 8% !important;
+}
+
+.mat-column-Action {
+    flex: 0 0 5% !important;
+}
+
+mat-tree {
+  overflow: auto;
+  height: fit-content;
+  max-height: 200px;
+  border: 1px #cccccc solid;
+  border-radius: 3%;
+}
+
+mat-tree-node {
+  overflow: visible !important;
+}

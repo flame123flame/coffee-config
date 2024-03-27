@@ -1,0 +1,23 @@
+<h1 mat-dialog-title>Update Status</h1>
+<div mat-dialog-content>
+    <form [formGroup]="formUpdateIssue">
+        <div class="d-flex flex-column  w-auto">
+            <mat-form-field>
+                <mat-label>Note</mat-label>
+                <input formControlName='adminRemark' matInput>
+            </mat-form-field>
+            <div class="d-flex flex-column  w-auto">
+                <mat-label class="mr-2">Auto Rebate :</mat-label>
+                <mat-radio-group formControlName="status">
+                    <mat-radio-button [value]="'APPROVE'">APPROVE</mat-radio-button>
+                    <mat-radio-button [value]="'REJECT'">REJECT</mat-radio-button>
+                </mat-radio-group>
+            </div>
+        </div>
+    </form>
+
+</div>
+<div mat-dialog-actions class="d-flex flex-row justify-content-center">
+    <button-cancel class="mr-1" (click)="onCancel()"></button-cancel>
+    <button-save (click)="onUpdate()"></button-save>
+</div>

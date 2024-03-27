@@ -1,0 +1,45 @@
+<div class="d-flex flex-column">
+    <app-content title="Landing Setting Add">
+        <div class="d-flex flex-column">
+            <form [formGroup]="form">
+                <div class="d-flex flex-lg-row flex-column">
+                    <mat-form-field appearance="outline" class="w-100 p-1 col-lg-6 col-12">
+                        <mat-label>Header</mat-label>
+                        <input matInput formControlName="header" />
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="w-100 p-1 col-lg-6 col-12">
+                        <mat-label>Config Path</mat-label>
+                        <input matInput formControlName="configPath" />
+                    </mat-form-field>
+                </div>
+
+                <div class="d-flex flex-lg-row flex-column">
+                    <mat-form-field floatLabel="always" appearance="outline" class="w-100 p-1 col-lg-12 col-12">
+                        <mat-label>Description</mat-label>
+                        <textarea class="" matInput formControlName="detail" cdkTextareaAutosize cdkAutosizeMinRows="1"
+                            cdkAutosizeMaxRows="20"></textarea>
+                    </mat-form-field>
+                </div>
+                <div class="d-flex flex-lg-row flex-column">
+                    <div class="w-100 p-1 col-lg-3 col-12">
+                        <label><span style="color: red;">*</span>Image Landing</label>
+                        <br>
+                        <input (change)="preview(file.files)" #file type="file"/>
+                        <p>Image size limit : 1 MB</p>
+                        <p>Support formats : JPG, PNG, GIF, BMP</p>
+                    </div>
+                    <!-- <div class="w-100 p-1 col-lg-3 col-12" *ngIf="tmp">
+                        <img [src]="tmp" height="150" width="150"
+                            style="background-image: url('assets/images/table_bg.jpg');">
+                    </div> -->
+                </div>
+            </form>
+        </div>
+    </app-content>
+
+    <div class="d-flex justify-content-center">
+        <button-cancel class="pr-2" wording="cancel" (click)="onCancel()"></button-cancel>
+        <button-save class="pr-2" wording="Submit" [disabled]="form.status=='VALID'?false:true" (click)="onSubmit()">
+        </button-save>
+    </div>
+</div>

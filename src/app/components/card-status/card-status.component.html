@@ -1,0 +1,22 @@
+<div class="app-content-container">
+  <div *ngIf="icon" class="app-conetent-header scale-up-ver-bottom">
+    <div class="d-flex flex-row">
+      <div class="col-2 p-0 text-center">
+        <div class="content shadow-drop-center text-center" [style]="iconStyle">
+          <div *ngIf="icon" class="header">
+            <mat-icon aria-hidden="false" aria-label="Example home icon">{{
+              icon
+            }}</mat-icon>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-10 text-right">
+        <span class="header-title">{{title}}</span>
+      </div>
+    </div>
+  </div>
+  <div class="content p-2">
+    <ng-content></ng-content>
+  </div>
+</div>

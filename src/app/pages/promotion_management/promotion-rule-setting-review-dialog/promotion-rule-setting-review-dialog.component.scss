@@ -1,0 +1,18 @@
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-bottom: 1%;
+  margin-top: 1%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+  vertical-align: -webkit-baseline-middle;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}

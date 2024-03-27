@@ -1,0 +1,13 @@
+<div class="d-flex flex-column">
+  <app-content class="p-1 mt-3" title="Game Group" subtitle="Logging">
+    <div class="d-flex flex-row justify-content-end">
+      <button mat-raised-button class="p-1" style="background-color: #009688;color: white;margin: 5px;"
+        (click)="saveGameGroup()">ADD GAME GROUP</button>
+    </div>
+    <app-table-mat [columns]="gameGroupCol" [length]='groupLength' [dataInput]="gameGroupData"
+      [displayedColumns]="gameGroupTr" (deleteAction)="onDeleteGameGroup($event)"
+      (editAction)="onEditGameGroup($event)" (onPageChange)='pageGroupChange($event)'
+      (onSortChange)='sortGroupChange($event)'>
+    </app-table-mat>
+  </app-content>
+</div>

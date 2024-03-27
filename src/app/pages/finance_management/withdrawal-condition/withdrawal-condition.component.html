@@ -1,0 +1,55 @@
+<div class="d-flex flex-column">
+    <app-content>
+        <div class="d-flex flex-column">
+            <div class="flex-lg-row">
+                <mat-form-field appearance="outline" class="w-100 p-1 col-lg-3 col-12" floatLabel="always"
+                    (click)="picker.open()">
+                    <mat-label>Date</mat-label>
+                    <mat-date-range-input [rangePicker]="picker">
+                        <input [(ngModel)]="search.dateStart" matStartDate placeholder="Start Date"
+                            [disabled]="selected1 === '2'" />
+                        <input [(ngModel)]="search.dateEnd" matEndDate placeholder="End Date"
+                            [disabled]="selected1 === '2'" />
+                    </mat-date-range-input>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-date-range-picker #picker></mat-date-range-picker>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="w-100 p-1 col-lg-3 col-12" floatLabel="always">
+                    <mat-label>Condition Type</mat-label>
+                    <mat-select [(value)]="selected2" [(ngModel)]="search.conditionType">
+                        <mat-option [value]="null">All</mat-option>
+                        <mat-option value="GENERAL">General</mat-option>
+                        <mat-option value="PROMOTION">Promotion</mat-option>
+                        <mat-option value="REBATE">Rebate</mat-option>
+                        <mat-option value="CASHBACK">Cashback</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="w-100 p-1 col-lg-4 col-12" floatLabel="always">
+                    <mat-label>Player ID</mat-label>
+                    <input [(ngModel)]="search.username" matInput [disabled]="selected1 === ''"
+                        placeholder="Ex. username" />
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="w-100 p-1 col-lg-2 col-12" floatLabel="always">
+                    <mat-label>Pass?</mat-label>
+                    <mat-select [(ngModel)]="search.pass" [(value)]="selected7">
+                        <mat-option [value]="null">All</mat-option>
+                        <mat-option value="Pass">Pass</mat-option>
+                        <mat-option value="NOT_PASS">Not Pass</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div class="d-flex flex-row justify-content-center">
+                <button-reset (click)="resetFilter()"></button-reset>
+                <button-search (click)="getPaginate()"></button-search>
+            </div>
+        </div>
+    </app-content>
+    <app-content class="mt-3" title="Withdrawal Condition List">
+        <app-table-mat [columns]="columns" [length]='length' [dataInput]="data" [displayedColumns]="tr"
+            [actionSetting]="actionSetting" (onPageChange)='pageChange($event)' (onSortChange)='sortChange($event)'>
+        </app-table-mat>
+    </app-content>
+</div>

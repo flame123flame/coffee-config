@@ -1,0 +1,14 @@
+<div class="d-flex flex-column">
+    <!-- <div class="d-flex flex-row w-100 justify-content-end">
+        <button mat-raised-button class="btn-version">
+            <mat-icon style="color: rgb(255, 255, 255)"> history </mat-icon>
+            version ({{10}})
+        </button>
+        <button-add wording="Add User Dummy" (click)="addDummy(null)"></button-add>
+        <button-add wording="Add" (click)="addLottoYeekee()"></button-add>
+    </div> -->
+    <app-content class="mt-3" title="Lotto Yeekee Approved" subtitle="Logging">
+        <app-table-mat [length]="length" [columns]="columns" [dataInput]="dataInput" [displayedColumns]="tr" (onPageChange)='pageChange($event)' (detaileAction)="goDetail($event)"
+            [actionSetting]="actionSetting"></app-table-mat>
+    </app-content>
+</div>

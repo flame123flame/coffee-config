@@ -1,0 +1,52 @@
+@import "../../../assets/styles/varibles";
+
+mat-card {
+  width: 90%;
+  height: 90%;
+  background-color: whitesmoke !important;
+}
+
+mat-form-field {
+  width: 90%;
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
+mat-grid-tile {
+  background: #eeeeee;
+}
+
+mat-divider {
+  background-color: $tomato;
+  width: 90% !important;
+  height: 1%;
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
+section {
+  width: 90%;
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
+button {
+  background-color: $tomato;
+  // color: #fff;
+  width: 90% !important;
+  height: 1%;
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-top: 2%;
+}
+
+.bg {
+  background-color: #eeeeee;
+
+  background-size: cover;
+  position: fixed;
+  top: 0;
+  left: 0;
+  min-width: 100%;
+  min-height: 100%;
+}

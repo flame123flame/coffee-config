@@ -1,0 +1,324 @@
+<ng-container *ngIf="resData != null">
+  <app-content class="pt-3 pb-3 " title="Basic Setting" height=''>
+    <div class="d-flex flex-column">
+      <table>
+        <tr>
+          <td>
+            <p><span class='review-header'>Promotion Title</span></p>
+          </td>
+          <td>{{resData.promotion.promoTitle}}</td>
+        </tr>
+        <tr
+          *ngIf="resData.promotion.promoType === TYPE_FIRST_ANDS_SECOND || resData.promotion.promoType === TYPE_CUSTOMIZE || resData.promotion.promoType === TYPE_GENERAL_DEPOSIT">
+          <td>
+            <p><span class='review-header'>Application Platform</span></p>
+          </td>
+          <td
+            *ngIf="resData.promotion.promoType === TYPE_FIRST_ANDS_SECOND || resData.promotion.promoType === TYPE_CUSTOMIZE || resData.promotion.promoType === TYPE_GENERAL_DEPOSIT">
+            <p>{{resData.promotion.appPlatform}}</p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p><span class='review-header'>Promotion Period</span></p>
+          </td>
+          <td>
+            <div class="flex-lg-row" *ngIf="resData.promotion.promoPeriodType === 'Indefinite'">
+              <p>
+                Indefinite
+              </p>
+              <p>Start Date : {{formateDate(resData.promotion.startDate)}}</p>
+            </div>
+            <div class="flex-lg-row">
+              <ng-container *ngIf="resData.promotion.promoPeriodType === 'DatePeriod'">
+                <p>
+                  Date Period
+                </p>
+                <p>Start Date : {{formateDate(resData.promotion.startDate)}}</p>
+                <p>End Date : {{formateDate(resData.promotion.endDate)}}</p>
+              </ng-container>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </app-content>
+
+  <br>
+  <app-content height='' class="pt-3 pb-3" title="Posting Setting">
+    <table>
+      <tr>
+        <td>Image</td>
+        <td><img style='max-height: 250px;max-width: 90%;' [src]='resData.postSetting.deskBanner'></td>
+      </tr>
+      <tr>
+        <td>Message</td>
+        <td>{{resData.postSetting.deskDetail}}</td>
+      </tr>
+    </table>
+  </app-content>
+
+  <!--TODO:  section 2 -->
+  <app-content height='' class="pt-3 pb-3" title="Application Setting">
+    <table>
+      <tr
+        *ngIf="resData.promotion.promoType === TYPE_REGISTER || resData.promotion.promoType === TYPE_FIRST_ANDS_SECOND || resData.promotion.promoType === TYPE_GENERAL_DEPOSIT">
+        <td>Valid Period</td>
+        <td>{{findValidPeriod(resData.appSetting.validPeriod)}}</td>
+      </tr>
+      <tr>
+        <td>Verification Type</td>
+        <td>{{resData.appSetting.verificationType}}</td>
+      </tr>
+      <tr *ngIf="resData.promotion.promoType === TYPE_FIRST_ANDS_SECOND">
+        <td>Deposit Sequence</td>
+        <td>{{resData.appSetting.depositSequence}}</td>
+      </tr>
+    </table>
+  </app-content>
+
+  <br>
+  <app-content height='' class="pt-3 pb-3" title="Application Risk Control">
+    <table>
+      <tr *ngIf="resData.promotion.promoType === TYPE_CUSTOMIZE">
+        <td>Time Gap Limitation</td>
+        <td>
+          <p>Time Gap b/w Consecutive Application
+            {{resData.appSetting.timeGapLimitationEnable?'YES':'NO'}}</p>
+          <div>
+            <p>{{resData.appSetting.timeGapLimitationValue+' '+resData.appSetting.timeGapLimitationType}}</p>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>Allow Applicant</td>
+        <td>{{resData.appSetting.allowApp}}</td>
+      </tr>
+      <tr *ngIf="resData.appSetting.groupList">
+        <td>Group</td>
+        <td>
+          <span *ngFor="let code of strToArr(resData.appSetting.groupList);let i = index">
+            {{i!=0?', ':''}}{{ findInGroupList(code)}}
+          </span>
+        </td>
+      </tr>
+      <tr
+        *ngIf="(resData.promotion.promoType === TYPE_FIRST_ANDS_SECOND || resData.promotion.promoType === TYPE_CUSTOMIZE || resData.promotion.promoType === TYPE_GENERAL_DEPOSIT) && resData.appSetting.notAllowTag">
+        <td>Not Allowed Tag</td>
+        <td><span *ngFor="let id of strToArr(resData.appSetting.notAllowTag);let i = index">
+            {{i!=0?', ':''}}{{ findInNotAllowTag(id)}}
+          </span></td>
+      </tr>
+    </table>
+  </app-content>
+  <br>
+  <app-content class="pt-3 pb-3" title="Risk Setting" height=''>
+    <table>
+      <tr>
+        <td>Does not allow same IP address</td>
+        <td>{{resData.appSetting.sameIP?'Yes':'No'}}</td>
+      </tr>
+      <tr>
+        <td>Does not allow same real name</td>
+        <td>{{resData.appSetting.sameRealName?'Yes':'No'}}</td>
+      </tr>
+      <tr *ngIf="resData.appSetting.violationCountSetting">
+        <td>Validation Count Setting</td>
+        <td>If validated count is above {{resData.appSetting.violationCountSetting|number}} , request will be auto
+          declined</td>
+      </tr>
+    </table>
+  </app-content>
+
+  <!-- TODO: section 3 -->
+  <app-content height='' class="pt-3 pb-3" title="Bonus & Condition  Setting">
+
+    <table>
+      <tr>
+        <td colspan="2">Bonus Structure</td>
+      </tr>
+      <tr>
+        <td>Bonus Type</td>
+        <td>{{resData.ruleSetting.bonusType}}</td>
+      </tr>
+      <tr>
+        <td>Condition Type</td>
+        <td>{{resData.ruleSetting.conditionType}}</td>
+      </tr>
+      <tr *ngIf="resData.promotion.promoType === TYPE_CUSTOMIZE">
+        <td>Remove General Condition</td>
+        <td>{{resData.ruleSetting.removeGeneral}}</td>
+      </tr>
+    </table>
+
+    <table>
+      <tr>
+        <td colspan="2">Set Parameter</td>
+      </tr>
+      <tr *ngIf="resData.ruleSetting.bonusType === 'RandomAmount'">
+        <td>Single Bonus Amount Limit</td>
+        <td>{{resData.ruleSetting.amountLimitType}} {{resData.ruleSetting.amountLimit|number}}</td>
+      </tr>
+      <tr>
+        <td>Max Approve Limit</td>
+        <td>
+          {{resData.ruleSetting.maxApprovalLimit != 9999999999?'Limit':'Unlimited'}}
+          <span *ngIf="resData.ruleSetting.maxApprovalLimit != 9999999999"> {{resData.ruleSetting.maxApprovalLimit|number}}</span>
+        </td>
+      </tr>
+      <tr>
+        <td>Max Bonus Limit</td>
+        <td>{{resData.ruleSetting.maxBonusLimit  != 9999999999?'Limit':'Unlimited'}}
+          <span *ngIf="resData.ruleSetting.maxBonusLimit != 9999999999">{{resData.ruleSetting.maxBonusLimit|number}}</span>
+        </td>
+      </tr>
+      <tr *ngIf="resData.promotion.promoType === TYPE_REGISTER">
+        <td>
+          <p class="flex-lg-row p-2" *ngIf="resData.ruleSetting.bonusType === 'FixedAmount'">Give</p>
+          <p class="flex-lg-row p-2" *ngIf="resData.ruleSetting.bonusType !== 'FixedAmount'">Min. Randomized
+            Amount</p>
+        </td>
+        <td>Bonus Calculation({{
+          resData.ruleSetting.bonusType === "FixedAmount"
+            ? "Fixed Amount"
+            : "Random Amount"
+        }}) {{resData.ruleSetting.bonusCalculate|number}} THB</td>
+      </tr>
+      <tr *ngIf="resData.promotion.promoType === TYPE_REGISTER">
+        <td>
+          <p class="flex-lg-row p-2" *ngIf="resData.ruleSetting.conditionType !== 'FixedAmount'">Bonus *
+            Multiplier
+          </p>
+        </td>
+        <td>
+          <p><span class='review-header'></span>Condition Type({{
+            resData.ruleSetting.conditionType !== "FixedAmount"
+              ? "Muitiplier Condition"
+              : "Fixed Amount"
+          }}) {{resData.ruleSetting.multiplierCondition|number}}</p>
+          <span class="flex-lg-row p-2" *ngIf="resData.ruleSetting.conditionType !== 'FixedAmount'">times</span>
+          <span class="flex-lg-row p-2" *ngIf="resData.ruleSetting.conditionType === 'FixedAmount'">THB</span>
+        </td>
+      </tr>
+      <tr *ngIf="resData.promotion.promoType === TYPE_CUSTOMIZE">
+        <td>
+          <p class="flex-lg-row p-2" *ngIf="resData.ruleSetting.bonusType === 'FixedAmount'">Give</p>
+          <p class="flex-lg-row p-2" *ngIf="resData.ruleSetting.bonusType !== 'FixedAmount'">Min. Randomized Amount</p>
+        </td>
+        <td>
+          <p>Bonus Calculation(
+            <span *ngIf="resData.ruleSetting.bonusType === 'FixedAmount'">Fixed Amount</span>
+            <span *ngIf="resData.ruleSetting.bonusType === 'RandomAmount'">Random Amount</span>
+            <span *ngIf="resData.ruleSetting.bonusType === 'ManualApprove'">Manual Approve</span>
+            ){{resData.ruleSetting.bonusCalculate|number}} THB</p>
+        </td>
+      </tr>
+      <tr *ngIf="resData.promotion.promoType === TYPE_CUSTOMIZE && resData.ruleSetting.bonusType != 'ManualApprove'">
+        <td>
+          <p class="flex-lg-row p-2" *ngIf="resData.ruleSetting.conditionType !== 'FixedAmount'">Bonus *
+            Multiplier </p>
+        </td>
+        <td>
+          <p>Condition
+            Type({{ resData.ruleSetting.conditionType !== 'FixedAmount'?'Muitiplier Condition':'Fixed Amount'}})
+            {{resData.ruleSetting.multiplierCondition|number}} times
+          </p>
+        </td>
+      </tr>
+    </table>
+
+    <div class="flex-lg-row pb-5">
+      <div class="flex-lg-row mb-2">
+        <ng-container
+          *ngIf="resData.promotion.promoType === TYPE_FIRST_ANDS_SECOND || resData.promotion.promoType === TYPE_GENERAL_DEPOSIT">
+          <div class="flex-lg-row">
+            <table mat-table [dataSource]="depositLevelSource" class="mat-elevation-z8">
+              <ng-container matColumnDef="level">
+                <th mat-header-cell *matHeaderCellDef> level. </th>
+                <td mat-cell *matCellDef="let element;let i = index"> Lv. {{i+1}} </td>
+              </ng-container>
+              <ng-container matColumnDef="depositAmount">
+                <th mat-header-cell *matHeaderCellDef> Deposit Amt. </th>
+                <td mat-cell *matCellDef="let element;let i = index">
+                  <mat-form-field appearance="outline" class="w-100 p-1 col-lg-12 col-12">
+                    <mat-label> Deposit above</mat-label>
+                    <input disabled [(ngModel)]='element.depositAmount' type='number' matInput
+                      [ngModelOptions]="{standalone: true}">
+                  </mat-form-field>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="bonusRatio">
+                <th mat-header-cell *matHeaderCellDef>
+                  {{resData.ruleSetting.bonusType=='FixedAmount'?'Bonus Calculation(Fixed Amount)':'Bonus Calculation(Ratio Amount)'}}
+                </th>
+                <td mat-cell *matCellDef="let element;let i = index">
+                  <mat-form-field appearance="outline" class="w-100 p-1 col-lg-12 col-12">
+                    <mat-label>
+                      {{resData.ruleSetting.bonusType=='FixedAmount'?'Fixed Bonus Amount':'(Deposit)*Multiplier (%)'}}
+                    </mat-label>
+                    <input disabled [(ngModel)]='element.bonusRatio' type='number' matInput
+                      [ngModelOptions]="{standalone: true}">
+                  </mat-form-field>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="multiplier">
+                <th mat-header-cell *matHeaderCellDef> Condition Type(Multiplier Condition) </th>
+                <td mat-cell *matCellDef="let element;let i = index">
+                  <mat-form-field appearance="outline" class="w-100 p-1 col-lg-12 col-12">
+                    <mat-label> (Bonus+Deposit)*Multiplier</mat-label>
+                    <input disabled [(ngModel)]='element.multiplier' type='number' matInput
+                      [ngModelOptions]="{standalone: true}">
+                  </mat-form-field>
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+          </div>
+        </ng-container>
+
+      </div>
+    </div>
+  </app-content>
+
+  <app-content height='' class="pt-3 pb-3" title="Bonus Issue Setting">
+    <table>
+      <tr>
+        <td>Wallet for receive bonus</td>
+        <td>{{resData.ruleSetting.receiveBonusWallet}}</td>
+      </tr>
+      <tr *ngIf="resData.ruleSetting.receiveBonusWallet === 'BONUS'">
+        <td>Product Type</td>
+        <td>
+          <div class="flex-lg-row mb-2">
+            <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="w-100 h-200 p-1 col-12">
+              <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding>
+                <button mat-icon-button disabled></button>
+                <mat-checkbox class="checklist-leaf-node" disabled
+                  [checked]="checklistSelection.isSelected(node) || isCheck(node)"
+                  (change)="todoLeafItemSelectionToggle(node)">{{node.item.displayValue}}</mat-checkbox>
+              </mat-tree-node>
+              <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
+                <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.item">
+                  <mat-icon class="mat-icon-rtl-mirror">
+                    {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                  </mat-icon>
+                </button>
+                <mat-checkbox [checked]="descendantsAllSelected(node)" disabled
+                  [indeterminate]="descendantsPartiallySelected(node)" (change)="todoItemSelectionToggle(node)">
+                  {{node.item.displayValue}}</mat-checkbox>
+              </mat-tree-node>
+            </mat-tree>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </app-content>
+  <div class="d-flex flex-row justify-content-center m-3">
+    <button mat-button style="background-color: tomato; color: white"
+      (click)="onNoClick()">
+      Next
+    </button>
+  </div>
+</ng-container>

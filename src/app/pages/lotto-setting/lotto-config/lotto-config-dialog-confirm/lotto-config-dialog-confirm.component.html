@@ -1,0 +1,29 @@
+<div mat-dialog-content *ngIf="confirmStatus == 'DELETE'">
+    <div class="d-flex flex-row w-100 justify-content-center">
+        <h1 style="">Delete Confirmation</h1>
+    </div>
+    <div class="d-flex flex-row w-100 justify-content-center">
+        <p>Are you sure you want to delete?</p>
+    </div>
+</div>
+<div mat-dialog-content *ngIf="confirmStatus == 'SAVE'">
+    <div class="d-flex flex-row w-100 justify-content-center">
+        <h1>Save Confirmation</h1>
+    </div>
+    <div class="d-flex flex-row w-100 justify-content-center">
+        <p>Are you sure you want to save?</p>
+    </div>
+</div>
+
+<div mat-dialog-content *ngIf="confirmStatus == 'OTHER'">
+    <div class="d-flex flex-row w-100 justify-content-center">
+        <h1>{{topic}}</h1>
+    </div>
+    <div class="d-flex flex-row w-100 justify-content-center">
+        <p>{{content}}</p>
+    </div>
+</div>
+<div mat-dialog-actions class="d-flex flex-row justify-content-center">
+    <button-cancel *ngIf="confirmStatus != 'OTHER'" wording="cancel" [mat-dialog-close]="" class="pr-2"></button-cancel>
+    <button mat-raised-button color="warn" [mat-dialog-close]="data['status']" class="btn-confirm " (click)="Confirm()">Confirm</button>
+</div>

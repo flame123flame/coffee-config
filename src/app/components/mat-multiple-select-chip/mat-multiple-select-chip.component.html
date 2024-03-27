@@ -1,0 +1,48 @@
+<ng-container *ngIf="useFromControl; else elseTemplate">
+  <ng-container *ngIf="formGroup">
+    <form [formGroup]='formGroup'>
+      <mat-form-field appearance="outline" class="col-12 p-0">
+        <mat-label>{{label}}</mat-label>
+        <mat-select multiple matNativeControl [disabled]='disabled' [value]="formGroup.controls[formName].value" [formControlName]="formName">
+          <mat-select-trigger>
+            <mat-chip-list>
+              <mat-chip *ngFor="let item of formGroup.controls[formName].value" [removable]="true"
+              (removed)="removeGroupListFormGroup(item)">
+                {{ findSelectedDisplayValue(item) }}
+                <mat-icon matChipRemove>cancel</mat-icon>
+              </mat-chip>
+            </mat-chip-list>
+          </mat-select-trigger>
+          <mat-option *ngFor="let item of selectList" [value]="item[selectValue]">
+            {{item[selectDisplay]}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </form>
+  </ng-container>
+</ng-container>
+<ng-template #elseTemplate>
+  <mat-form-field appearance="outline" class="col-12 p-0">
+    <mat-label>{{label}}</mat-label>
+    <mat-select multiple matNativeControl [disabled]='disabled' [(value)]="selectedList">
+      <mat-select-trigger>
+        <mat-chip-list>
+          <mat-chip *ngFor="let item of selectedList" [removable]="true"
+          (removed)="removeGroupListFormGroup(item)">
+            {{ findSelectedDisplayValue(item) }}
+            <mat-icon matChipRemove>cancel</mat-icon>
+          </mat-chip>
+        </mat-chip-list>
+      </mat-select-trigger>
+      <mat-option *ngFor="let item of selectList" [value]="item[selectValue]">
+        {{item[selectDisplay]}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</ng-template>
+<!-- {{selectedList | json}}
+{{selectList | json}}
+{{selectDisplay}}
+{{selectValue}}
+{{mapDisplayField}}
+{{selectedDisplay}} -->

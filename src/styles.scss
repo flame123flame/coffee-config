@@ -1,0 +1,133 @@
+@import "~@angular/material/theming";
+@import "assets/styles/varibles";
+@include mat-core();
+$americano-cold-primary: mat-palette($mat-indigo);
+$americano-cold-secondary: mat-palette($mat-indigo);
+$americano-cold-thirdary: mat-palette($mat-indigo);
+$americano-cold-accent: mat-palette($mat-pink, A200, A100, A400);
+$americano-cold-warn: mat-palette($mat-red);
+$americano-cold-theme: mat-light-theme(
+  (
+    color: (
+      primary: $americano-cold-primary,
+      accent: $americano-cold-accent,
+      warn: $americano-cold-warn,
+    ),
+  )
+);
+
+@include angular-material-theme($americano-cold-theme);
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: "Kanit", sans-serif !important;
+  background: #272a30;
+}
+.btn-search {
+  background-color: $tomato;
+}
+*:focus {
+  outline: 0 !important;
+}
+
+table {
+  width: 100%;
+}
+
+.mat-form-field {
+  font-size: 12px;
+}
+.mat-form-field-appearance-outline .mat-form-field-outline-thick {
+  color: rgb(255, 99, 71, 0.6) !important;
+}
+// overwrite the checkbox background
+.mat-checkbox-checked .mat-checkbox-background,
+.mat-checkbox-indeterminate .mat-checkbox-background {
+  background-color: $tomato !important;
+}
+
+h3{
+  font-size: 20px; 
+  font-weight: 300; 
+  color: rgb(102 115 126);
+  font-family: "Kanit", sans-serif !important;
+}
+
+// overwrite the ripple overlay on hover and click
+.mat-checkbox:not(.mat-checkbox-disabled)
+  .mat-checkbox-ripple
+  .mat-ripple-element {
+  background-color: $tomato !important;
+}
+
+label {
+  margin-bottom: 0px !important;
+}
+
+.mat-focused .mat-form-field-label {
+  /*change color of label*/
+  color: $label-mat-form !important;
+}
+
+// .mat-form-field-outline {
+//   /*change color of underline*/
+//   color: $outline-mat-form !important;
+// }
+
+.mat-form-field-outline {
+  /*change color of underline*/
+  color: rgb(0, 0, 0,0.2) !important;
+}
+
+// ::ng-deep.mat-form-field-ripple {
+//   /*change color of underline when focused*/
+//   background-color: rgb(211, 100, 9) !important;
+// }
+
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgba($color: gray, $alpha: 0.6);
+  border-radius: 4px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+
+.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle{
+  border-color: tomato; 
+}
+
+.mat-radio-button.mat-accent .mat-radio-inner-circle{
+  color:tomato;
+  background-color:tomato ;
+}
+
+.mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element {
+    background-color:tomato;
+}
+
+.mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
+  background-color: rgb(255, 147, 128);
+}
+
+.mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
+  background-color: tomato;
+}

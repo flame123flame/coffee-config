@@ -1,0 +1,371 @@
+<div style="overflow-x: auto">
+  <table mat-table matSort (matSortChange)="_sortChange($event)" class="table-striped"
+    [dataSource]="castToDataSource(dataInput)" style="margin-top: 5px">
+    <ng-container matColumnDef="no">
+      <th mat-header-cell *matHeaderCellDef>
+        <mat-header-cell> # </mat-header-cell>
+      </th>
+      <td mat-cell *matCellDef="let row; let i = index">
+        <mat-cell> {{ i + 1 }} </mat-cell>
+      </td>
+    </ng-container>
+    <!-- Checkbox Column -->
+    <ng-container matColumnDef="select">
+      <th mat-header-cell *matHeaderCellDef>
+        <mat-checkbox class="pr-3" (change)="$event ? masterToggle() : null"
+          [checked]="selection.hasValue() && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()"
+          [aria-label]="checkboxLabel()">
+        </mat-checkbox>
+      </th>
+      <td mat-cell *matCellDef="let row">
+        <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
+          [checked]="selection.isSelected(row)" [aria-label]="checkboxLabel(row)">
+        </mat-checkbox>
+      </td>
+      <td mat-footer-cell *matFooterCellDef></td>
+    </ng-container>
+
+    <!-- Input Column -->
+
+    <!-- <ng-container matColumnDef="select">
+      <th mat-header-cell *matHeaderCellDef>
+        <mat-checkbox
+          class="pr-3"
+          (change)="$event ? masterToggle() : null"
+          [checked]="selection.hasValue() && isAllSelected()"
+          [indeterminate]="selection.hasValue() && !isAllSelected()"
+          [aria-label]="checkboxLabel()"
+        >
+        </mat-checkbox>
+      </th>
+      <td mat-cell *matCellDef="let row">
+        <mat-checkbox
+          (click)="$event.stopPropagation()"
+          (change)="$event ? selection.toggle(row) : null"
+          [checked]="selection.isSelected(row)"
+          [aria-label]="checkboxLabel(row)"
+        >
+        </mat-checkbox>
+      </td>
+    </ng-container>-->
+
+    <!-- Generate Column -->
+    <ng-container *ngFor="let col of columns" [matColumnDef]="col.field">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header [disabled]='col?.orderable' style="white-space: nowrap">
+        {{ col.header }}
+      </th>
+      <td mat-cell *matCellDef="let element">
+        <div [ngSwitch]="col.type">
+          <div *ngSwitchCase="'icon'">
+            <mat-icon aria-hidden="false" aria-label="Example home icon">{{
+              element[col.field]
+            }}</mat-icon>
+          </div>
+          <div *ngSwitchCase="'link'">
+            <!-- <a [href]="element[col.field].url" target="_blank">{{element[col.field].title}}</a> -->
+            <div class="link" (click)="
+                element.onClick
+                  ? element.onClick(element)
+                  : col.onClick
+                  ? col.onClick(element)
+                  : null
+              ">
+              {{
+                element[col.field].title && element[col.field].title != null
+                  ? element[col.field].title
+                  : element[col.field]
+              }}
+            </div>
+          </div>
+          <div *ngSwitchCase="'input'">
+            <div class="d-flex flex-row">
+              <mat-form-field appearance="outline" class="p-2 w-100 col-12" floatLabel="always">
+                <mat-label></mat-label>
+                <input matInput [(ngModel)]="element[col.field]" />
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div *ngSwitchCase="'number'">
+            <div class="d-flex flex-row">
+              <mat-form-field appearance="outline" class="p-2 w-100 col-12" floatLabel="always">
+                <mat-label></mat-label>
+                <input type="number" matInput [(ngModel)]="element[col.field]" />
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div *ngSwitchCase="'option'">
+            <div class="d-flex flex-row">
+              <!-- {{col.option | json}} -->
+              <mat-form-field appearance="outline" class="p-2 w-100 col-12" floatLabel="always">
+                <mat-label></mat-label>
+                <!-- <input type="number" matInput  /> -->
+                <mat-select [(ngModel)]="element[col.field]" (selectionChange)="_optionChange($event)">
+                  <mat-option *ngFor="let option of col.option; let j = index" [value]='option.code'>{{option.name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div *ngSwitchCase="'image'">
+            <img src="{{element[col.field]}}" style="width: 3vw; min-width: 100;" />
+          </div>
+          <!-- (click)="openDialog(element.games)" -->
+
+          <div *ngSwitchCase="'buttonIcon'">
+            <div class="justify-content-around">
+              <button mat-icon-button style="color: gray" (click)="element.onClick
+                ? element.onClick(element)
+                : col.onClick
+                ? col.onClick(element)
+                : null">
+                <mat-icon> {{element[col.field]}}</mat-icon>
+              </button>
+            </div>
+          </div>
+
+          <!-- input is type number -->
+          <div *ngSwitchCase="'pipeNumber'" style="text-align: left;">
+            <div *ngIf="element[col.field] < 0" style="color: red;">
+              {{ element[col.field] | number:'1.2-2'}}
+            </div>
+            <div *ngIf="element[col.field] >= 0">
+              {{ element[col.field] | number:'1.2-2'}}
+            </div>
+          </div>
+
+          <!-- value is type number format comma -->
+          <div *ngSwitchCase="'FooterNumber'">
+            <div style="text-align: left;">
+              {{ element[col.field] | number}} </div>
+          </div>
+
+          <!-- input is type text(number, range) -->
+          <div *ngSwitchCase="'textNumber'" style="text-align: left;">
+            {{element[col.field]}}
+          </div>
+
+          <!-- value is dateTime, date or time -->
+          <div *ngSwitchCase="'textCenter'" style="text-align: center;">
+            {{element[col.field]}}
+          </div>
+
+          <div *ngSwitchCase="'dateFormat'" style="text-align: left;">
+            {{element[col.field] | date:'dd/MM/yyyy HH:ss' }}
+          </div>
+
+          <!-- value is number & link -->
+          <div *ngSwitchCase="'linkNumber'">
+            <!-- <a [href]="element[col.field].url" target="_blank">{{element[col.field].title}}</a> -->
+            <div class="link" style="text-align: center;" (click)="
+                element.onClick
+                  ? element.onClick(element)
+                  : col.onClick
+                  ? col.onClick(element)
+                  : null
+              ">
+              {{
+                element[col.field].title && element[col.field].title != null
+                  ? element[col.field].title
+                  : element[col.field]
+              }}
+            </div>
+          </div>
+
+          <div *ngSwitchDefault>{{ element[col.field] }}</div>
+        </div>
+      </td>
+      <td mat-footer-cell *matFooterCellDef style="background-color: #B0C4DE">
+        <div [ngSwitch]="col.type">
+          <div *ngSwitchCase="'pipeNumber'">
+            <div *ngIf="col.footer < 0" style="padding-left: 10px;padding-right: 10px;color: red;text-align: left;">
+              {{ col.footer | number:'1.2-2'}}
+            </div>
+            <div *ngIf="col.footer >= 0" style="padding-left: 10px;padding-right: 10px;text-align: left;">
+              {{ col.footer | number:'1.2-2'}}
+            </div>
+          </div>
+          <div *ngSwitchCase="'FooterNumber'">
+            <div style="padding-left: 10px;padding-right: 10px;text-align: left;"> {{ col.footer | number}} </div>
+          </div>
+          <div div *ngSwitchDefault>{{ col.footer }}</div>
+        </div>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="action">
+      <th mat-header-cell *matHeaderCellDef style="text-align: center;">Action</th>
+      <td mat-cell *matCellDef="let row; let i = index">
+        <div class="d-flex flex-row justify-content-lg-around">
+          <div [ngSwitch]="actionSetting.type">
+            <div *ngSwitchCase="'choice'">
+              <ng-container *ngIf="actionSetting?.showFunction(row, i)">
+                <button (click)="actionSetting?.onCancel(row)" class="mr-2" mat-flat-button color="warn">
+                  {{ actionSetting?.textCancel }}
+                </button>
+                <button (click)="actionSetting?.onConfirm(row)" mat-flat-button color="primary">
+                  {{ actionSetting?.textConfirm }}
+                </button>
+              </ng-container>
+              <ng-container *ngIf="actionSetting?.listIcon">
+                <ng-container *ngFor="let item of actionSetting?.listIcon">
+                  <ng-container *ngIf="item.showFunction(row, i)">
+                    <button mat-icon-button [style]="'color:'+item.color" (click)="item.action(row)">
+                      <mat-icon>{{item.icon}}</mat-icon>
+                    </button>
+                  </ng-container>
+                </ng-container>
+              </ng-container>
+            </div>
+            <div *ngSwitchDefault>
+              <ng-container *ngIf="actionSetting?.showFunction(row, i)">
+                <button *ngIf="actionSetting?.hideEdit" mat-icon-button matTooltip="edit" style="color: gray"
+                  (click)="_editAction(row)">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button *ngIf="actionSetting?.hideDelete" mat-icon-button matTooltip="delete" style="color: red"
+                  (click)="_deleteAction(row)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+                <button *ngIf="actionSetting?.hideDetail" mat-icon-button matTooltip="detail" style="color: skyblue"
+                  (click)="_detaileAction(row)">
+                  <mat-icon>search</mat-icon>
+                </button>
+              </ng-container>
+
+              <ng-container *ngIf="actionSetting?.listIcon">
+                <ng-container *ngFor="let item of actionSetting?.listIcon">
+                  <ng-container *ngIf="item.showFunction(row, i)">
+                    <ng-container *ngIf="item.type === 'text'; else elseTemplate">
+                      <button (click)="item.action(row)" class="mr-2" mat-flat-button [matTooltip]="item.tooltip"
+                        [color]="item.color">
+                        {{ item?.text }}
+                      </button>
+                    </ng-container>
+                    <ng-template #elseTemplate>
+                      <button mat-icon-button [style]="'color:'+item.color" [matTooltip]="item.tooltip"
+                        (click)="item.action(row)">
+                        <mat-icon>{{item.icon}}</mat-icon>
+                      </button>
+                    </ng-template>
+                  </ng-container>
+                </ng-container>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+      </td>
+      <td mat-footer-cell *matFooterCellDef style="background-color: #B0C4DE"></td>
+    </ng-container>
+
+    <!-- Slide Toggle Status -->
+    <ng-container matColumnDef="status-slide-toggle">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+      <td mat-cell *matCellDef="let row;let i = index">
+        <div class="d-flex flex-row">
+          <mat-slide-toggle [checked]='row.toggle?.status' [disabled]='row.toggle?.disabled'
+            (change)='_toggleAction($event,row)'></mat-slide-toggle>
+        </div>
+      </td>
+      <td mat-footer-cell *matFooterCellDef></td>
+    </ng-container>
+
+    <!-- List -->
+    <ng-container matColumnDef="list">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>List</th>
+      <td mat-cell *matCellDef="let i = index">
+        <div class="d-flex flex-row">
+          <button mat-icon-button style="color: gray">
+            <mat-icon>list</mat-icon>
+          </button>
+        </div>
+      </td>
+      <td mat-footer-cell *matFooterCellDef></td>
+    </ng-container>
+
+    <!-- Dropdown -->
+    <ng-container matColumnDef="dropdown">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Period</th>
+      <td mat-cell *matCellDef="let i = index">
+        <div class="d-flex flex-row">
+          <mat-form-field appearance="outline" class="pt-2" floatLabel="always">
+            <mat-label></mat-label>
+            <mat-select [(value)]="selected">
+              <mat-option value="1">Click to Select</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <div class="d-flex pt-4 pl-1 pr-1">-</div>
+          <mat-form-field appearance="outline" class="pt-2" floatLabel="always">
+            <mat-label></mat-label>
+            <mat-select [(value)]="selected">
+              <mat-option value="1">Click to Select</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </td>
+      <td mat-footer-cell *matFooterCellDef></td>
+    </ng-container>
+
+    <!-- apply button -->
+    <ng-container matColumnDef="apply">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+      <td mat-cell *matCellDef="let i = index">
+        <div class="d-flex flex-row">
+          <button class="btn-search" mat-raised-button style="color: white">
+            Apply to All
+          </button>
+        </div>
+      </td>
+      <td mat-footer-cell *matFooterCellDef></td>
+    </ng-container>
+
+    <!-- set second footer for total amount-->
+    <ng-container matColumnDef="Total">
+      <td mat-footer-cell *matFooterCellDef style="background-color: #97b5db;"> Total
+      </td>
+    </ng-container>
+    <!-- set second footer for value-->
+    <div *ngIf="enableFooterRowSecond">
+      <ng-container *ngFor="let col of columns" [matColumnDef]='col.fieldSecondFooter'>
+        <td mat-footer-cell *matFooterCellDef style="background-color: #97b5db;">
+          <div [ngSwitch]="col.type">
+            <div *ngSwitchCase="'pipeNumber'">
+              <div *ngIf="col.footerSecondValue < 0"
+                style="padding-left: 10px;padding-right: 10px;color: red;text-align: left;">
+                {{ col.footerSecondValue | number:'1.2-2'}}
+              </div>
+              <div *ngIf="col.footerSecondValue >= 0" style="padding-left: 10px;padding-right: 10px;text-align: left;">
+                {{ col.footerSecondValue | number:'1.2-2'}}
+              </div>
+            </div>
+            <div *ngSwitchCase="'FooterNumber'">
+              <div style="padding-left: 10px;padding-right: 10px;text-align: left;"> {{ col.footerSecondValue | number}}
+              </div>
+            </div>
+            <div div *ngSwitchDefault>{{ col.footerSecondValue }}</div>
+          </div>
+        </td>
+      </ng-container>
+    </div>
+    <!-- empty second footer row-->
+    <ng-container matColumnDef="emptyFooter">
+      <td mat-footer-cell *matFooterCellDef style="background-color:#97b5db;"></td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    <div *ngIf="enableFooterRow">
+      <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
+    </div>
+    <div *ngIf="enableFooterRowSecond">
+      <tr mat-footer-row *matFooterRowDef="displayedSecondColumns"></tr>
+    </div>
+  </table>
+  <div *ngIf="dataInput?.length === 0 && !enableFooterRow" class="d-flex flex-row justify-content-center mt-3 mb-3">
+    <span style="color: gray">No Data</span>
+  </div>
+</div>
+<mat-paginator *ngIf="displayPaginator" [length]="length" [pageSizeOptions]="pageSizeOptions" [pageSize]='pageSize'
+  (page)='_pageChange($event)' showFirstLastButtons></mat-paginator>

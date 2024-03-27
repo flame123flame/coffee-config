@@ -1,0 +1,51 @@
+<h1 mat-dialog-title>Send Message</h1>
+<div mat-dialog-content>
+  <div class="d-flex flex-column  w-auto">
+    <form [formGroup]="formSendMessage">
+      <div class="d-flex flex-lg-column flex-column">
+          
+        <mat-form-field floatLabel="always" appearance="outline" class="w-100 p-1 col-lg-12 col-12">
+          <mat-label>To Player ID </mat-label>
+          <mat-select placeholder="Click to select" formControlName="usernames" multiple>
+            <mat-option *ngFor="let item of usernames" [value]="item.username">{{item.username}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field floatLabel="always" appearance="outline" class="w-100 p-1 col-lg-12 col-12">
+          <mat-label>To Groups</mat-label>
+          <mat-select placeholder="Click to select" formControlName="groupCodes" multiple>
+            <mat-option *ngFor="let item of groupList" [value]="item.groupCode">{{item.groupName}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field floatLabel="always" appearance="outline" class="w-100 p-1 col-lg-12 col-12">
+          <mat-label><span style="color: red;">*</span>Subject</mat-label>
+          <input matInput formControlName="subject" />
+        </mat-form-field>
+
+        <div class="d-flex flex-lg-row flex-column">
+          <mat-form-field floatLabel="always" appearance="outline" class="w-100 p-1 col-lg-2 col-12">
+            <mat-label>Messtype Type</mat-label>
+            <mat-select placeholder="Click to select" formControlName="messageType" (onChange)="changeData($event)">
+              <mat-option *ngFor="let item of messageTypes" [value]="item.messageType">{{item.messageType}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field floatLabel="always" appearance="outline" class="w-100 p-1 col-lg-10 col-12">
+            <mat-label>PromoTion</mat-label>
+            <mat-select placeholder="Click to select" formControlName="promoCode"
+            [disabled]="formSendMessage.get('messageType').value === 'NORMAL'">
+              <mat-option *ngFor="let item of promotions" [value]="item.promoCode">{{item.promoTitle}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <label><span style="color: red;">*</span>Web Message(limited under 1000 words)##</label>
+        <text-editor (onEnter)="onChange($event)"></text-editor>
+      </div>
+    </form>
+  </div>
+</div>
+<div mat-dialog-actions class="d-flex flex-row justify-content-center">
+  <button-cancel class="mr-1" (click)="onNoClick()"></button-cancel>
+  <button-save (click)="sendMessage()"></button-save>
+</div>

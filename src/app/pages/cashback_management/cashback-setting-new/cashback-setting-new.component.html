@@ -1,0 +1,94 @@
+<div class="d-flex flex-column">
+  <div class="d-flex flex-row w-100 justify-content-end">
+    <div>Action</div>
+    <div>
+      <menu-dropdown [listItems]="listItemMenu"></menu-dropdown>
+    </div>
+  </div>
+  <app-content class="mt-3">
+    <div class="d-flex flex-column">
+      <!-- <div class="d-flex flex-row justify-content-end">
+          <button-add
+            routerLink="/rebate-management/rebate-setting-new-add"
+            wording="Add"
+          ></button-add>
+        </div> -->
+      <!-- <div class="flex-lg-row">
+        <mat-form-field appearance="outline" class="w-100 p-1 col-lg-3 col-12" floatLabel="always">
+          <mat-label>Product Type</mat-label>
+          <mat-select [(value)]="selected1">
+            <mat-option value="1">All</mat-option>
+            <mat-option value="option">Animal Sports</mat-option>
+            <mat-option value="option">Chess Games</mat-option>
+            <mat-option value="option">RNG Games</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="w-100 p-1 col-lg-3 col-12" floatLabel="always">
+          <mat-label>Max Group Cashback</mat-label>
+          <mat-select [(value)]="selected2">
+            <mat-option value="1">
+              <= </mat-option>
+                <mat-option value="2"> >= </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-100 p-1 col-lg-3 col-12" floatLabel="always">
+          <mat-label>Input</mat-label>
+          <input matInput disabled placeholder="" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-100 p-1 col-lg-3 col-12" floatLabel="always">
+          <mat-label>Currency</mat-label>
+          <mat-select [(value)]="selected3">
+            <mat-option value="1">All</mat-option>
+            <mat-option value="2">Thai Baht</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="d-flex flex-lg-row">
+        <div class="w-100 p-1 col-lg-3 col-12">
+          <mat-label class="mr-5">Cashback Type :</mat-label>
+          <mat-radio-group>
+            <mat-radio-button value="1">Total Loss</mat-radio-button>
+          </mat-radio-group>
+        </div>
+        <mat-form-field appearance="outline" class="w-100 p-1 col-lg-3 col-12" floatLabel="always">
+          <mat-label>Auto Cashback </mat-label>
+          <mat-select [(value)]="selected4">
+            <mat-option value="1">All</mat-option>
+            <mat-option value="option">Yes</mat-option>
+            <mat-option value="option">No</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="w-100 p-1 col-lg-3 col-12" floatLabel="always">
+          <mat-label> Cashback Period </mat-label>
+          <mat-select [(value)]="selected5">
+            <mat-option value="1">All</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="flex-lg-row">
+        <mat-label>Auto Cashback </mat-label>
+        <section class="example-section">
+          <mat-checkbox checked class="example-margin mr-2">All</mat-checkbox>
+          <mat-checkbox class="example-margin mr-2">Active</mat-checkbox>
+          <mat-checkbox class="example-margin mr-2">Suspend</mat-checkbox>
+          <mat-checkbox class="example-margin mr-2">Pending</mat-checkbox>
+          <mat-checkbox class="example-margin mr-2">Completed</mat-checkbox>
+        </section>
+      </div> -->
+      <div class="d-flex flex-row justify-content-center">
+        <!-- <button-reset [disabled]="true"></button-reset>
+        <button-search></button-search> -->
+        <button-reset wording='Count Cashback' (click)='clickTest1()'></button-reset>
+        <button-reset wording='Submit Cashback' (click)='clickTest2()'></button-reset>
+      </div>
+    </div>
+  </app-content>
+  <app-content class="mt-3" title="Cashback History" subtitle="Logging">
+    <app-table-mat [columns]="columns" [dataInput]="dataInput" [displayedColumns]="tr" [actionSetting]="actionSetting"
+      (editAction)='clickEdit($event)' (deleteAction)='clickDelete($event)' (detaileAction)="viewDetail($event)">
+    </app-table-mat>
+  </app-content>
+</div>

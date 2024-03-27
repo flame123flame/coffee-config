@@ -1,0 +1,28 @@
+<h1>IP Rule Add##</h1>
+<div mat-dialog-content style="min-height: auto">
+    <div class="d-flex flex-column w-auto">
+        <div class="flex-lg-row">
+            <mat-form-field appearance="outline" class="w-100 p-1 col-lg-12 col-12" floatLabel="always">
+                <mat-label>IP Address</mat-label>
+                <input matInput placeholder="IP Address" />
+            </mat-form-field>
+        </div>
+        <div class="flex-lg-row">
+            <div><label>Status</label></div>
+            <mat-radio-group class="example-container p-1 col-lg-4 col-12" [(value)]="radio1">
+                <mat-radio-button value="1">Allowed</mat-radio-button>
+                <mat-radio-button value="2">Blocket</mat-radio-button>
+            </mat-radio-group>
+        </div>
+        <div class="flex-lg-row mt-1">
+            <mat-form-field class="example-full-width">
+                <mat-label>Remarks</mat-label>
+                <textarea matInput ></textarea>
+            </mat-form-field>
+        </div>
+    </div>
+</div>
+<div mat-dialog-actions class="d-flex flex-row justify-content-center mb-2">
+    <button-cancel wording="cancel" [mat-dialog-close]="1" class="pr-2"></button-cancel>
+    <button mat-raised-button [mat-dialog-close]="1" class="btn-confirm ">Confirm</button>
+</div>

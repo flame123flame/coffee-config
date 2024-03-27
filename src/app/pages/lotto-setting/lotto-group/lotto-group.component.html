@@ -1,0 +1,22 @@
+<div class="d-flex flex-column  w-auto">
+  <app-content title='Lotto Group' class="mb-1">
+      <div class="d-flex flex-row w-100 justify-content-end">
+        <button-add wording="Add" (click)='goToAddEdit()'></button-add>
+    </div>
+      <div class="d-flex flex-lg-column flex-column ">
+        <!-- <div class="flex-lg-row">
+            <mat-form-field floatLabel="always" appearance="outline" class="col-lg-3">
+              <mat-label><span style="color: red;">*</span>Filter Lotto</mat-label>
+              <mat-select>
+                <mat-option value='GOVERNMENT'>GOVERNMENT</mat-option>
+                <mat-option value='STOCK'>STOCK</mat-option>
+                <mat-option value='YIKI'>YIKI</mat-option>
+              </mat-select>
+            </mat-form-field>
+        </div> -->
+
+      </div>
+      <app-table-mat [columns]="columns" [dataInput]="data" [displayedColumns]="tr" [actionSetting]="actionSetting" (editAction)='goToAddEdit($event)' (deleteAction)='deleteId($event)'></app-table-mat>
+    </app-content>
+
+</div>

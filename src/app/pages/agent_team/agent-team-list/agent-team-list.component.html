@@ -1,0 +1,64 @@
+<div class="d-flex flex-column">
+    <app-content>
+        <div class="d-flex flex-column">
+            <div class="flex-lg-row">
+                <mat-form-field appearance="outline" class="w-100 p-1 col-lg-2 col-12" floatLabel="always">
+                    <mat-label>Agent ID</mat-label>
+                    <mat-select placeholder="Agent ID" [(value)]="selected1">
+                        <mat-option value="1">Agent ID</mat-option>
+                        <mat-option value="2">Updated By</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="w-100 p-1 col-lg-2 col-12" floatLabel="always">
+                    <mat-label></mat-label>
+                    <input matInput disabled placeholder="" disabled />
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="w-100 p-1 col-lg-2 col-12" floatLabel="always">
+                    <mat-label>Agent Level</mat-label>
+                    <mat-select placeholder="Status" [(value)]="selected2">
+                        <mat-option value="1">All</mat-option>
+                        <mat-option value="2">SSH</mat-option>
+                        <mat-option value="3">SH</mat-option>
+                        <mat-option value="4">SSMA</mat-option>
+                        <mat-option value="5">SMA</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="w-100 p-1 col-lg-2 col-12" floatLabel="always">
+                    <mat-label>Status</mat-label>
+                    <mat-select placeholder="Status" [(value)]="selected3">
+                        <mat-option value="1">All</mat-option>
+                        <mat-option value="2">Active</mat-option>
+                        <mat-option value="3">Suspended</mat-option>
+                        <mat-option value="4">Disabled</mat-option>
+                        <mat-option value="5">Blocked</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="d-flex flex-row justify-content-center">
+                <button-reset disabled></button-reset>
+                <button-search></button-search>
+            </div>
+        </div>
+    </app-content>
+    <app-content class="mt-3" title="Agent Team List" subtitle="">
+        <div class="row">
+            <div class="col-6">
+                <button class="mr-2" style="background-color: #009688; margin: 5px; color: rgb(255, 255, 255);"
+                    mat-raised-button>
+                    Home
+                </button>
+            </div>
+            <div class="col-6 text-right">
+                <button class="mr-2" style="background-color: #009688; margin: 5px; color: rgb(255, 255, 255);"
+                    mat-raised-button (click)="onClick()">
+                    <mat-icon style="color: rgb(255, 255, 255);">
+                        add
+                    </mat-icon> Add
+                </button>
+            </div>
+        </div>
+        <app-table-mat [columns]="columns" [dataInput]="dataInput" [displayedColumns]="tr"></app-table-mat>
+    </app-content>
+</div>

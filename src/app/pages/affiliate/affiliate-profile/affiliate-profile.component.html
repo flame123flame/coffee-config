@@ -1,0 +1,162 @@
+<div class="d-flex flex-column">
+  <h1>Affiliate Profile</h1>
+  <div class='d-flex flex-lg-row justify-content-end pb-3'>
+    <button mat-raised-button (click)="goToPlayerProfile(playerId)">Player Profile</button>
+  </div>
+  <app-content title="Personal Information" class='mb-2'>
+    <div class="d-flex flex-column">
+
+      <div class="row">
+        <div class="col-lg-6 col-12">
+          <div class="row">
+            <div class="col-4 border label">
+              <p>Affiliate ID</p>
+            </div>
+            <div class="col-8 border">
+              <p>{{affiliateId}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6 col-12">
+          <div class="row">
+            <div class="col-4 border label">
+              <p>Player ID</p>
+            </div>
+            <div class="col-8 border">
+              <p>{{playerId}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+
+      <div class="col-lg-6 col-12">
+        <div class="row">
+          <div class="col-4 border label">
+            <p>Real Name</p>
+          </div>
+          <div class="col-8 border">
+            <p>{{realName}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 col-12">
+        <div class="row">
+          <div class="col-4 border label">
+            <p>Player Status</p>
+          </div>
+          <div class="col-8 border">
+            <p>{{playerStatus}}</p>
+          </div>
+        </div>
+      </div>
+      </div>
+
+      <div class="row">
+
+      <div class="col-lg-6 col-12">
+        <div class="row">
+          <div class="col-4 border label">
+            <p>Affiliate Upline</p>
+          </div>
+          <div class="col-8 border">
+            <p>{{affiliateUpline}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 col-12">
+        <div class="row">
+          <div class="col-4 border label">
+            <p>Player Group</p>
+          </div>
+          <div class="col-8 border">
+            <p>{{playerGroup}}</p>
+          </div>
+        </div>
+      </div>
+      </div>
+
+
+      <div class="row">
+
+      <div class="col-lg-6 col-12">
+        <div class="row">
+          <div class="col-4 border label">
+            <p>Registered On</p>
+          </div>
+          <div class="col-8 border">
+            <p>{{registeredOn}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 col-12">
+        <div class="row">
+          <div class="col-4 border label">
+            <p>Last Login Time</p>
+          </div>
+          <div class="col-8 border">
+            <p>{{lastLoginTime}}</p>
+          </div>
+        </div>
+      </div>
+      </div>
+     
+
+      <div class="row">
+        <div class="col-lg-6 col-12">
+          <div class="row">
+            <div class="col-4 border label">
+              <p>Mobile</p>
+            </div>
+            <div class="col-8 border">
+              <p>{{mobile}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6 col-12">
+          <div class="row">
+            <div class="col-4 border label">
+              <p>Affiliate Link</p>
+            </div>
+            <div class="col-8 border">
+              <a href="affiliateLink"><p>{{affiliateLink}}</p></a>
+            </div>
+          </div>
+        </div>
+        </div>
+
+      <div class="row">
+        <div class="col-lg-6 col-12">
+          <div class="row">
+            <div class="col-4 border label">
+              <p>Group</p>
+            </div>
+            <div class="col-8 border">
+              <mat-form-field appearance="outline" class="w-100 p-1 col-lg-10 col-10" floatLabel="always">
+                <mat-label>Group</mat-label>
+                <mat-select  [(ngModel)]="selectedGroup">
+                  <mat-option *ngFor="let item of groupList" [value]="item.affiliateGroupCode">
+                    {{item.groupName}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <button class="col-lg-2 col-2" mat-raised-button (click)="onSaveGroup()" [disabled]='!selectedGroup'><mat-icon>save</mat-icon></button>
+            </div>
+          </div>
+        </div>
+        </div>
+
+      
+
+    </div>
+  </app-content>
+  <app-content title="Downline List">
+    <div class="d-flex flex-column">
+      <div class="flex-lg-row">
+        <app-table-mat [columns]="columns" [dataInput]="dataInput" [displayedColumns]="tr"></app-table-mat>
+      </div>
+    </div>
+
+  </app-content>
+</div>

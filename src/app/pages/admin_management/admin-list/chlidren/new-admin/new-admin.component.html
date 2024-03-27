@@ -1,0 +1,106 @@
+<div class="d-flex flex-column">
+  <app-content title="{{type}} Admin">
+    <div class="d-flex flex-column">
+      <form [formGroup]='form'>
+        <div class="d-flex flex-column flex-wrap">
+          <mat-form-field appearance="outline" class="w-100 p-1 col-lg-4 col-12" floatLabel="always">
+            <mat-label>Username</mat-label>
+            <input matInput [readonly]="id?true:false" placeholder="Username" formControlName='username' (change)='formValueChange("username")' />
+            <mat-error *ngIf="form.controls.username.hasError('required')">
+              <strong>Required</strong>
+            </mat-error>
+            <mat-error *ngIf="form.controls.username.hasError('duplicateUsername')">
+              <strong>Duplicate Username please change and try again</strong>
+            </mat-error>
+          </mat-form-field>
+          <ng-container *ngIf="!id">
+            <mat-form-field appearance="outline" class="w-100 p-1 col-lg-4 col-12" floatLabel="always">
+              <mat-label>Password</mat-label>
+              <input matInput [type]="hide ? 'password' : 'text'" placeholder="password" formControlName='password'
+                (change)='formValueChange("password")' />
+              <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+              <mat-error *ngIf="form.controls.password.hasError('required')">
+                <strong>Required</strong>
+              </mat-error>
+              <mat-error *ngIf="form.controls.password.hasError('notSame')">
+                <strong>Password with confirm password not match</strong>
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="w-100 p-1 col-lg-4 col-12" floatLabel="always">
+              <mat-label>Confirm Password</mat-label>
+              <input matInput [type]="hide2 ? 'password' : 'text'" placeholder="confirm password"
+                formControlName='password2' (change)='formValueChange("password2")' />
+              <mat-icon matSuffix (click)="hide2 = !hide2">{{hide2 ? 'visibility_off' : 'visibility'}}</mat-icon>
+              <mat-error *ngIf="form.controls.password2.hasError('required')">
+                <strong>Required</strong>
+              </mat-error>
+              <mat-error *ngIf="form.controls.password2.hasError('notSame')">
+                <strong>Password with confirm password not match</strong>
+              </mat-error>
+            </mat-form-field>
+          </ng-container>
+          <mat-form-field appearance="outline" class="w-100 p-1 col-lg-4 col-12" floatLabel="always">
+            <mat-label>Role</mat-label>
+            <mat-select placeholder="Roles" formControlName='fwUserRoleCode' multiple>
+              <mat-option *ngFor="let item of roleList" [value]="item.id==-1?null:item.code">{{item.name}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="form.controls.fwUserRoleCode.hasError('required')">
+              <strong>Required</strong>
+            </mat-error>
+          </mat-form-field>
+          <div class="p-1">
+            <label>Active</label>
+            <div class="d-flex flex-row flex-wrap">
+              <p>Disable</p>
+              <mat-slide-toggle class='mr-1 ml-1' formControlName='isDisable'></mat-slide-toggle>
+              <p>Active</p>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="d-flex flex-row justify-content-center mt-3 mb-3">
+      <button-cancel class="mr-2" (click)="goBack()"></button-cancel>
+      <button-save (click)="onSave()"></button-save>
+    </div>
+
+    <ng-container *ngIf="id">
+      <div class="d-flex flex-column">
+        <h2>Reset Password</h2>
+        <form [formGroup]='formUpdatePassword'>
+          <div class="d-flex flex-column flex-wrap">
+            <mat-form-field appearance="outline" class="w-100 p-1 col-lg-4 col-12" floatLabel="always">
+              <mat-label>Password</mat-label>
+              <input matInput [type]="hide ? 'password' : 'text'" placeholder="password" formControlName='password'
+                (change)='formUpdatePasswordValueChange("password")' />
+              <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+              <mat-error *ngIf="formUpdatePassword.controls.password.hasError('required')">
+                <strong>Required</strong>
+              </mat-error>
+              <mat-error *ngIf="formUpdatePassword.controls.password.hasError('notSame')">
+                <strong>Password with confirm password not match</strong>
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="w-100 p-1 col-lg-4 col-12" floatLabel="always">
+              <mat-label>Confirm Password</mat-label>
+              <input matInput [type]="hide2 ? 'password' : 'text'" placeholder="confirm password"
+                formControlName='password2' (change)='formUpdatePasswordValueChange("password2")' />
+              <mat-icon matSuffix (click)="hide2 = !hide2">{{hide2 ? 'visibility_off' : 'visibility'}}</mat-icon>
+              <mat-error *ngIf="formUpdatePassword.controls.password2.hasError('required')">
+                <strong>Required</strong>
+              </mat-error>
+              <mat-error *ngIf="formUpdatePassword.controls.password2.hasError('notSame')">
+                <strong>Password with confirm password not match</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          </form>
+      </div>
+      <div class="d-flex flex-row justify-content-center mt-3 mb-3">
+        <button-cancel class="mr-2" (click)="goBack()"></button-cancel>
+        <button-save (click)="onSavePassword()"></button-save>
+      </div>
+    </ng-container>
+  </app-content>
+
+</div>

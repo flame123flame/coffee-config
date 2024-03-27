@@ -1,0 +1,29 @@
+<h1 mat-dialog-title>{{header}}</h1>
+<div mat-dialog-content>
+    <div class="d-flex flex-column  w-auto">
+        <form [formGroup]='form'>
+            <mat-form-field appearance="outline" class="w-100 p-1 col-lg-12 col-12" floatLabel="always">
+                <mat-label>Code</mat-label>
+                <input matInput formControlName='code'>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="w-100 p-1 col-lg-12 col-12" floatLabel="always">
+                <mat-label>Name TH</mat-label>
+                <input matInput formControlName='nameTh'>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="w-100 p-1 col-lg-12 col-12" floatLabel="always">
+                <mat-label>Name EN</mat-label>
+                <input matInput formControlName='nameEn'>
+            </mat-form-field>
+            <mat-form-field floatLabel="always" appearance="outline" class="w-100 p-1 col-lg-12 col-12">
+                <mat-label>Game Product</mat-label>
+                <mat-select placeholder="Click to select" formControlName="productCode" multiple>
+                    <mat-option *ngFor="let item of productList" [value]="item.code">{{item.nameEn}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </form>
+    </div>
+</div>
+<div mat-dialog-actions class="d-flex flex-row justify-content-center">
+    <button-cancel class="mr-1" (click)="onNoClick()"></button-cancel>
+    <button-save [disabled]="form.status=='VALID'?false:true" (click)="onSave()"></button-save>
+</div>

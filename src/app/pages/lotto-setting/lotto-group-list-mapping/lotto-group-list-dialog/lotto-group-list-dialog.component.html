@@ -1,0 +1,29 @@
+<h1 mat-dialog-title>{{id?"แก้ไข":"เพิ่ม"}} กลุ่มหวย {{''}}</h1>
+<div mat-dialog-content>
+  <div class="d-flex flex-column  w-auto">
+    <form [formGroup]='formGroupList'>
+        <mat-form-field appearance="outline" class="w-100 p-1 col-lg-12 col-12" floatLabel="always">
+            <mat-label>ประเภทกลุ่มหวย</mat-label>
+            <!-- <input matInput type='number' formControlName='price'> -->
+            <mat-select formControlName='groupListCode' (selectionChange)="onSelectionChange()">
+              <mat-option value='LOTTO_HIT'>กลุ่มหวยยอดนิยม</mat-option>
+              <mat-option value='LOTTO_GROUP_STOCKS'>กลุ่มหวยหุ้น</mat-option>
+              <mat-option value='LOTTO_SET'>กลุ่มหวยชุด</mat-option>
+            </mat-select>
+          </mat-form-field>
+        <mat-form-field appearance="outline" class="w-100 p-1 col-lg-12 col-12" floatLabel="always">
+            <mat-label>ชื่อหวย</mat-label>
+            <!-- <input matInput type='number' formControlName='price'> -->
+            <mat-select formControlName='classCode' (selectionChange)="onSelectionChange()">
+              <mat-option *ngFor="let item of lottoClassFilter " [value]="item.lottoClassCode">
+                {{item.className}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+    </form>
+  </div>
+</div>
+<div mat-dialog-actions class="d-flex flex-row justify-content-center">
+  <button-cancel class="mr-1" (click)="onNoClick()"></button-cancel>
+  <button-save [disabled]="formGroupList.status=='VALID'?false:true" (click)="insertOne()"></button-save>
+</div>

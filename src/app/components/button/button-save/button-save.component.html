@@ -1,0 +1,10 @@
+<button
+  mat-raised-button
+  class="btn-save"
+  [disabled]="disabled"
+  (click)="_onClick($event)">
+  <mat-icon style="color: rgb(255, 255, 255);">
+    save
+  </mat-icon>
+  {{ wording }}
+</button>

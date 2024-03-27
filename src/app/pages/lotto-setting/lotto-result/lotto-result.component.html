@@ -1,0 +1,55 @@
+<div class="d-flex flex-column  w-auto">
+    <mat-card class="mb-1">
+        <mat-card-title class="mb-1">
+            <h2>Lotto Government Result - {{className}}</h2>
+        </mat-card-title>
+        <div class="d-flex flex-row justify-content-end mt-3">
+            <button mat-raised-button matTooltip="Sync lotto result" (click)="getSyncLottoResult()">Sync ผลรางวัล</button>
+        </div>
+        <div class="d-flex flex-lg-column flex-column ">
+            <form [formGroup]='formAddresult'>
+                <div class="flex-lg-row">
+                    <mat-form-field floatLabel="always" appearance="outline" class="col-lg-3">
+                        <mat-label><span style="color: red;">*</span>งวด (ค.ศ.) เช่น. 31-01-2020</mat-label>
+                        <input matInput mask="00-00-0000" placeholder="กรุณาระบุงวด (ค.ศ.) เช่น. 31-01-2020 " formControlName="installment" required />
+                        <mat-error>
+                            กรุณากรอกในรูปแบบ 31-01-2020
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field floatLabel="always" appearance="outline" class="col-lg-3">
+                        <mat-label><span style="color: red;">*</span>3 ตัวบน</mat-label>
+                        <input maxlength="3" mask="000" matInput formControlName="digit3Top" />
+                    </mat-form-field>
+                    <mat-form-field *ngIf="showFrontBot" floatLabel="always" appearance="outline" class="col-lg-3">
+                        <mat-label><span style="color: red;">* </span>3 ตัวหน้า(1)</mat-label>
+                        <input maxlength="3" mask="000" matInput formControlName="digit3Front1" required />
+                    </mat-form-field>
+                    <mat-form-field *ngIf="showFrontBot" floatLabel="always" appearance="outline" class="col-lg-3">
+                        <mat-label><span style="color: red;">* </span>3 ตัวหน้า(2)</mat-label>
+                        <input maxlength="3" mask="000" matInput formControlName="digit3Front2" required />
+                    </mat-form-field>
+                    <mat-form-field *ngIf="showFrontBot" floatLabel="always" appearance="outline" class="col-lg-3">
+                        <mat-label><span style="color: red;">* </span>3 ตัวล่าง(2)</mat-label>
+                        <input maxlength="3" mask="000" matInput formControlName="digit3Bot1" required />
+                    </mat-form-field>
+                    <mat-form-field *ngIf="showFrontBot" floatLabel="always" appearance="outline" class="col-lg-3">
+                        <mat-label><span style="color: red;">* </span>3 ตัวล่าง(2)</mat-label>
+                        <input maxlength="3" mask="000" matInput formControlName="digit3Bot2" required />
+                    </mat-form-field>
+                    <mat-form-field floatLabel="always" appearance="outline" class="col-lg-3">
+                        <mat-label><span style="color: red;">* </span>2 ตัวล่าง</mat-label>
+                        <input maxlength="2" mask="00" matInput formControlName="digit2Bot" required />
+                    </mat-form-field>
+                </div>
+            </form>
+        </div>
+        <div class="d-flex flex-row justify-content-center mt-3">
+            <button-cancel (click)="goBack()"></button-cancel>
+            &nbsp;
+            &nbsp;
+            &nbsp;
+            <button-save (click)="onSubmit()"></button-save>
+        </div>
+
+    </mat-card>
+</div>

@@ -1,0 +1,131 @@
+<div class="d-flex flex-column">
+    <form [formGroup]="formAddGroupLv">
+        <app-content class="mt-3" title="Group Setting">
+            <div class="d-flex flex-column">
+                <div class="d-flex flex-lg-row flex-column">
+                    <mat-form-field appearance="outline" class="w-100 p-1 col-lg-3 col-12" floatLabel="always">
+                        <mat-label>Group Name</mat-label>
+                        <input matInput required formControlName="groupName" />
+                        <!-- [disabled]="formAddGroupLv.status === viewDetail" -->
+                    </mat-form-field>
+
+                    <mat-form-field floatLabel="always" appearance="outline" class="w-100 p-1 col-lg-3 col-12">
+                        <mat-label>Daily Max W/D Amount</mat-label>
+                        <input type="number" matInput required formControlName="dailyMaxWDAmount" />
+                    </mat-form-field>
+
+                    <mat-form-field floatLabel="always" appearance="outline" class="w-100 p-1 col-lg-3 col-12">
+                        <mat-label>Daily Max W/D Count</mat-label>
+                        <input type="number" matInput required formControlName="dailyMaxWDCount" />
+                    </mat-form-field>
+
+                    <mat-form-field floatLabel="always" appearance="outline" class="w-100 p-1 col-lg-3 col-12">
+                        <mat-label>Description</mat-label>
+                        <textarea class="" matInput formControlName="description" cdkTextareaAutosize
+                            cdkAutosizeMinRows="1" cdkAutosizeMaxRows="20"></textarea>
+                    </mat-form-field>
+                </div>
+
+
+                <div class="d-flex flex-lg-row flex-column">
+                    <mat-form-field floatLabel="always" appearance="outline" class="w-100 p-1 col-lg-3 col-12">
+                        <mat-label>Max Deposit Amount</mat-label>
+                        <input type="number" matInput required formControlName="maxDepositAmt" />
+                    </mat-form-field>
+
+                    <mat-form-field floatLabel="always" appearance="outline" class="w-100 p-1 col-lg-3 col-12">
+                        <mat-label>Min Deposit Amount</mat-label>
+                        <input type="number" matInput required formControlName="minDepositAmt" />
+                    </mat-form-field>
+
+                    <mat-form-field floatLabel="always" appearance="outline" class="w-100 p-1 col-lg-3 col-12">
+                        <mat-label>Max Withdrawal Amount</mat-label>
+                        <input type="number" matInput required formControlName="maxWithdrawalAmt" />
+                    </mat-form-field>
+                    <mat-form-field floatLabel="always" appearance="outline" class="w-100 p-1 col-lg-3 col-12">
+                        <mat-label>Min Withdrawal Amount</mat-label>
+                        <input type="number" matInput required formControlName="minWithdrawalAmt" />
+                    </mat-form-field>
+                </div>
+
+                <div class="d-flex flex-lg-row flex-column">
+                    <mat-form-field floatLabel="always" appearance="outline" class="w-100 p-1 col-lg-3 col-12">
+                        <mat-label>Group Mobile Phone</mat-label>
+                        <input type="text" matInput required formControlName="groupMobilePhone" #groupMobilePhone
+                            counter />
+                        <!-- <mat-hint align="end">{{groupMobilePhone.value.length}}</mat-hint> -->
+                        <!-- <mat-error *ngIf="formAddGroupLv.controls.groupMobilePhone.hasError('pattern')">
+                            Please enter a valid mobile phone number
+                        </mat-error> -->
+                        <mat-error *ngIf="formAddGroupLv.controls.groupMobilePhone.hasError('required')">
+                            Mobile phone number is <strong>required</strong>
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field floatLabel="always" appearance="outline" class="w-100 p-1 col-lg-3 col-12">
+                        <mat-label>Group Link Line@</mat-label>
+                        <input type="text" matInput required formControlName="groupLinkLine" />
+                    </mat-form-field>
+
+                    <div class="w-100 p-1 col-lg-3 col-12">
+                        <label><span style="color: red;">*</span>Group Icon</label>
+                        <br>
+                        <input (change)="preview(file.files)" #file type="file" *ngIf="!viewDetail" />
+                        <p>Image size limit : 1 MB</p>
+                        <p>Support formats : JPG, PNG, GIF, BMP</p>
+                    </div>
+                    <div class="w-100 p-1 col-lg-3 col-12" *ngIf="tmp">
+                        <img [src]="tmp" height="150" width="150"
+                            style="background-image: url('assets/images/table_bg.jpg');">
+                    </div>
+                </div>
+
+                <div class="d-flex flex-lg-row flex-column mb-3">
+
+                    <div class="flex-lg-row p-2 col-lg-3 col-12">
+                        <div>
+                            <label class="pr-2">Default Group</label>
+                        </div>
+                        <mat-slide-toggle formControlName="defaultGroup" (click)="onToggleShowInFrontEnd($event)"
+                            class="p-1 pr-1"></mat-slide-toggle>
+                    </div>
+
+
+                    <div class="flex-lg-row col-lg-3 col-12 ">
+                        <div>
+                            <label class="flex-lg-row p-2">Status</label>
+                        </div>
+                        <mat-radio-group required formControlName="status">
+                            <mat-radio-button class="pr-2 flex-lg-row" value="Active">Active</mat-radio-button>
+                            <mat-radio-button class="flex-lg-row" value="Disabled">Disabled</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                    <div class="flex-lg-row col-lg-3 col-12 mt-2">
+                        <mat-form-field floatLabel="always" appearance="outline" class="w-100 p-1 col-lg-12 col-12">
+                            <mat-label>General Condition (%)</mat-label>
+                            <input type="number" matInput required formControlName="generalCondition" />
+                        </mat-form-field>
+                    </div>
+                    <div class="flex-lg-row col-lg-3 col-12 mt-2">
+                        <mat-form-field floatLabel="always" appearance="outline" class="w-100 p-1 col-lg-12 col-12">
+                            <mat-label>Level</mat-label>
+                            <input type="number" matInput required formControlName="level" />
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+        </app-content>
+    </form>
+    <app-content class="mt-3" title="Promotion List">
+        <app-table-mat [columns]="columns" [dataInput]="dataInput" [displayedColumns]="tr"></app-table-mat>
+    </app-content>
+
+
+    <div class="d-flex justify-content-center p-4">
+        <button-cancel class="pr-2" wording="cancel" (click)="onCancel()"></button-cancel>
+        <button-save class="pr-2" wording="Submit" [disabled]="formAddGroupLv.status=='VALID'?false:true"
+            (click)="onSubmit()"></button-save>
+    </div>
+
+
+</div>

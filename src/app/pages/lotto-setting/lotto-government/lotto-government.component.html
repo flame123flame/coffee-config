@@ -1,0 +1,59 @@
+<div class="d-flex flex-column">
+  <!-- <app-content class="p-1 mt-3" title="Lotto List Search" subtitle="Logging">
+        <div class="d-flex flex-column">
+            <div class="flex-lg-row">
+                <form [formGroup]='form'>
+                    <mat-form-field appearance="outline" class="w-100 p-1 col-lg-3 col-12" floatLabel="always">
+                        <mat-label>Game Provider</mat-label>
+                        <mat-select (selectionChange)="getProductTypeList($event.value)" formControlName='provider'>
+                            <mat-option *ngFor="let item of gameProviderList" value='{{item.code}}'>{{item.nameTh}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="w-100 p-1 col-lg-3 col-12" floatLabel="always">
+                        <mat-label>Product Type</mat-label>
+                        <mat-select (selectionChange)="getGameGroupList($event.value)"  formControlName='type'>
+                            <mat-option *ngFor="let item of productTypeList" value='{{item.code}}'>{{item.nameTh}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="w-100 p-1 col-lg-3 col-12" floatLabel="always">
+                        <mat-label>Game Group</mat-label>
+                        <mat-select  formControlName='group'>
+                            <mat-option *ngFor="let item of gameGroupList" value='{{item.code}}'>{{item.nameTh}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="w-100 p-1 col-lg-3 col-12" floatLabel="always">
+                        <mat-label>Status</mat-label>
+                        <mat-select  formControlName='status'>
+                            <mat-option [value]="1">Active</mat-option>
+                            <mat-option [value]="2">Disabled</mat-option> -->
+  <!-- <mat-option [value]="3">Coming Soon</mat-option> -->
+  <!-- </mat-select>
+                    </mat-form-field>
+                </form>
+            </div>
+            <div class="d-flex flex-row justify-content-center p-3">
+                <button class="mr-2" mat-raised-button (click)="reset()">Reset</button>
+                <button-search (click)="search()"></button-search>
+            </div>
+        </div>
+    </app-content> -->
+  <div class="d-flex flex-row w-100 justify-content-end">
+    <button mat-raised-button class="btn-version" (click)="goDraftClass()">
+      <mat-icon style="color: rgb(255, 255, 255)"> history </mat-icon>
+      version ({{countInit}})
+    </button>
+
+    <button-add wording="Add" (click)="onCreatGroup()"></button-add>
+  </div>
+  <!-- <div class="d-flex flex-row w-100 justify-content-end" *ngFor="let item of userRole">
+        <ng-container *ngIf="item =='lottoApproveResult1'">
+            <button-add wording="test" (click)="onCreatGroup()"></button-add>
+        </ng-container>
+    </div> -->
+
+  <app-content class="mt-3" title="หวยรัฐบาล" subtitle="Logging">
+    <app-table-mat [columns]="columns" [dataInput]="data" [displayedColumns]="tr" [actionSetting]="actionSetting" (toggleAction)="
+        changeStatus($event.data.viewStatus, $event.data.lottoClassId)
+      "></app-table-mat>
+  </app-content>
+</div>

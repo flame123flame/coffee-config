@@ -1,0 +1,34 @@
+<div class="d-flex flex-column">
+  <app-content title="Search">
+    <div class="d-flex flex-column">
+      <div class="flex-lg-row">
+        <div class="flex-row">
+          <mat-form-field floatLabel="always" appearance="outline" class="w-100 p-1 col-lg-3 col-12">
+            <mat-label><span style="color: red;">*</span>Log Period</mat-label>
+            <input placeholder="from" matInput [matDatepicker]="picker" />
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field floatLabel="always" appearance="outline" class="w-100 p-1 col-lg-3 col-12">
+            <input placeholder="to" matInput [matDatepicker]="picker2" />
+            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field floatLabel="always" appearance="outline" class="w-100 p-1 col-lg-6 col-12">
+            <mat-label><span style="color: red;">*</span>Bank Name</mat-label>
+            <mat-select placeholder="All">
+              <mat-option *ngFor="let item of bankNameList" [value]="item">{{item}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="d-flex flex-row justify-content-center">
+        <button-reset [disabled]="true"></button-reset>
+        <button-search></button-search>
+      </div>
+    </div>
+  </app-content>
+  <app-content class="mt-3" title="Company Account Log" subtitle="">
+    <app-table-mat [columns]="columns" [dataInput]="data" [displayedColumns]="tr"></app-table-mat>
+  </app-content>
+</div>

@@ -1,0 +1,17 @@
+<div class="app-content-container {{height=='100'?'h-100':''}} mb-4">
+  <!-- <div *ngIf="title" class="app-conetent-header scale-up-ver-bottom">
+    <div class="content shadow-drop-center">
+      <div *ngIf="title" class="header">
+        <span> {{ title }}</span>
+      </div>
+      <div *ngIf="subtitle" class="subtitle">{{ subtitle }}</div>
+    </div>
+  </div> -->
+  <div *ngIf="title" class=" p-3 header">
+    <span style="font-size: 25px; font-weight: 300; color: rgb(102 115 126);"> {{ title }}</span>
+    <mat-icon *ngIf="icon">{{icon}}</mat-icon>
+  </div>
+  <div [class]="{'content':true, 'px-3':title , 'p-3':!title}">
+    <ng-content></ng-content>
+  </div>
+</div>

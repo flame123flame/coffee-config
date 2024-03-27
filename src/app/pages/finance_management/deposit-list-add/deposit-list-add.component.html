@@ -1,0 +1,82 @@
+<div class="d-flex flex-column">
+  <app-content title="New Deposit">
+    <div class="d-flex flex-column">
+      <div class="flex-lg-row">
+        <mat-form-field
+          appearance="outline"
+          class="w-100 p-1 col-lg-4 col-12"
+          floatLabel="always"
+        >
+          <mat-label>Player ID</mat-label>
+          <mat-select [(ngModel)]="formModel.depositOrder">
+            <mat-option value="1">Please Enter Player ID</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="flex-lg-row">
+        <mat-form-field
+          appearance="outline"
+          class="w-100 p-1 col-lg-4 col-12"
+          floatLabel="always"
+        >
+          <mat-label>Deposit Bank</mat-label>
+          <mat-select [(ngModel)]="formModel.username">
+            <mat-option value="1">Clike to Select</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="flex-lg-row">
+        <mat-form-field
+          appearance="outline"
+          class="w-100 p-1 col-lg-4 col-12"
+          floatLabel="always"
+        >
+          <mat-label>Deposit Type</mat-label>
+          <mat-select [(ngModel)]="formModel.depositType">
+            <mat-option value="1">Online back</mat-option>
+            <mat-option value="2">ATM Transfer</mat-option>
+            <mat-option value="2">ATM Cash Deposit</mat-option>
+            <mat-option value="2">Bank Counter</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="flex-lg-row">
+        <mat-form-field
+          appearance="outline"
+          class="w-100 p-1 col-lg-4 col-12"
+          floatLabel="always"
+        >
+          <mat-label>Deposit Amt.</mat-label>
+          <input matInput [(ngModel)]="formModel.amount" />
+        </mat-form-field>
+      </div>
+      <div class="flex-lg-row">
+        <mat-form-field
+          appearance="outline"
+          class="w-100 p-1 col-lg-4 col-12"
+          floatLabel="always"
+        >
+          <mat-label>Company Account</mat-label>
+          <mat-select [(ngModel)]="formModel.companyAccountId">
+            <mat-option value="1">Clike to Select</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="flex-lg-row">
+        <mat-form-field
+          appearance="outline"
+          class="w-100 p-1 col-lg-4 col-12"
+          floatLabel="always"
+        >
+          <mat-label>Remarks</mat-label>
+          <textarea matInput [(ngModel)]="formModel.remark"></textarea>
+        </mat-form-field>
+      </div>
+      <div class="flex-lg-row"></div>
+    </div>
+    <div class="d-flex flex-row justify-content-center mb-5">
+      <button-reset [disabled]="true"></button-reset>
+      <button-save (click)="onSubmit()"></button-save>
+    </div>
+  </app-content>
+</div>

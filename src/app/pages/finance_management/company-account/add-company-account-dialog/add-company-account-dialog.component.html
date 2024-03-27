@@ -1,0 +1,84 @@
+<div class="d-flex flex-column">
+    <app-content title="Company account">
+        <div class="d-flex flex-column">
+            <app-content title="Bank Information" class="mt-2 mb-2">
+                <form [formGroup]="myForm">
+                    <div class="flex-row">
+                        <mat-form-field floatLabel="always" appearance="outline" class="w-100 p-1 col-lg-6 col-12">
+                            <mat-label><span style="color: red;">*</span>Bank</mat-label>
+                            <mat-select formControlName='bankCode'>
+                                <mat-option *ngFor="let item of groupBank" [value]="item.bankCode">{{item.bankNameEn}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field floatLabel="always" appearance="outline" class="w-100 p-1 col-lg-6 col-12">
+                            <mat-label>Bank Account</mat-label>
+                            <input formControlName='bankAccount' matInput>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="flex-row">
+                        <mat-form-field floatLabel="always" appearance="outline" class="w-100 p-1 col-lg-6 col-12">
+                            <mat-label>Account Name</mat-label>
+                            <input formControlName='accountName' matInput>
+                        </mat-form-field>
+
+                        <mat-form-field floatLabel="always" appearance="outline" class="w-100 p-1 col-lg-6 col-12">
+                            <mat-label>Display Name</mat-label>
+                            <input formControlName='displayName' matInput>
+                        </mat-form-field>
+
+                    </div>
+                    <div class="flex-row">
+                        <mat-form-field floatLabel="always" appearance="outline" class="w-100 p-1 col-lg-3 col-12">
+                            <mat-label>Bank ID</mat-label>
+                            <input formControlName='bankId' matInput>
+                        </mat-form-field>
+
+                        <mat-form-field floatLabel="always" appearance="outline" class="w-100 p-1 col-lg-3 col-12">
+                            <mat-label>Max Deposit Daily</mat-label>
+                            <input type='number' formControlName='maxDepositDaily' matInput>
+                        </mat-form-field>
+
+                        <mat-form-field floatLabel="always" appearance="outline" class="w-100 p-1 col-lg-3 col-12">
+                            <mat-label>Max Withdraw Daily</mat-label>
+                            <input type='number' formControlName='maxWithdrawDaily' matInput>
+                        </mat-form-field>
+
+                        <!-- <mat-form-field floatLabel="always" appearance="outline" class="w-100 p-1 col-lg-3 col-12">
+                            <mat-label>Min Deposit</mat-label>
+                            <input type='number' formControlName='minDeposit' matInput>
+                        </mat-form-field>
+                        <mat-form-field floatLabel="always" appearance="outline" class="w-100 p-1 col-lg-3 col-12">
+                            <mat-label>Max Deposit</mat-label>
+                            <input type='number' formControlName='maxDeposit' matInput>
+                        </mat-form-field> -->
+                    </div>
+                    <div class="flex-row">
+                        <mat-form-field floatLabel="always" appearance="outline" class="w-100 p-1 col-lg-6 col-12">
+                            <mat-label><span style="color: red;">*</span>Group Level</mat-label>
+                            <mat-select formControlName='groupCode'>
+                                <mat-option *ngFor="let item of groupList" [value]="item.groupCode">{{item.groupName}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="flex-row">
+                        <!-- <mat-form-field floatLabel="always" appearance="outline" class="w-100 p-1 col-lg-6 col-12">
+                            <mat-label><span style="color: red;">*</span>Payment Type</mat-label>
+                            <mat-select formControlName='groupCode'>
+                                <mat-option *ngFor="let item of grougroupBankpList" [value]="item.groupCode">{{item.groupName}}</mat-option>
+                            </mat-select>
+                        </mat-form-field> -->
+                    </div>
+                </form>
+
+            </app-content>
+
+            <div class="d-flex flex-row justify-content-center m-2">
+                <button-cancel class="mr-1" (click)="onNoClick()"></button-cancel>
+                <button-save [disabled]="myForm.status==='INVALID'?true:false" (click)="save()"></button-save>
+            </div>
+        </div>
+    </app-content>
+</div>

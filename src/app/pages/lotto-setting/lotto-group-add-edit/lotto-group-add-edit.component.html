@@ -1,0 +1,54 @@
+<div class="d-flex flex-column  w-auto">
+  <app-content [title]='pageTitle' class="mb-1">
+    <div class="d-flex flex-lg-column flex-column ">
+      <ng-container *ngIf="lottoGroup">
+
+      <div [formGroup]="lottoGroup">
+        <mat-form-field floatLabel="always" appearance="outline" class="col-lg-3">
+          <mat-label><span style="color: red;">*</span>Name</mat-label>
+          <input formControlName="name" matInput required />
+        </mat-form-field>
+        <mat-form-field floatLabel="always" appearance="outline" class="col-lg-3">
+          <mat-label><span style="color: red;">*</span>Owner</mat-label>
+          <input formControlName="usernameOwner" matInput readonly required />
+        </mat-form-field>
+        <!-- <mat-form-field floatLabel="always" appearance="outline" class="col-lg-3">
+          <mat-label><span style="color: red;">*</span>Owner</mat-label>
+          <mat-select formControlName='usernameOwner'>
+            <mat-option *ngFor="let item of usernameList" [value]='item.username'>{{item.username}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field> -->
+        <div class="flex-row mb-2">
+          <button-add (click)="addItem()"></button-add>
+        </div>
+          <div formArrayName="lottoGroupNumberChildList"
+            *ngFor="let itemArr of lottoGroup.controls.lottoGroupNumberChildList['controls']; let i = index;">
+            <div [formGroupName]="i">
+              <mat-form-field floatLabel="always" appearance="outline" class="col-lg-3">
+                <mat-label><span style="color: red;">*</span>Number</mat-label>
+                <input formControlName="lottoNumber" matInput required/>
+              </mat-form-field>
+              <mat-form-field floatLabel="always" appearance="outline" class="col-lg-3">
+                <mat-label><span style="color: red;">*</span>Lotto Kind</mat-label>
+                <mat-select formControlName='lottoKind' (selectionChange)='setValidate(i,$event.value)'>
+                  <mat-option *ngFor="let item of msdList" [value]='item.msdLottoKindCode'>{{item.msdLottoKindName}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <button mat-icon-button [style]="'color:red'" (click)="remove(i)">
+                <mat-icon>close</mat-icon>
+              </button>
+
+            </div>
+          </div>
+      </div>
+    </ng-container>
+
+      <div class="d-flex flex-row justify-content-center mb-3">
+        <button-cancel (click)="cancle()" class='mr-2'></button-cancel>
+        <button-save (click)="save()"></button-save>
+    </div>
+    </div>
+  </app-content>
+</div>

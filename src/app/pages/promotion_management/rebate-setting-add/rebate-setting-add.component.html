@@ -1,0 +1,116 @@
+<div class="d-flex flex-column">
+    <app-content title="New Creation">
+        <div class="d-flex flex-column">
+            <mat-form-field appearance="outline" class="w-100 p-1 col-lg-4 col-12" floatLabel="always">
+                <mat-label>Rebate Title</mat-label>
+                <input matInput disabled />
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="w-100 p-1 col-lg-8 col-12" floatLabel="always">
+                <mat-label>Description</mat-label>
+                <input matInput disabled />
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="w-100 p-1 col-lg-4 col-12" floatLabel="always" (click)="picker.open()">
+                <mat-label>Date Select</mat-label>
+                <mat-date-range-input [rangePicker]="picker">
+                    <input matStartDate placeholder="Start date" />
+                    <input matEndDate placeholder="End date" />
+                </mat-date-range-input>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-date-range-picker #picker></mat-date-range-picker>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="w-100 p-1 col-lg-3 col-12" floatLabel="always">
+                <mat-label>Currency</mat-label>
+                <mat-select [(value)]="selected1">
+                    <mat-option value="1">THB</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="w-100 p-1 col-lg-3 col-12" floatLabel="always">
+                <mat-label>Rebate Terms</mat-label>
+                <mat-select [(value)]="selected2">
+                    <mat-option value="1">Daily</mat-option>
+                    <mat-option value="2">Weekly</mat-option>
+                    <mat-option value="3">Monthly</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-label class="mr-5">Rebate Type :</mat-label>
+            <mat-radio-group [(value)]="radio1" class="mr-5">
+                <mat-radio-button value="1">Valid Bets</mat-radio-button>
+            </mat-radio-group>
+
+            <mat-form-field appearance="outline" class="w-100 p-1 col-lg-3 col-12" floatLabel="always">
+                <mat-label>Product Type</mat-label>
+                <mat-select [(value)]="selected3">
+                    <mat-option value="1">Animal Sports</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="w-100 p-1 col-lg-3 col-12" floatLabel="always">
+                <mat-label>Assign to Vip</mat-label>
+                <mat-select [(value)]="selected4">
+                    <mat-option value="1">Click to Select</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="w-100 p-1 col-lg-3 col-12" floatLabel="always">
+                <mat-label>Exclude Tag</mat-label>
+                <mat-select [(value)]="selected5">
+                    <mat-option value="1">Click to Select</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="w-100 p-1 col-lg-3 col-12" floatLabel="always">
+                <mat-label>Status</mat-label>
+                <mat-select [(value)]="selected6">
+                    <mat-option value="1">Active</mat-option>
+                    <mat-option value="2">Disable</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="w-100 p-1 col-lg-4 col-12" floatLabel="always">
+                <mat-label>Game Exdude List</mat-label>
+                <mat-select [(value)]="selected7">
+                    <mat-option value="1">Click to Select</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </app-content>
+
+    <!-- <app-content title="Rebate Conditions" class="mt-3">
+        <app-table-mat [columns]="columns" [dataInput]="data" [displayedColumns]="tr"></app-table-mat>
+    </app-content> -->
+
+    <!-- <app-content title="Withdrawal Conditions" class="mt-3">
+        <div class="d-flex flex-column">
+            <div class="flex-lg-row">
+                <mat-form-field appearance="outline" class="w-100 p-1 col-lg-4 col-12" floatLabel="always">
+                    <mat-label>Max Group Rebate (0 is unlimited)</mat-label>
+                    <input matInput disabled />
+                </mat-form-field> 
+
+                <mat-form-field appearance="outline" class="w-100 p-1 col-lg-8 col-12" floatLabel="always">
+                    <mat-label>Rebate Multiplier Condition</mat-label>
+                    <input matInput disabled />
+                </mat-form-field>
+            </div>
+        </div>
+    </app-content> -->
+
+    <!-- <app-content title="Penalty Setting" class="mt-3">
+        <div class="d-flex flex-column">
+            <div class="flex-lg-row">
+                <mat-form-field appearance="outline" class="w-100 p-1 col-lg-4 col-12" floatLabel="always">
+                    <mat-label>Admin Fee (%)</mat-label>
+                    <input matInput disabled />
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="w-100 p-1 col-lg-8 col-12" floatLabel="always">
+                    <mat-label>Processing Fee</mat-label>
+                    <input matInput disabled />
+                </mat-form-field>
+            </div>
+        </div>
+    </app-content> -->
+    <div class="d-flex flex-row justify-content-center mt-3">
+        <button-save></button-save>
+    </div>
+</div>

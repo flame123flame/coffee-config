@@ -1,0 +1,63 @@
+<div class="d-flex flex-column">
+  <app-content class="p-1 mt-3" title="Provider Setting" subtitle="Logging">
+    <!-- <div class="d-flex flex-row justify-content-end">
+      <button mat-raised-button class='mr-2' (click)="sync()" [disabled]='disabled'>Sync</button>
+      <button mat-raised-button (click)="reset()">Reset Filter</button>
+    </div> -->
+    <div class="d-flex flex-column">
+      <mat-tab-group (selectedTabChange)="onTabChange($event)" [selectedIndex]="selected.value"
+        (selectedIndexChange)="selected.setValue($event)">
+
+        <mat-tab label="Product Type">
+          <div class="d-flex flex-row justify-content-end">
+            <button mat-raised-button class="p-1" style="background-color: #009688;color: white;margin: 5px;"
+              (click)="saveProductType()">ADD PRODUCT
+              TYPE</button>
+          </div>
+          <app-table-mat [columns]="productCol" [length]='productLength' [dataInput]="productData"
+            [displayedColumns]="productTr" (deleteAction)="onDeleteProduct($event)" (editAction)="onEditProduct($event)"
+            (onPageChange)='pageProductChange($event)' (onSortChange)='sortProductChange($event)'>
+          </app-table-mat>
+        </mat-tab>
+
+        <mat-tab label="Game Group">
+          <div class="d-flex flex-row justify-content-end">
+            <button mat-raised-button class="p-1" style="background-color: #009688;color: white;margin: 5px;"
+              (click)="saveGameGroup()">ADD GAME GROUP</button>
+          </div>
+          <app-table-mat [columns]="gameGroupCol" [length]='groupLength' [dataInput]="gameGroupData"
+            [displayedColumns]="gameGroupTr" (deleteAction)="onDeleteGameGroup($event)"
+            (editAction)="onEditGameGroup($event)" (onPageChange)='pageGroupChange($event)'
+            (onSortChange)='sortGroupChange($event)'>
+          </app-table-mat>
+        </mat-tab>
+
+        <mat-tab label="Provider">
+          <div class="d-flex flex-row justify-content-end">
+            <button mat-raised-button class="p-1" style="background-color: #009688;color: white;margin: 5px;"
+              (click)="onSaveProvider()">ADD PROVIDER</button>
+          </div>
+          <app-table-mat [columns]="providerCol" [length]='providerLength' [dataInput]="providerData"
+            [displayedColumns]="providerTr" (deleteAction)="onDeleteProvider($event)"
+            (editAction)="onEditProvider($event)" (onPageChange)='pageProviderChange($event)'
+            (onSortChange)='sortProviderChange($event)'>
+          </app-table-mat>
+        </mat-tab>
+
+
+
+        <mat-tab label="Games">
+          <div class="d-flex flex-row justify-content-end">
+            <button mat-raised-button class="p-1" style="background-color: tomato;color: white;margin: 5px;"
+              (click)="syncGames()">SYNC GAME</button>
+            <button mat-raised-button class="p-1" style="background-color: #009688;color: white;margin: 5px;"
+              (click)="saveGames()">ADD GAME</button>
+          </div>
+          <app-table-mat [columns]="gamesCol" [length]='gamesLength' [dataInput]="gamesData"
+            [displayedColumns]="gamesTr" (deleteAction)="onDeleteGames($event)" (editAction)="onEditGames($event)"
+            (onPageChange)='pageGameChange($event)' (onSortChange)='sortGameChange($event)'></app-table-mat>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </app-content>
+</div>

@@ -1,0 +1,24 @@
+<div class="d-flex flex-column">
+    <app-content title="Company Setting">
+        <div class="d-flex flex-column">
+            <form [formGroup]="form">
+                <div class="flex-lg-row mb-3">
+                    <label>
+                        <h4>Show Money Transfer Auto/Manually/Close </h4>
+                    </label><br>
+                    <mat-radio-group class="example-container w-100 p-1 col-lg-4 col-12 mr-5"
+                        formControlName="checkTransfer">
+                        <mat-radio-button value="AUTO">Auto</mat-radio-button>
+                        <mat-radio-button value="MANUAL">Manual</mat-radio-button>
+                        <mat-radio-button value="CLOSE">Close</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+
+            </form>
+        </div>
+    </app-content>
+    <div class="d-flex justify-content-center">
+        <button-save wording="Submit" (click)="save()">
+        </button-save>
+    </div>
+</div>

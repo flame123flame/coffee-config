@@ -1,0 +1,36 @@
+<app-content [title]="data?.title">
+    <label>Description</label>
+    <p>{{data?.description}}</p>
+    <label>Period Type</label>
+    <p>{{data?.periodStatus}}</p>
+    <label>from</label>
+    <p>{{data?.startDate}}</p>
+    <label>to</label>
+    <p>{{data?.endDate}}</p>
+    <label>status</label>
+    <p>{{data?.description}}</p>
+    <label>Last time job</label>
+    <p>{{data?.startBatchJobDate}}</p>
+    <label>Next next job</label>
+    <p>{{data?.nextBatchJobDate}}</p>
+    <label>vip group</label>
+    <p>{{data?.vipGroupCode}}</p>
+    <label>exclude tag</label>
+    <p>{{data?.description}}</p>
+
+    <label>condition multipler</label>.
+    <p>{{data?.cashbackConditionMultiplier}}</p>
+
+    <label>Condition</label>
+    <app-table-mat [columns]="columns2" [dataInput]="dataInput2" [displayedColumns]="tr2" [displayPaginator]='false'>
+    </app-table-mat>
+</app-content>
+<app-content class="mt-3" subtitle="">
+    <div class="row">
+        <button-reset wording='APPROVE ALL' (click)='doApproveAll()'></button-reset>
+        <button-reset wording='REJECT All' (click)='doRejectAll()'></button-reset>
+    </div>
+    <app-table-mat [columns]="columns" [dataInput]="dataInput" [displayedColumns]="tr" [actionSetting]="actionSetting"
+        [displayPaginator]='false'>
+    </app-table-mat>
+</app-content>

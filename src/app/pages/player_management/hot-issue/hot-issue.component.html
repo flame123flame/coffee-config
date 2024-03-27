@@ -1,0 +1,20 @@
+<div class="d-flex flex-column">
+    <!-- <app-content class="mt-3" title="Hot Issue">
+        <app-table-mat [columns]="columns" [dataInput]="dataInput" [displayedColumns]="tr"></app-table-mat>
+    </app-content> -->
+    <app-content class="mt-3" title="Hot Issue List">
+        <div class="row">
+            <div class="col-12 col-lg-12 text-right">
+                <button mat-raised-button style="background-color: #009688;color: white;" (click)="addIssueType()">
+                    <mat-icon style="color: rgb(255, 255, 255);">
+                        add
+                    </mat-icon>
+                    ADD ISSUE TYPE
+                </button>
+            </div>
+        </div>
+        <app-table-mat [columns]="columns" [dataInput]="dataInput" [displayedColumns]="tr"
+            [actionSetting]="actionSetting" (editAction)="updateStatus($event)">
+        </app-table-mat>
+    </app-content>
+</div>

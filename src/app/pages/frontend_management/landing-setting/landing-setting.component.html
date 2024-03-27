@@ -1,0 +1,13 @@
+<div class="d-flex flex-column">
+    <div class="d-flex flex-column mb-2">
+        <div class="d-flex flex-row justify-content-end">
+            <button-add (click)="landingAdd()"></button-add>
+        </div>
+    </div>
+    <app-content title="Landing Setting List">
+        <app-table-mat [columns]="columns" [dataInput]="dataTable" [displayedColumns]="tr" [actionSetting]="actionSetting"
+            (editAction)="onEdit($event)" (detaileAction)="openDialogDetail($event)" (deleteAction)='onDelete($event)'
+            [displayPaginator]="false">
+      </app-table-mat><br><br>
+    </app-content>
+</div>

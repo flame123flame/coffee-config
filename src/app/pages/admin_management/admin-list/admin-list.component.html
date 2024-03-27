@@ -1,0 +1,59 @@
+<div class="d-flex flex-column">
+    <app-content>
+        <div class="d-flex flex-column">
+            <div class="d-flex flex-lg-row justify-content-end">
+                <button (click)="toPageAddNewAdmin()" class="mr-2" style="background-color: #009688; margin: 5px; color: rgb(255, 255, 255);"
+                    mat-raised-button>
+                    <mat-icon style="color: rgb(255, 255, 255);">
+                        add
+                    </mat-icon> Add
+                </button>
+            </div>
+            <div class="flex-lg-row">
+                <mat-form-field appearance="outline" class="w-100 p-1 col-lg-3 col-12" floatLabel="always">
+                    <mat-label>Username</mat-label>
+                    <input matInput disabled placeholder="Username" [(ngModel)]='searchUsername' />
+                </mat-form-field>
+
+                <!-- <mat-form-field appearance="outline" class="w-100 p-1 col-lg-3 col-12" floatLabel="always">
+                    <mat-label>Real Name</mat-label>
+                    <input matInput disabled placeholder="Real Name" />
+                </mat-form-field> -->
+
+                <mat-form-field appearance="outline" class="w-100 p-1 col-lg-3 col-12" floatLabel="always">
+                    <mat-label>Role</mat-label>
+                    <mat-select placeholder="Role" [(value)]="searchRole">
+                        <mat-option *ngFor="let item of roleList" [value]="item.id==-1?null:item.code">{{item.name}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="w-100 p-1 col-lg-3 col-12" floatLabel="always">
+                  <mat-label>Status</mat-label>
+                  <mat-select placeholder="Status" [(value)]="searchStatus">
+                      <mat-option [value]="null">All</mat-option>
+                      <mat-option [value]="true">Active</mat-option>
+                      <mat-option [value]="false">Disable</mat-option>
+                  </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="flex-lg-row">
+
+
+                <!-- <mat-form-field appearance="outline" class="w-100 p-1 col-lg-3 col-12" floatLabel="always">
+                    <mat-label>Online Status</mat-label>
+                    <mat-select placeholder="Status" [(value)]="selected3">
+                        <mat-option [value]="null">All</mat-option>
+                        <mat-option [value]="true">Online</mat-option>
+                        <mat-option [value]="false">Offline</mat-option>
+                    </mat-select>
+                </mat-form-field> -->
+            </div>
+            <div class="d-flex flex-row justify-content-center">
+                <button-reset disabled></button-reset>
+                <button-search></button-search>
+            </div>
+        </div>
+    </app-content>
+    <app-content class="mt-3" title="Search List" subtitle="">
+        <app-table-mat [columns]="columns"  [length]='length' (onPageChange)='pageChange($event)' (onSortChange)='sortChange($event)' [dataInput]="dataInput" [displayedColumns]="tr" [actionSetting]='actionSetting' (editAction)='editAction($event.fwUsersId)' (deleteAction)='deleteAction($event.fwUsersId)'></app-table-mat>
+    </app-content>
+</div>

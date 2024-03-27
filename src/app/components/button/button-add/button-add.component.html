@@ -1,0 +1,11 @@
+<button
+  mat-raised-button
+  class="btn-add"
+  [disabled]="disabled"
+  (click)="_onClick($event)"
+>
+  <mat-icon style="color: rgb(255, 255, 255);">
+    add
+  </mat-icon>
+  {{ wording }}
+</button>

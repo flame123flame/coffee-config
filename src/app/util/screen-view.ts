@@ -1,0 +1,5 @@
+class ScreenView {
+  static checkScreen() {
+
+  }
+}

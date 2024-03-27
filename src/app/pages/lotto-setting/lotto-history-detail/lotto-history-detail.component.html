@@ -1,0 +1,32 @@
+<div class="d-flex flex-column  w-auto">
+  <div class="d-flex flex-row w-100 d-flex justify-content-start">
+    <button-cancel wording="Back" (click)="goBack()"></button-cancel>
+</div>
+&nbsp;
+    <mat-card class="mb-1">
+        <mat-card-title class="mb-1">
+          <h2>Lotto Group Detail - Username : {{Codeusername}}</h2>
+        </mat-card-title>
+        <!-- <div class="d-flex flex-lg-column flex-column ">
+          <div class="flex-lg-row">
+              <mat-form-field floatLabel="always" appearance="outline" class="col-lg-3">
+                <mat-label><span style="color: red;">*</span>Filter Lotto</mat-label>
+                <mat-select>
+                  <mat-option value='GOVERNMENT'>GOVERNMENT</mat-option>
+                  <mat-option value='STOCK'>STOCK</mat-option>
+                  <mat-option value='YIKI'>YIKI</mat-option>
+                </mat-select>
+              </mat-form-field>
+          </div>
+    
+        </div> -->
+        <!-- <app-content class="mt-3" title="หวยรัฐบาล" subtitle="Logging">
+            <app-table-mat [columns]="columns" [dataInput]="data" [displayedColumns]="tr" [actionSetting]="actionSetting" (editAction)='onClickEdit($event)'></app-table-mat>
+            <app-table-mat [columns]="columns" [dataInput]="data" [displayedColumns]="tr" [actionSetting]="actionSetting"></app-table-mat>
+            <app-table-mat [columns]="columns" [dataInput]="data" [displayedColumns]="tr" [actionSetting]="actionSetting"></app-table-mat>
+            <app-table-mat [columns]="columns"  [displayedColumns]="tr" ></app-table-mat>
+        </app-content> -->
+        <app-table-mat [columns]="columns" [dataInput]="data" [displayedColumns]="tr" [displayPaginator]='false'></app-table-mat>
+      </mat-card>
+
+</div>

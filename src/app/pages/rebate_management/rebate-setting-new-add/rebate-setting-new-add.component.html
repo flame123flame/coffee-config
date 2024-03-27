@@ -1,0 +1,203 @@
+<div class="d-flex flex-column">
+  <app-content>
+    <div class="d-flex flex-column">
+
+      <form [formGroup]='form'>
+
+        <div class="flex-row">
+          <mat-form-field appearance="outline" class="w-100 p-1 col-lg-3 col-12" floatLabel="always">
+            <mat-label>Rebate Title</mat-label>
+            <input matInput formControlName='title' [readonly]='disabled' />
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="w-100 p-1 col-lg-3 col-12" floatLabel="always">
+            <mat-label>Description</mat-label>
+            <input matInput formControlName='description' />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="w-100 p-1 col-lg-3 col-12" floatLabel="always"
+            (click)="picker.open()">
+            <mat-label>Date</mat-label>
+            <input matInput [matDatepicker]="picker" [matDatepickerFilter]="myFilter" formControlName='startDate'
+              [disabled]='disabled'>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="w-100 p-1 col-lg-3 col-12" floatLabel="always"
+            (click)="picker2.open()">
+            <input matInput [matDatepicker]="picker2" [matDatepickerFilter]="myFilter" formControlName='endDate'>
+            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+          </mat-form-field>
+        </div>
+
+        <div class="d-flex flex-column flex-lg-row">
+          <div class="w-100 p-1 col-lg-4 col-12">
+            <mat-label class="mr-2">Rebate Period :</mat-label>
+            <mat-radio-group formControlName='periodStatus' [disabled]='disabled'
+              (change)='this.form.controls.startDate.setValue(null);this.form.controls.endDate.setValue(null)'>
+              <mat-radio-button class="mr-2" [value]="1">Daily</mat-radio-button>
+              <mat-radio-button class="mr-2" [value]="2">Weekly</mat-radio-button>
+              <mat-radio-button [value]="3">Monthly</mat-radio-button>
+            </mat-radio-group>
+          </div>
+          <div class="w-100 p-1 col-lg-2 col-12">
+            <mat-label class="mr-2">Rebate Type :</mat-label>
+            <mat-radio-group formControlName='rebateType' [disabled]='disabled'>
+              <mat-radio-button [value]="1">Valid Bets</mat-radio-button>
+
+            </mat-radio-group>
+          </div>
+          <div class="w-100 p-1 col-lg-3 col-12">
+            <mat-label class="mr-2">Auto Rebate :</mat-label>
+            <mat-radio-group formControlName="isAutoRebate" [disabled]='disabled'>
+              <mat-radio-button [value]="true">Active</mat-radio-button>
+              <mat-radio-button [value]="false">Disable</mat-radio-button>
+            </mat-radio-group>
+          </div>
+          <div class="w-100 p-1 col-lg-3 col-12">
+            <mat-label class="mr-2">Status :</mat-label>
+            <mat-radio-group formControlName="status">
+              <mat-radio-button [value]="true">Active</mat-radio-button>
+              <mat-radio-button [value]="false">Disable</mat-radio-button>
+            </mat-radio-group>
+          </div>
+        </div>
+        <div class="flex-row mt-3">
+          <mat-form-field appearance="outline" class="w-100 p-1 col-lg-3 col-12" floatLabel="always">
+            <mat-label>Assign to Vip</mat-label>
+            <mat-select formControlName="vipGroupCode" multiple>
+              <mat-option *ngFor="let item of vipList" [value]="item.groupCode">{{item.groupName}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="w-100 p-1 col-lg-3 col-12" floatLabel="always">
+            <mat-label>Product Type</mat-label>
+            <mat-select formControlName="productTypeCode" (selectionChange)='onProductChange($event)'
+              [disabled]='disabled'>
+              <mat-option *ngFor="let item of productTypeList" [value]="item.code">{{item.nameEn}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="w-100 p-1 col-lg-3 col-12" floatLabel="always">
+            <mat-label>Exclude Tag</mat-label>
+            <mat-select formControlName='tagCode' multiple>
+              <mat-option *ngFor="let item of tagList" [value]="item.tagCode">{{item.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="d-flex flex-row">
+
+          <mat-form-field appearance="outline" class="w-100 p-1 col-lg-12 col-12" floatLabel="always">
+            <mat-label>Game Exclude List</mat-label>
+
+            <mat-select formControlName='gamesCodeExclude' multiple (selectionChange)='setGamesExclude()'>
+              <mat-select-trigger>
+                <mat-chip-list>
+                  <mat-chip *ngFor="let code of form.controls.gamesCodeExclude.value" [removable]="true"
+                    (removed)="remove(code)">
+                    {{ findInGameList(code) }}
+                    <mat-icon matChipRemove>cancel</mat-icon>
+                  </mat-chip>
+                </mat-chip-list>
+              </mat-select-trigger>
+              <mat-option *ngFor="let item of gameList" [value]="item.gameCode">
+                {{item.provider}}-{{item.game}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </form>
+
+    </div>
+  </app-content>
+</div>
+<app-content *ngIf="dataSource">
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <!-- Checkbox Column -->
+    <!-- <ng-container matColumnDef="select">
+      <th mat-header-cell *matHeaderCellDef>
+        <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
+          [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
+        </mat-checkbox>
+      </th>
+      <td mat-cell *matCellDef="let row">
+        <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
+          [checked]="selection.isSelected(row)" [aria-label]="checkboxLabel(row)">
+        </mat-checkbox>
+      </td>
+    </ng-container> -->
+
+    <ng-container matColumnDef="gameProvider">
+      <th mat-header-cell *matHeaderCellDef> Game Provider </th>
+      <td mat-cell *matCellDef="let element"> {{element.gameProvider}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="gameGroupCode">
+      <th mat-header-cell *matHeaderCellDef> Game Group Code </th>
+      <td mat-cell *matCellDef="let element"> {{element.gameGroupCode}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="validBets">
+      <th mat-header-cell *matHeaderCellDef> Valid Bets (>=1) </th>
+      <td mat-cell *matCellDef="let element">
+        <mat-form-field appearance="outline" class="w-100 p-1 col-lg-12 col-12" floatLabel="always">
+          <input type='number' matInput [(ngModel)]="element.validBets" [disabled]='disabled' />
+        </mat-form-field>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="rebatePercent">
+      <th mat-header-cell *matHeaderCellDef> Rebate% (Recommend
+        <=1) </th>
+      <td mat-cell *matCellDef="let element">
+        <mat-form-field appearance="outline" class="w-100 p-1 col-lg-12 col-12" floatLabel="always">
+          <input matInput type='number' [(ngModel)]="element.rebatePercent" [disabled]='disabled' />
+        </mat-form-field>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="rebateMax">
+      <th mat-header-cell *matHeaderCellDef> Max. Rebate (0 is unlimited) </th>
+      <td mat-cell *matCellDef="let element">
+        <mat-form-field appearance="outline" class="w-100 p-1 col-lg-12 col-12" floatLabel="always">
+          <input matInput type='number' [(ngModel)]="element.rebateMax" [disabled]='disabled' />
+        </mat-form-field>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="gameExclude">
+      <th mat-header-cell *matHeaderCellDef> Game to Exclude </th>
+      <td mat-cell *matCellDef="let element">
+        <div class="justify-content-around">
+          <button mat-icon-button style="color: gray"
+            (click)="openDialog(element.games,form.controls.gamesCodeExclude.value)">
+            <mat-icon>table_view</mat-icon>
+          </button>
+        </div>
+
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</app-content>
+<form [formGroup]='form'>
+
+  <app-content>
+    <div class="d-flex flex-column">
+      <h5>Withdrawal Condittions</h5>
+      <div class="flex-row">
+        <mat-form-field appearance="outline" class="w-100 p-1 col-lg-3 col-12" floatLabel="always">
+          <mat-label>Max. Group Rebate(0 is unlimited)</mat-label>
+          <input type='number' matInput formControlName='maxGroupRebate' [readonly]='disabled' />
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="w-100 p-1 col-lg-3 col-12" floatLabel="always">
+          <mat-label>Rebate Condition Multplier</mat-label>
+          <input type='number' matInput formControlName='rebateConditionMultiplier' [readonly]='disabled' />
+        </mat-form-field>
+      </div>
+      <div mat-dialog-actions class="d-flex flex-row justify-content-center mt-2 mb-2">
+        <button-save (click)="insertOne()"></button-save>
+      </div>
+    </div>
+  </app-content>
+
+</form>

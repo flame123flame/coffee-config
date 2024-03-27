@@ -1,0 +1,180 @@
+<div class="d-flex flex-column">
+    <!-- <div class="d-flex flex-row w-100 justify-content-end">
+        <button-add wording="Add" (click)="onClickAdd($event)"></button-add>
+    </div> -->
+    <app-content title="{{title}}" subtitle="Logging">
+        <div class="d-flex flex-column">
+            <form [formGroup]="formGrouplottoConfig">
+                <div class="flex-lg-row">
+                    <mat-form-field floatLabel="always" appearance="outline" class="w-100 p-1 col-lg-6 col-12">
+                        <mat-label><span style="color: red;">*</span>Group Name</mat-label>
+                        <!-- <input matInput [(ngModel)]="lottoConfigModel.groupName" /> -->
+                        <input matInput formControlName="groupName" required />
+                        <mat-error>
+                            Required Group Name
+                        </mat-error>
+                        <!-- <input matInput /> -->
+                    </mat-form-field>
+                    <mat-form-field floatLabel="always" appearance="outline" class="w-100 p-1 col-lg-6 col-12">
+                        <mat-label><span style="color: red;">*</span>Max Close</mat-label>
+                        <input (change)="onChange()" matInput type="text" mask="separator.2" thousandSeparator=","
+                            formControlName="groupMaxClose" />
+                        <!-- <input matInput /> -->
+                        <mat-error>
+                            Required Group Max Close
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="flex-lg-row">
+                    <mat-form-field floatLabel="always" appearance="outline" class="w-100 p-1 col-lg-6 col-12">
+                        <mat-label><span style="color: red;">*</span>Earning Percent</mat-label>
+                        <input (change)="onChange()" matInput type="text" mask="separator.0" thousandSeparator=","
+                            formControlName="groupEarningsPercent" />
+                        <mat-error *ngIf="formGrouplottoConfig.controls.groupEarningsPercent.hasError('min')">
+                            Number should be greater than 0
+                        </mat-error>
+                        <mat-error *ngIf="formGrouplottoConfig.controls.groupEarningsPercent.hasError('max')">
+                            Number should be less than 100
+                        </mat-error>
+                        <mat-error *ngIf="formGrouplottoConfig.controls.groupEarningsPercent.hasError('required')">
+                            Required Group Earnings Percent
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <app-content>
+                    <div class="d-flex flex-row w-100 justify-content-end">
+                        <button-add wording="Add Risk" (click)="onClickAddRisk($event)"></button-add>
+                        <!-- <button wording="test" (click)="test()"></button> -->
+                    </div>
+                    <!-- <app-table-mat [columns]="columns" [dataInput]="lottoRiskList" [displayedColumns]="tr" [actionSetting]="actionSetting" (editAction)='onClickEditRisk($event)' (deleteAction)="removeLottoRisk($event)"></app-table-mat> -->
+                    <div style="overflow-x: auto">
+                        <!-- <table mat-table matSort [dataSource]="castToDataSource(lottoRiskList)" class="table-striped"> -->
+                        <table mat-table matSort [dataSource]="dataSourceX" class="table-striped"
+                            formArrayName="groupRiskList">
+                            <!-- <ng-container > -->
+                            <ng-container matColumnDef="level">
+                                <th mat-header-cell *matHeaderCellDef> Level </th>
+                                <td mat-cell *matCellDef="let element; let i = index">
+                                    <!-- {{formGrouplottoConfig.controls.groupRiskList['controls'][i].controls.level.value}} -->
+                                    {{'Lv.'+(i+1)}}
+                                </td>
+                                <td mat-footer-cell *matFooterCellDef></td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="percentForLimit">
+                                <th mat-header-cell *matHeaderCellDef> Percent Limit (%)</th>
+                                <td mat-cell *matCellDef="let element ; let i = index " [formGroupName]="i">
+                                    <mat-form-field appearance="outline" class="w-100 p-1 col-lg-12 col-12"
+                                        floatLabel="always">
+                                        <input type="text" mask="separator.0" thousandSeparator=","
+                                            (change)="onChange()" (change)="checkCompareArray(i)" matInput
+                                            formControlName="percentForLimit" />
+                                        <mat-error
+                                            *ngIf="formGrouplottoConfig.controls.groupRiskList['controls'][i].controls.percentForLimit.hasError('toMuch') && formGrouplottoConfig.controls.groupRiskList['controls'][i].controls.percentForLimit.touched">
+                                            Percent limit shoud be Sum All = 100 (%)
+                                        </mat-error>
+                                        <mat-error
+                                            *ngIf="formGrouplottoConfig.controls.groupRiskList['controls'][i].controls.percentForLimit.hasError('required') && formGrouplottoConfig.controls.groupRiskList['controls'][i].controls.percentForLimit.touched">
+                                            require Percent limit
+                                        </mat-error>
+                                    </mat-form-field>
+                                </td>
+                                <td mat-footer-cell *matFooterCellDef="let element">Sum All Percent Limit :
+                                    <span *ngIf="sumPercent>100" style="color: red;">
+                                        {{sumPercent | number}}
+                                    </span>
+                                    <span *ngIf="sumPercent<=100">
+                                        {{sumPercent | number}}
+                                    </span>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="action">
+                                <th mat-header-cell *matHeaderCellDef> Action </th>
+                                <td mat-cell *matCellDef="let element ; let i = index">
+                                    <div>
+                                        <button mat-icon-button style="color: red"
+                                            (click)="removeLottoRisk(element.value,i)">
+                                            <mat-icon>delete</mat-icon>
+                                        </button>
+                                    </div>
+                                </td>
+                                <td mat-footer-cell *matFooterCellDef></td>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                            <tr mat-footer-row *matFooterRowDef="displayedColumns" class="mt-3"></tr>
+
+                        </table>
+                    </div>
+                    <div *ngIf="formGrouplottoConfig.controls.groupRiskList['controls'].length==0">
+                        Max Risk Cant be Empty
+                    </div>
+                </app-content>
+
+                <app-content>
+                    <div class="d-flex flex-row w-100 justify-content-end">
+                        <button-add wording="Add Type" (click)="onClickAddType($event)"></button-add>
+                    </div>
+                    <div style="overflow-x: auto">
+                        <table mat-table matSort [dataSource]="dataSourceX2" class="table-striped"
+                            formArrayName="kindCode">
+
+                            <ng-container matColumnDef="#">
+                                <th mat-header-cell *matHeaderCellDef> # </th>
+                                <td mat-cell *matCellDef="let element; let i = index">
+                                    {{i+1}}
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="lottoType">
+                                <th mat-header-cell *matHeaderCellDef>Lotto Type</th>
+                                <td mat-cell *matCellDef="let element; let i = index" [formGroupName]="i">
+                                    <mat-form-field appearance="outline" class="w-100 p-1 col-lg-12 col-12"
+                                        floatLabel="always">
+                                        <mat-select formControlName="kindCode">
+                                            <mat-option (change)="onChange()"
+                                                *ngFor="let option of getList(element.value.kindCode); let j = index"
+                                                [value]='option.code'>
+                                                {{option.name}}
+                                            </mat-option>
+                                        </mat-select>
+                                        <mat-error
+                                            *ngIf="formGrouplottoConfig.controls.kindCode['controls'][i].controls.kindCode.hasError('required') && formGrouplottoConfig.controls.kindCode['controls'][i].controls.kindCode.touched">
+                                            require Lotto Type
+                                        </mat-error>
+                                    </mat-form-field>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="action">
+                                <th mat-header-cell *matHeaderCellDef> Action </th>
+                                <td mat-cell *matCellDef="let element ; let i = index">
+                                    <div>
+                                        <button mat-icon-button style="color: red"
+                                            (click)="removeLottoType(element.value,i)">
+                                            <mat-icon>delete</mat-icon>
+                                        </button>
+                                    </div>
+                                </td>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+                        </table>
+                        <div *ngIf="formGrouplottoConfig.controls.kindCode['controls'].length==0">
+                            Lotto Type Cant be Empty
+                        </div>
+                    </div>
+
+                </app-content>
+            </form>
+        </div>
+    </app-content>
+    <div mat-dialog-actions class="d-flex flex-row justify-content-center">
+        <button-cancel class="mr-1" (click)="onCancel()"></button-cancel>
+        <button-save (click)="onSave()" [disabled]="formGrouplottoConfig.status=='VALID'?false:true"></button-save>
+    </div>
+</div>

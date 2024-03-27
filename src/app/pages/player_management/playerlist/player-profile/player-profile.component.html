@@ -1,0 +1,534 @@
+<div class="d-flex flex-column">
+  <app-content title="Signup Information" class="mb-3">
+    <div class="d-flex flex-column contaier-detail  p-2 mb-3">
+      <div class="d-flex flex-row flex-wrap">
+        <div class="col-12 mt-1 col-lg-6">
+          <div class="d-flex flex-row mb-1">
+            <div class="col-4 p-0">Player ID</div>
+            <div class="col-8 p-0 content">
+              <div class="d-flex flex-row ">
+                <div class="col-12">{{profileInfo.username}}</div>
+              </div>
+            </div>
+          </div>
+          <div class="d-flex flex-row mb-1">
+            <div class="col-4 p-0">Registered Date</div>
+            <div class="col-8 p-0 content">
+              <div class="d-flex flex-row ">
+                <div class="col-12">{{profileInfo.registerDate}}</div>
+              </div>
+            </div>
+          </div>
+          <div class="d-flex flex-row mb-1">
+            <div class="col-4 p-0">Registration IP</div>
+            <div class="col-8 p-0 content">
+              <div class="d-flex flex-row ">
+                <div class="col-12">-</div>
+              </div>
+            </div>
+          </div>
+          <div class="d-flex flex-row mb-1">
+            <div class="col-4 p-0">IP Address</div>
+            <div class="col-8 p-0 content">
+              <div class="d-flex flex-row ">
+                <div class="col-12">-</div>
+              </div>
+            </div>
+          </div>
+          <div class="d-flex flex-row mb-1">
+            <div class="col-4 p-0">Last Login Date</div>
+            <div class="col-8 p-0 content">
+              <div class="d-flex flex-row ">
+                <div class="col-12">{{profileInfo.lastLoginDate}}</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="col-12 mt-1 col-lg-6">
+          <div class="d-flex flex-row mb-1">
+            <div class="col-4 p-0">Affiliate ID</div>
+            <div class="col-8 p-0 content">
+              <div class="d-flex flex-row ">
+                <div class="col-12">{{profileInfo.affiliateCode}}</div>
+              </div>
+            </div>
+          </div>
+          <div class="d-flex flex-row mb-1">
+            <div class="col-4 p-0">Affiliate Upline</div>
+            <div class="col-8 p-0 content">
+              <div class="d-flex flex-row ">
+                <div class="col-12">{{profileInfo.affiliateCodeUp}}</div>
+
+              </div>
+            </div>
+          </div>
+          <div class="d-flex flex-row mb-1 align-items-center">
+            <div class="col-4 p-0">Tag Name</div>
+            <!-- if -->
+            <div class="col-8 p-0 content" *ngIf="editTagType">
+              <div class="d-flex flex-row align-items-center">
+                <div class="col-8">{{profileInfo.tagName}}</div>
+                <div class="col-4 text-right">
+                  <button mat-icon-button style="color: gray;" (click)="editTag(profileInfo.tagCode)">
+                    <mat-icon style="font-size: 20px;">create</mat-icon>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <!-- else -->
+            <div class="col-8 p-0 content" *ngIf="!editTagType">
+              <div class="d-flex flex-row align-items-center">
+                <div class="col-8 align-items-center">
+                  <mat-form-field appearance="outline" class="w-100 col-12" style="margin-bottom: -10px">
+                    <mat-select [formControl]="tagCode" required multiple>
+                      <mat-option *ngFor="let item of tagOptions" [value]="item.tagCode">
+                        {{item.name}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div class="col-4 text-right">
+                  <button mat-icon-button style="color: red;" (click)="cancelTag(profileInfo.tagCode)">
+                    <mat-icon style="font-size: 20px;">clear</mat-icon>
+                  </button>
+                  <button mat-icon-button style="color: green;" (click)="saveTag(tagCode)">
+                    <mat-icon style="font-size: 20px;">check</mat-icon>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="d-flex flex-row mb-1 align-items-center">
+            <div class="col-4 p-0">VIP Group</div>
+            <!-- if -->
+            <div class="col-8 p-0 content" *ngIf="editGroupType">
+              <div class="d-flex flex-row align-items-center">
+                <div class="col-8">{{profileInfo.groupName}}</div>
+                <div class="col-4 text-right">
+                  <button mat-icon-button style="color: gray;" (click)="editGroup(profileInfo.groupCode)">
+                    <mat-icon style="font-size: 20px;">create</mat-icon>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <!-- else -->
+            <div class="col-8 p-0 content" *ngIf="!editGroupType">
+              <div class="d-flex flex-row align-items-center">
+                <div class="col-8 align-items-center">
+                  <mat-form-field appearance="outline" class="w-100 col-12" style="margin-bottom: -10px">
+                    <mat-select [formControl]="groupCode" required>
+                      <mat-option *ngFor="let item of vipGroupOptions" [value]="item.groupCode">
+                        {{item.groupName}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div class="col-4 text-right">
+                  <button mat-icon-button style="color: red;" (click)="cancelGroup(profileInfo.groupCode)">
+                    <mat-icon style="font-size: 20px;">clear</mat-icon>
+                  </button>
+                  <button mat-icon-button style="color: green;" (click)="saveGroup(groupCode)">
+                    <mat-icon style="font-size: 20px;">check</mat-icon>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="d-flex flex-row mb-1">
+            <div class="col-4 p-0">Online/Offline</div>
+            <div class="col-8 p-0 content">
+              <div class="d-flex flex-row ">
+                <div class="col-12">{{profileInfo.loginStatus}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </app-content>
+
+  <app-content title="Personal Infomation" class="mb-3">
+    <div class="d-flex flex-column contaier-detail  p-2 mb-3">
+      <div class="d-flex flex-row flex-wrap">
+        <div class="col-12 mt-1 col-lg-6">
+          <div class="d-flex flex-row mb-1">
+            <div class="col-4 p-0">Real Name</div>
+            <div class="col-8 p-0 content">
+              <div class="d-flex flex-row ">
+                <div class="col-12">{{profileInfo?.realName}}</div>
+              </div>
+            </div>
+          </div>
+          <div class="d-flex flex-row mb-1">
+            <div class="col-4 p-0">Email</div>
+            <div class="col-8 p-0 content">
+              <div class="d-flex flex-row ">
+                <div class="col-12">{{profileInfo?.email}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 mt-1 col-lg-6">
+          <div class="d-flex flex-row mb-1">
+            <div class="col-4 p-0">Mobile</div>
+            <div class="col-8 p-0 content">
+              <div class="d-flex flex-row ">
+                <div class="col-12">{{profileInfo.mobilePhone}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </app-content>
+
+  <app-content title="Bank Information" class="mb-3">
+    <div class="d-flex flex-column contaier-detail  p-2 mb-3">
+
+      <div class="col-12 mt-1 col-lg-10">
+        <div class="d-flex flex-row mb-1 align-items-center">
+          <div class="col-4 p-0">Bank Name</div>
+          <!-- if -->
+          <div class="col-8 p-0 content" *ngIf="editBankType">
+            <div class="d-flex flex-row align-items-center">
+              <div class="col-8">{{bankInfo.bankNameEn}}</div>
+              <div class="col-4 text-left">
+                <button mat-icon-button style="color: gray;" (click)="editBank(bankInfo.bankCode)">
+                  <mat-icon style=" font-size: 20px;">create</mat-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+          <!-- else -->
+          <div class="col-8 p-0 content" *ngIf="!editBankType">
+            <div class="d-flex flex-row align-items-center">
+              <div class="col-8 align-items-center">
+                <mat-form-field appearance="outline" class="w-100 col-12" style="margin-bottom: -10px">
+                  <mat-select [formControl]="bankCode" required>
+                    <mat-option *ngFor="let item of bankOptions" [value]="item.bankCode">
+                      {{item.bankNameEn}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="col-4 text-left">
+                <button mat-icon-button style="color: red;" (click)="cancelBank()">
+                  <mat-icon style="font-size: 20px;">clear</mat-icon>
+                </button>
+                <button mat-icon-button style="color: green;" (click)="saveBank(bankCode.value)">
+                  <mat-icon style="font-size: 20px;">check</mat-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="d-flex flex-row mb-1 align-items-center">
+          <div class="col-4 p-0">Bank Account </div>
+          <!-- if -->
+          <div class="col-8 p-0 content" *ngIf="editBankAccountType">
+            <div class="d-flex flex-row align-items-center">
+              <div class="col-8">{{bankInfo.bankAccount}}</div>
+              <div class="col-4 text-left">
+                <button mat-icon-button style="color: gray;" (click)="editBankAccount(bankInfo.bankAccount)">
+                  <mat-icon style="font-size: 20px;">create</mat-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+          <!-- else -->
+          <div class="col-8 p-0 content" *ngIf="!editBankAccountType">
+            <div class="d-flex flex-row align-items-center">
+              <div class="col-8 align-items-center">
+                <mat-form-field appearance="outline" class="w-100 col-12" style="margin-bottom: -10px">
+                  <input matInput [formControl]='bankAccount' required />
+                </mat-form-field>
+              </div>
+              <div class="col-4 text-left">
+                <button mat-icon-button style="color: red;" (click)="cancelBankAccount()">
+                  <mat-icon style="font-size: 20px;">clear</mat-icon>
+                </button>
+                <button mat-icon-button style="color: green;" (click)="saveBankAccount(bankAccount.value)">
+                  <mat-icon style="font-size: 20px;">check</mat-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="d-flex flex-row mb-1 align-items-center">
+          <div class="col-4 p-0">Account Name</div>
+          <!-- if -->
+          <div class="col-8 p-0 content" *ngIf="editAccountNameType">
+            <div class="d-flex flex-row ">
+              <div class="col-8">{{bankInfo.realName}}</div>
+              <div class="col-4 text-left">
+                <button mat-icon-button style="color: gray;" (click)="editAccountName(bankInfo.accountName)">
+                  <mat-icon style="font-size: 20px;">create</mat-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+          <!-- else -->
+          <div class="col-8 p-0 content" *ngIf="!editAccountNameType">
+            <div class="d-flex flex-row align-items-center">
+              <div class="col-8 align-items-center">
+                <mat-form-field appearance="outline" class="w-100 col-12" style="margin-bottom: -10px">
+                  <input matInput [formControl]='accountName' required />
+                </mat-form-field>
+              </div>
+              <div class="col-4 text-left">
+                <button mat-icon-button style="color: red;" (click)="cancelAccountName()">
+                  <mat-icon style="font-size: 20px;">clear</mat-icon>
+                </button>
+                <button mat-icon-button style="color: green;" (click)="saveAccountName(accountName.value)">
+                  <mat-icon style="font-size: 20px;">check</mat-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </app-content>
+
+  <app-content title="Wallet Information" class="mb-3">
+    <div class="d-flex flex-column contaier-detail justify-content-start p-2 mb-3" *ngIf="walletInfo?.length > 0">
+      <div class="d-flex  flex-wrap">
+        <div class="col-12">
+          <app-table-mat [columns]="walletCol" [dataInput]="walletInfo" [displayedColumns]="walletTr">
+          </app-table-mat>
+        </div>
+        <div class="row col-12">
+          <div class="col-lg-3 col-12">
+            <h2>Deposit Information</h2>
+            <table class="information">
+              <tr>
+                <td>Total Deposit Count</td>
+                <td>{{depositInformation?(depositInformation.totalCount|number):'-'}}</td>
+              </tr>
+              <tr>
+                <td>Total Deposit Amount</td>
+                <td>{{depositInformation?(depositInformation.totalAmount|number):'-'}}</td>
+              </tr>
+              <tr>
+                <td>Average Deposit</td>
+                <td>{{depositInformation?getAvg(depositInformation.totalAmount,depositInformation.totalCount):'-'}}</td>
+              </tr>
+              <tr>
+                <td>First Deposit Date Time</td>
+                <td>{{depositInformation?formatDate(depositInformation.createdDate):'-'}}</td>
+              </tr>
+              <tr>
+                <td>Last Deposit Date Time</td>
+                <td>{{depositInformation?formatDate(depositInformation.updatedDate):'-'}}</td>
+              </tr>
+            </table>
+          </div>
+          <div class="col-lg-3 col-12">
+            <h2>Withdrawal Information</h2>
+            <table class="information">
+              <tr>
+                <td>Total Withdrawal Count</td>
+                <td>{{withdrawalInformation?(withdrawalInformation.totalCount|number):'-'}}</td>
+              </tr>
+              <tr>
+                <td>Total Withdrawal Amount</td>
+                <td>{{withdrawalInformation?(withdrawalInformation.totalAmount|number):'-'}}</td>
+              </tr>
+              <tr>
+                <td>Average Withdrawal</td>
+                <td>
+                  {{withdrawalInformation?getAvg(withdrawalInformation.totalAmount,withdrawalInformation.totalCount):'-'}}
+                </td>
+              </tr>
+              <tr>
+                <td>First Withdrawal Date Time</td>
+                <td>{{withdrawalInformation?formatDate(withdrawalInformation.createdDate):'-'}}</td>
+              </tr>
+              <tr>
+                <td>Last Withdrawal Date Time</td>
+                <td>{{withdrawalInformation?formatDate(withdrawalInformation.updatedDate):'-'}}</td>
+              </tr>
+            </table>
+          </div>
+          <div class="col-lg-3 col-12">
+            <h2>Bonus Information</h2>
+            <table class="information">
+              <tr>
+                <td>Total Registration Bonus</td>
+                <td>{{bonusInformation?(bonusInformation.totalRegistrationBonus|number):'-'}}</td>
+              </tr>
+              <tr>
+                <td>Total Manual Bonus</td>
+                <td>{{bonusInformation?(bonusInformation.totalManualBonus|number):'-'}}</td>
+              </tr>
+              <tr>
+                <td>Total Deposit Bonus</td>
+                <td>{{bonusInformation?(bonusInformation.totalDepositBonus|number):'-'}}</td>
+              </tr>
+              <tr>
+                <td>Total Cashback Bonus</td>
+                <td>{{bonusInformation?(bonusInformation.totalCashbackBonus|number):'-'}}</td>
+              </tr>
+              <tr>
+                <td>Total Rebate Bonus</td>
+                <td>{{bonusInformation?(bonusInformation.totalRebateBonus|number):'-'}}</td>
+              </tr>
+              <tr>
+                <td>Total Amount of Manual Add/Subtract</td>
+                <td>{{bonusInformation?(bonusInformation.totalAmountOfManual|number):'-'}}</td>
+              </tr>
+            </table>
+          </div>
+          <div class="col-lg-3 col-12">
+            <h2>Total Information</h2>
+            <table class="information">
+              <tr>
+                <td>Total Bets</td>
+                <td>{{totalInformation?(totalInformation.totalBets|number):'-'}}</td>
+              </tr>
+              <tr>
+                <td>Total Valid Bets</td>
+                <td>{{totalInformation?(totalInformation.totalValidBets|number):'-'}}</td>
+              </tr>
+              <tr>
+                <td>Win/Loss</td>
+                <td>{{totalInformation?(totalInformation.winLoss|number):'-'}}</td>
+              </tr>
+              <!-- <tr>
+                <td>Total JP Win/Loss</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Total Profit</td>
+                <td></td>
+              </tr> -->
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </app-content>
+
+  <app-content title="Withdrawal Condition" class="mb-3">
+    <app-table-mat [columns]="withdrawalCol" [length]='withdrawalLength' [dataInput]="withdrawalData"
+      [displayedColumns]="withdrawalTr" (onPageChange)='pagewithdrawalChange($event)'
+      (onSortChange)='sortwithdrawalChange($event)' [actionSetting]="actionSettingWithdrawal">
+    </app-table-mat>
+  </app-content>
+
+  <app-content title="Promotion Information" class="mb-3">
+    <div class="d-flex flex-column contaier-detail p-2 mb-3">
+      <div class="d-flex flex-row flex-wrap">
+        <div class="col-12 mt-1 col-lg-12">
+          <div class="d-flex flex-row mb-1">
+            <div class="col-4 p-0">Promotion Name</div>
+            <div class="col-8 p-0 content">
+              <div class="d-flex flex-row ">
+                <div class="col-12" *ngIf="promoInfo.promotion">{{promoInfo.promotion.promoTitle}}</div>
+                <div class="col-12" *ngIf="!promoInfo.promotion">-</div>
+              </div>
+            </div>
+          </div>
+          <div class="d-flex flex-row mb-1">
+            <div class="col-4 p-0">Status</div>
+            <div class="col-8 p-0 content">
+              <div class="d-flex flex-row ">
+                <div class="col-12" *ngIf="promoInfo.status">{{promoInfo.status}}</div>
+                <div class="col-12" *ngIf="!promoInfo.status">-</div>
+              </div>
+            </div>
+          </div>
+          <div class="d-flex flex-row mb-1">
+            <div class="col-4 p-0">Date Active</div>
+            <div class="col-8 p-0 content">
+              <div class="d-flex flex-row ">
+                <div class="col-12"> {{promoInfo.dateActive}}</div>
+              </div>
+            </div>
+          </div>
+          <div class="d-flex flex-row mb-1">
+            <div class="col-4 p-0">Promotion Image</div>
+            <div class="col-8 p-0 content">
+              <div class="d-flex flex-row ">
+                <div class="col-12" *ngIf="promoInfo.postSetting">
+                  <img [src]="promoInfo.postSetting.deskBanner" style="width: 100%;">
+                </div>
+                <div class="col-12" *ngIf="!promoInfo.postSetting">-</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </app-content>
+
+  <app-content title="Activity Log" class="mb-3">
+    <div class="d-flex flex-column mb-3">
+      <mat-tab-group (selectedTabChange)="tabAction($event)">
+        <mat-tab label="Game Log">
+          <div class="flex-row">
+            <mat-form-field floatLabel="always" appearance="outline" class="w-100 p-1 col-lg-3 col-12">
+              <mat-label>Date</mat-label>
+              <input [(ngModel)]='gameLogSearch.dateFrom' placeholder="from" matInput [matDatepicker]="picker" />
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field floatLabel="always" appearance="outline" class="w-100 p-1 col-lg-3 col-12">
+              <input [(ngModel)]='gameLogSearch.dateTo' placeholder="to" matInput [matDatepicker]="picker2" />
+              <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+              <mat-datepicker #picker2></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="w-100 p-1 col-lg-3 col-12">
+              <mat-label>Provider</mat-label>
+              <mat-select [(ngModel)]='gameLogSearch.provider'>
+                <mat-option *ngFor="let option of providerList" [value]="option.code">
+                  {{ option.nameEn }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <button-reset (click)="resetGameLogSearch()"></button-reset>
+            <button-search (click)="getTransactionGame()"></button-search>
+          </div>
+          <app-table-mat [columns]="gameCol" [length]='gamesLength' [dataInput]="gameData" [displayedColumns]="gameTr"
+            (onPageChange)='pageGameChange($event)' (onSortChange)='sortGameChange($event)'>
+          </app-table-mat>
+        </mat-tab>
+        <mat-tab label="Transaction Log">
+          <div class="flex-row">
+            <mat-form-field floatLabel="always" appearance="outline" class="w-100 p-1 col-lg-3 col-12">
+              <mat-label>Date</mat-label>
+              <input [(ngModel)]='gameTransectionLogSearch.dateFrom' placeholder="from" matInput
+                [matDatepicker]="picker3" />
+              <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+              <mat-datepicker #picker3></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field floatLabel="always" appearance="outline" class="w-100 p-1 col-lg-3 col-12">
+              <input [(ngModel)]='gameTransectionLogSearch.dateTo' placeholder="to" matInput
+                [matDatepicker]="picker4" />
+              <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
+              <mat-datepicker #picker4></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="w-100 p-1 col-lg-3 col-12">
+              <mat-label>Transaction Type</mat-label>
+              <mat-select [(ngModel)]='gameTransectionLogSearch.type'>
+                <mat-option *ngFor="let option of transectionList" [value]="option.code">
+                  {{ option.display }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <button-reset (click)="resetTransactionLogSearch()"></button-reset>
+            <button-search (click)="getTransactionLog()"></button-search>
+          </div>
+          <app-table-mat [columns]="transactionCol" [length]='logLength' [dataInput]="transactionData"
+            [displayedColumns]="transactionTr" (onPageChange)='pageLogChange($event)'
+            (onSortChange)='sortLogChange($event)'></app-table-mat>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </app-content>
+</div>

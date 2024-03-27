@@ -1,0 +1,15 @@
+mat-tree {
+  overflow: auto;
+  height: fit-content;
+  max-height: 200px;
+  border: 1px #cccccc solid;
+  border-radius: 3%;
+}
+
+mat-tree-node {
+  overflow: visible !important;
+}
+
+.required-span {
+  color: red;
+}

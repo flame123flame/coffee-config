@@ -1,0 +1,75 @@
+<div class="d-flex flex-column w-auto">
+  <div class="d-flex flex-row w-100 d-flex justify-content-start">
+    <button-cancel wording="Back" (click)="onBack()"></button-cancel>
+  </div>
+  <br>
+  <app-content >
+    <mat-card-title class="mb-1">
+      <h2>ADD RULES : {{className}}</h2>
+    </mat-card-title>
+    <!-- <app-content *ngFor="let item of [1,2,3,4,5]; let i=index" [formGroupName]="i"> -->
+    <app-content *ngFor="let ruleData of ruleDesArray; let i=index">
+      <div class="d-flex flex-row justify-content-between"> 
+        <mat-card-title class="mb-1">
+          <h2>เพิ่มข้อมูลกติกา</h2>
+        </mat-card-title>
+        <ng-container *ngIf="i != 0">
+          <button mat-icon-button style="color: red" (click)="dropRow(i)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </ng-container>
+      </div>
+      <div class="flex-column pt-2 col-12">
+        <div class="w-100 p-1 col-lg-3 col-12">
+          <img [src]="ruleData.imageRulePath" 
+            style="background-image: url('/assets/images/table_bg.jpg');object-fit:contain;" />
+            <ng-container *ngIf="ruleData.imageRulePath">
+              <button-cancel (click)="reset2(i)"></button-cancel>
+            </ng-container>
+        </div>
+        <div class="w-100 p-1 col-lg-3 col-12">
+          <input (change)="preview(file.files,i)" #file type="file" />
+
+        </div>
+      </div>
+      <div floatLabel="always" appearance="outline" class="flex-lg-row">
+        <label><span style="color: red">*</span>Rule Description</label>
+        <text-editor [Ckdata]="ruleData.ruleDes" (onEnter)="onChange($event,i)"></text-editor>
+      </div>
+    </app-content>
+    <div class="d-flex flex-row justify-content-center mt-3 mb-3">
+      <button-add (click)="addRow()"></button-add>
+    </div>
+
+    <app-content *ngFor="let imageData of imageArr; let i=index">
+      <div  class="d-flex flex-row justify-content-end">
+        <button mat-icon-button style="color: red" (click)="dropRow2(i)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+      <div class="flex-column pt-2 col-12">
+        <div class="w-100 p-1 col-lg-3 col-12">
+          <img [src]="imageData.imageRulePath"
+            style="background-image: url('/assets/images/table_bg.jpg');object-fit:contain;" />
+          <ng-container *ngIf="imageData.imageRulePath">
+            <button-cancel (click)="reset1(i)"></button-cancel>
+          </ng-container>
+        </div>
+
+        <div class="w-100 p-1 col-lg-3">
+          <input (change)="preview2(file.files,i)" #file type="file" />
+        </div>
+      </div>
+    </app-content>
+    <div class="d-flex flex-row justify-content-end mt-3">
+      <button-add (click)="addImageRow()"></button-add>
+    </div>
+  </app-content>
+  <div class="d-flex flex-row justify-content-center mb-2">
+    <button-cancel wording="Back" (click)="onBack()"></button-cancel>
+    &nbsp;
+    &nbsp;
+    <button-save (click)="onSave()"></button-save>
+    <!-- <button-save (click)="test()" wording="TEST"></button-save> -->
+  </div>
+</div>

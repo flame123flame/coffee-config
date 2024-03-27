@@ -1,0 +1,31 @@
+<div class="d-flex flex-row w-100 d-flex justify-content-start">
+  <button-cancel wording="Back" (click)="goBack()"></button-cancel>
+</div>
+<br />
+<ng-container>
+  <app-content class="mb-2 mt-2" title="ตั้งค่าหวยปิด {{ className }}">
+  </app-content>
+</ng-container>
+<ng-container *ngFor="let item of msdList; let i = index">
+  <app-content class="mb-2" title="{{ item.msdLottoKindName }}">
+    <div class="d-flex justify-content-end">
+      <button-add
+        (click)="addNumber(item.msdLottoKindCode, item.msdLottoKindName)"
+      ></button-add>
+    </div>
+    <app-table-mat
+      [length]="closNumberList[i].length"
+      [columns]="columns"
+      [dataInput]="msdDataList[item.msdLottoKindCode]"
+      [displayedColumns]="tr"
+      [actionSetting]="actionSetting"
+      (toggleAction)="setEnable($event.status.checked, $event.data)"
+      (deleteAction)="deleteOne($event)"
+    ></app-table-mat>
+  </app-content>
+</ng-container>
+<ng-container *ngIf="!msdList?.length">
+  <app-content class="mb-2" title="{{ NODATA_MESSAGE }}">
+    NO DATA LOTTO GROUP PLEASE GO BACK TO ADD GROUP
+  </app-content>
+</ng-container>

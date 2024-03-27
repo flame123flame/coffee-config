@@ -1,0 +1,13 @@
+<div class="d-flex flex-column">
+  <app-content class="p-1 mt-3" title="Provider" subtitle="Logging">
+    <div class="d-flex flex-row justify-content-end">
+      <button mat-raised-button class="p-1" style="background-color: #009688;color: white;margin: 5px;"
+        (click)="onSaveProvider()">ADD PROVIDER</button>
+    </div>
+    <app-table-mat [columns]="providerCol" [length]='providerLength' [dataInput]="providerData"
+      [displayedColumns]="providerTr" (deleteAction)="onDeleteProvider($event)"
+      (editAction)="onEditProvider($event)" (onPageChange)='pageProviderChange($event)'
+      (onSortChange)='sortProviderChange($event)'>
+    </app-table-mat>
+  </app-content>
+</div>

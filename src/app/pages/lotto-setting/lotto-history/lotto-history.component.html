@@ -1,0 +1,154 @@
+<div class="d-flex flex-column  w-auto">
+  <app-content>
+    <mat-tab-group (selectedTabChange)="loadTabHistory()">
+      <mat-tab label="All GroupTransaction">
+        <mat-card class="mb-1">
+          <mat-card-title class="mb-1">
+            <h2>Lotto History - Group Transaction</h2>
+          </mat-card-title>
+          <div class="d-flex flex-lg-column flex-column ">
+            <div class="flex-lg-row">
+              <form [formGroup]="formFilter">
+                <mat-form-field floatLabel="always" appearance="outline" class="col-lg-2">
+                  <mat-label><span style="color: red;">*</span>Filter Lotto Category</mat-label>
+                  <mat-select formControlName="selectedCategory">
+                    <mat-option value=''>ALL</mat-option>
+                    <mat-option value='GOVERNMENT'>GOVERNMENT</mat-option>
+                    <mat-option value='STOCKS'>STOCKS</mat-option>
+                    <mat-option value='YEEKEE'>YEEKEE</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-form-field floatLabel="always" appearance="outline" class="col-lg-2">
+                  <mat-label><span style="color: red;">*</span>Filter Lotto Name</mat-label>
+                  <mat-select formControlName="selectedClassCode">
+                    <mat-option value=''>
+                      ALL
+                    </mat-option>
+                    <mat-option *ngFor="let item of lottoClassCode" [value]="item.lottoClassCode">
+                      {{item.className}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-form-field floatLabel="always" appearance="outline" class="col-lg-2">
+                  <mat-label><span style="color: red;">*</span>Filter Status</mat-label>
+                  <mat-select formControlName="selected">
+                    <mat-option value=''>ALL</mat-option>
+                    <mat-option value='SHOW'>SHOW</mat-option>
+                    <mat-option value='PENDING'>PENDING</mat-option>
+                    <mat-option value='REFUND'>REFUND</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-form-field floatLabel="always" appearance="outline" class="col-lg-2">
+                  <mat-label><span style="color: red;">*</span>Username Search</mat-label>
+                  <input type="text" formControlName="usernameSearch" matInput />
+                </mat-form-field>
+                <mat-form-field floatLabel="always" appearance="outline" class="col-lg-2">
+                  <mat-label><span style="color: red;">*</span>Installment Search</mat-label>
+                  <input type="text" formControlName="installmentSearch" matInput />
+                </mat-form-field>
+                <mat-form-field floatLabel="always" appearance="outline" class="col-lg-2">
+                  <mat-label><span style="color: red;">*</span>Transaction Group Code Search</mat-label>
+                  <input type="text" formControlName="transactionGroupSearch" matInput />
+                </mat-form-field>
+                <mat-form-field floatLabel="always" appearance="outline" class="col-lg-2">
+                  <mat-label><span style="color: red;">*</span>Round Yeekee Search</mat-label>
+                  <input type="text" formControlName="roundNumber" matInput />
+                </mat-form-field>
+              </form>
+
+            </div>
+          </div>
+          <div class="d-flex flex-row justify-content-center">
+            <button-reset (click)="resetSearch()"></button-reset>
+            <button-search (click)="getPaginateGroupTransation()"></button-search>
+          </div>
+          <app-table-mat [columns]="columns" [length]='length' [dataInput]="data" [displayedColumns]="tr" [actionSetting]="actionSetting" (onPageChange)='pageChange($event)' (onSortChange)='sortChange($event)'>
+          </app-table-mat>
+        </mat-card>
+      </mat-tab>
+
+      <mat-tab label="All Transaction from Group">
+        <mat-card class="mb-1">
+          <mat-card-title class="mb-1">
+            <h2>Lotto History - All Transaction</h2>
+          </mat-card-title>
+          <div class="d-flex flex-lg-column flex-column ">
+            <div class="flex-lg-row">
+              <form [formGroup]="formFillterAll">
+                <mat-form-field floatLabel="always" appearance="outline" class="col-lg-2">
+                  <mat-label><span style="color: red;">*</span>Filter Lotto Category</mat-label>
+                  <mat-select formControlName="selectedCategory">
+                    <mat-option value=''>ALL</mat-option>
+                    <mat-option value='GOVERNMENT'>GOVERNMENT</mat-option>
+                    <mat-option value='STOCKS'>STOCKS</mat-option>
+                    <mat-option value='YEEKEE'>YEEKEE</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-form-field floatLabel="always" appearance="outline" class="col-lg-2">
+                  <mat-label><span style="color: red;">*</span>Filter Lotto Name</mat-label>
+                  <mat-select formControlName="selectedClassCode">
+                    <mat-option value=''>
+                      ALL
+                    </mat-option>
+                    <mat-option *ngFor="let item of lottoClassCode" [value]="item.lottoClassCode">
+                      {{item.className}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-form-field floatLabel="always" appearance="outline" class="col-lg-2">
+                  <mat-label><span style="color: red;">*</span>Filter Lotto Kind Name</mat-label>
+                  <mat-select formControlName="selectedKindCode">
+                    <mat-option value=''>
+                      ALL
+                    </mat-option>
+                    <mat-option [value]='item.msdLottoKindCode' *ngFor="let item of listKind">
+                      {{item.msdLottoKindName}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-form-field floatLabel="always" appearance="outline" class="col-lg-2">
+                  <mat-label><span style="color: red;">*</span>Filter Status</mat-label>
+                  <mat-select formControlName="selected">
+                    <mat-option value=''>ALL</mat-option>
+                    <mat-option value='WIN'>WIN</mat-option>
+                    <mat-option value='PENDING'>PENDING</mat-option>
+                    <mat-option value='LOSE'>LOSE</mat-option>
+                    <mat-option value='REFUND'>REFUND</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-form-field floatLabel="always" appearance="outline" class="col-lg-2">
+                  <mat-label><span style="color: red;">*</span>Username Search</mat-label>
+                  <input type="text" formControlName="usernameSearch" matInput />
+                </mat-form-field>
+                <mat-form-field floatLabel="always" appearance="outline" class="col-lg-2">
+                  <mat-label><span style="color: red;">*</span>Lotto Number Search</mat-label>
+                  <input type="text" formControlName="lottoNumberSearch" matInput />
+                </mat-form-field>
+                <mat-form-field floatLabel="always" appearance="outline" class="col-lg-2">
+                  <mat-label><span style="color: red;">*</span>Installment Search</mat-label>
+                  <input type="text" formControlName="installmentSearch" matInput />
+                </mat-form-field>
+                <mat-form-field floatLabel="always" appearance="outline" class="col-lg-2">
+                  <mat-label><span style="color: red;">*</span>Transaction Group Code Search</mat-label>
+                  <input type="text" formControlName="transactionCodeSearch" matInput />
+                </mat-form-field>
+                <mat-form-field floatLabel="always" appearance="outline" class="col-lg-2">
+                  <mat-label><span style="color: red;">*</span>Round Yeekee Search</mat-label>
+                  <input type="text" formControlName="roundNumber" matInput />
+                </mat-form-field>
+              </form>
+
+            </div>
+          </div>
+          <div class="d-flex flex-row justify-content-center">
+            <button-reset (click)="resetSearchAll()"></button-reset>
+            <button-search (click)="getPaginateAllTransation()"></button-search>
+          </div>
+          <app-table-mat [columns]="columns2" [length]='lengthAll' [dataInput]="dataAll" [displayedColumns]="tr2" [actionSetting]="actionSetting" (onPageChange)='pageAllChange($event)' (onSortChange)='sortAllChange($event)'>
+          </app-table-mat>
+        </mat-card>
+      </mat-tab>
+    </mat-tab-group>
+  </app-content>
+
+</div>

@@ -1,0 +1,42 @@
+<app-content title="{{title}}" subtitle="Logging">
+  <app-content title="{{msdLottoKindName}}" subtitle="Logging" class='pb-2'>
+    <div style="overflow-x: auto">
+      <table mat-table [dataSource]="vipGroupList" class='table-striped'>
+        <ng-container *ngFor="let item of columns;let i = index" [matColumnDef]="item.field">
+          <ng-container *ngIf="i == 0; else elseTemplate">
+            <th mat-header-cell *matHeaderCellDef> {{item.header}} </th>
+            <td mat-cell *matCellDef="let element">
+              {{element?.vipName}}
+            </td>
+          </ng-container>
+          <ng-template #elseTemplate>
+            <th mat-header-cell *matHeaderCellDef> {{item.header}} </th>
+            <td mat-cell *matCellDef="let element;let row = index">
+              <ng-container *ngIf="formGroup?.controls?.myArr['controls'][row]">
+                <form [formGroup]="formGroup.controls.myArr['controls'][row]">
+                  <mat-form-field appearance="outline" class="p-2 w-100 col-12" floatLabel="always">
+                    <input type="text" mask="separator.2" thousandSeparator="," matInput formControlName='{{item.field}}' [(ngModel)]='element[item.field]' style="text-align:right;"/>
+                    <mat-error *ngIf="formGroup.controls.myArr['controls'][row]['controls'][item.field].hasError('required')">
+                      <strong>required</strong>
+                    </mat-error>
+                    <mat-error *ngIf="formGroup.controls.myArr['controls'][row]['controls'][item.field].hasError('lessThan')">
+                      <strong>this value must less than condition price before</strong>
+                    </mat-error>
+                  </mat-form-field>
+                </form>
+              </ng-container>
+
+            </td>
+          </ng-template>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="tr"></tr>
+        <tr mat-row *matRowDef="let row; columns: tr;"></tr>
+      </table>
+    </div>
+  </app-content>
+
+  <div mat-dialog-actions class="d-flex flex-row justify-content-center mb-2">
+    <button-cancel class="mr-1" (click)="onCancel()"></button-cancel>
+    <button-save (click)="onSave($event)"></button-save>
+  </div>

@@ -1,0 +1,80 @@
+<div class="d-flex flex-column">
+  <app-content title="Select Promotion Type">
+    <div class="row mb-5">
+      <div class="col-12 col-lg-4">
+        <div class="card mt-3" (click)="onRegistrantion()">
+          <div class="card-header">
+            <div class="row">
+              <div class="col-6">Registration</div>
+              <div class="col-6 text-right"><i class="material-icons">
+                  check_circle_outline
+                </i></div>
+            </div>
+          </div>
+          <div class="card-body" style="padding: 12px;">
+            Register to receive promotional bonus</div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-4">
+        <div class="card mt-3" (click)="onFirstAndSecondDeposit()">
+          <div class="card-header">
+            <div class="row">
+              <div class="col-6">1st & 2nd Deposit</div>
+              <div class="col-6 text-right"><i class="material-icons">
+                  check_circle_outline
+                </i></div>
+            </div>
+          </div>
+          <div class="card-body" style="padding: 12px;">
+            Deposit for the 1st or 2nd time to claim bonus</div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-4">
+        <div class="card mt-3" (click)="goRoute('customized')">
+          <div class="card-header">
+            <div class="row">
+              <div class="col-6">Customized Promotion</div>
+              <div class="col-6 text-right"><i class="material-icons">
+                  check_circle_outline
+                </i></div>
+            </div>
+          </div>
+          <div class="card-body" style="padding: 12px;">
+            Create a Customized Promotion
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-4">
+        <div class="card mt-3" (click)="onGeneralDeposit()">
+          <div class="card-header">
+            <div class="row">
+              <div class="col-6">General Deposit</div>
+              <div class="col-6 text-right"><i class="material-icons">
+                  check_circle_outline
+                </i></div>
+            </div>
+          </div>
+          <div class="card-body" style="padding: 12px;">
+            Create a General Deposit
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-4">
+        <div class="card mt-3" (click)="onPromotionPosting()">
+          <div class="card-header">
+            <div class="row">
+              <div class="col-6">Promotion Posting</div>
+              <div class="col-6 text-right"><i class="material-icons">
+                  check_circle_outline
+                </i></div>
+            </div>
+          </div>
+          <div class="card-body" style="padding: 12px;">
+            Create a Promotion Posting
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </app-content>
+</div>
